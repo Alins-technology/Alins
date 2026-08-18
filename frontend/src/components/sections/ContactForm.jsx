@@ -39,7 +39,11 @@ export default function ContactForm() {
 
     // Open the tab synchronously on the click so popup blockers (Safari/Firefox)
     // don't treat it as an unsolicited popup once the redirect happens after the await below.
-    const whatsappTab = window.open('', '_blank', 'noopener,noreferrer')
+    // NOTE: deliberately no 'noopener' here — that flag makes window.open() return null,
+    // which would leave us with no handle to redirect once the fetch resolves. We cut the
+    // opener link manually instead, which gives the same tab-nabbing protection.
+    const whatsappTab = window.open('', '_blank')
+    if (whatsappTab) whatsappTab.opener = null
 
     try {
       const res = await fetch(`${API_URL}/api/contact`, {
