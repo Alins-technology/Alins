@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Send, Loader2, CheckCircle2, AlertCircle } from 'lucide-react'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+// Same-origin in production (Vercel rewrites /api/* to the backend service) —
+// only needed as an absolute URL for local dev where frontend/backend run on different ports.
+const API_URL = import.meta.env.VITE_API_URL || ''
 const WHATSAPP_NUMBER = '919354080179'
 
 const serviceOptions = [
