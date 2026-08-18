@@ -1,0 +1,96 @@
+import {
+  MonitorSmartphone,
+  Code2,
+  Smartphone,
+  LineChart,
+  Palette,
+  Search,
+} from 'lucide-react'
+
+export const services = [
+  {
+    id: 'web-design',
+    icon: MonitorSmartphone,
+    title: 'Web Design',
+    short: 'Interfaces that feel as good as they look.',
+    description:
+      'Pixel-perfect, conversion-focused web design that blends bold visuals with intuitive UX — built to represent your brand at its best.',
+    features: ['UI/UX Design', 'Wireframing & Prototyping', 'Design Systems', 'Responsive Layouts'],
+    color: 'from-primary-500 to-nebula',
+    accent: '#3b6dfb',
+    motif: 'wireframe',
+    glowFrom: '#3b6dfb',
+    glowTo: '#8b5cf6',
+  },
+  {
+    id: 'web-development',
+    icon: Code2,
+    title: 'Web Development',
+    short: 'Fast, scalable, future-proof builds.',
+    description:
+      'From marketing sites to complex web apps — we engineer performant, SEO-friendly, and secure products using modern frameworks.',
+    features: ['Custom Web Apps', 'E-commerce', 'CMS & Headless', 'API Integration'],
+    color: 'from-accent to-primary-500',
+    accent: '#00e9f7',
+    motif: 'nodes',
+    glowFrom: '#8b5cf6',
+    glowTo: '#00e9f7',
+  },
+  {
+    id: 'app-development',
+    icon: Smartphone,
+    title: 'App Development',
+    short: 'Native-grade mobile experiences.',
+    description:
+      'iOS, Android and cross-platform apps engineered for speed and stability — designed to keep users coming back.',
+    features: ['iOS & Android', 'React Native', 'App Store Launch', 'Maintenance & Support'],
+    color: 'from-nebula to-primary-600',
+    accent: '#8b5cf6',
+    motif: 'device',
+    glowFrom: '#00e9f7',
+    glowTo: '#3b6dfb',
+  },
+  {
+    id: 'digital-marketing',
+    icon: LineChart,
+    title: 'Digital Marketing',
+    short: 'Data-driven growth, not guesswork.',
+    description:
+      'Full-funnel marketing across search, social and paid channels — engineered around measurable ROI and real growth.',
+    features: ['SEO Strategy', 'Paid Ads (PPC)', 'Social Media', 'Analytics & Reporting'],
+    color: 'from-flame to-flame-hot',
+    accent: '#ff7a30',
+    motif: 'graph',
+    glowFrom: '#3b6dfb',
+    glowTo: '#d946a8',
+  },
+  {
+    id: 'graphic-designing',
+    icon: Palette,
+    title: 'Graphic Designing',
+    short: 'Visual identity that sticks.',
+    description:
+      'Brand identity, marketing collateral and motion graphics crafted to make every touchpoint unmistakably yours.',
+    features: ['Brand Identity', 'Logo & Guidelines', 'Social Creatives', 'Motion & Animation'],
+    color: 'from-nebula to-flame',
+    accent: '#d946a8',
+    motif: 'shards',
+    glowFrom: '#d946a8',
+    glowTo: '#ff7a30',
+  },
+  {
+    id: 'seo-growth',
+    icon: Search,
+    title: 'SEO & Growth',
+    short: 'Rank higher. Convert more.',
+    description:
+      'Technical SEO, content strategy and CRO working together to compound your organic visibility and revenue over time.',
+    features: ['Technical SEO', 'Content Strategy', 'CRO & A/B Testing', 'Local SEO'],
+    color: 'from-primary-400 to-accent',
+    accent: '#5c81ff',
+    motif: 'path',
+    glowFrom: '#8b5cf6',
+    glowTo: '#00e9f7',
+  },
+]
+
