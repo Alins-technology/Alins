@@ -5,7 +5,13 @@ dotenv.config()
 export const env = {
   PORT: process.env.PORT || 5000,
   NODE_ENV: process.env.NODE_ENV || 'development',
+  // Comma-separated list of allowed frontend origins, e.g.
+  // "https://www.alins.in,https://alins-sigma.vercel.app"
   CLIENT_URL: process.env.CLIENT_URL || 'http://localhost:5173',
+  CLIENT_URLS: (process.env.CLIENT_URL || 'http://localhost:5173')
+    .split(',')
+    .map((url) => url.trim())
+    .filter(Boolean),
 
   // SMTP is optional. If not configured, the contact form still works —
   // submissions are logged to the console / saved to disk instead of emailed.
