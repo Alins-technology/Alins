@@ -1,94 +1,38 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowUpRight, CheckCircle2 } from 'lucide-react'
+import { Sparkle, ScribbleCircle, PlusCluster } from '../common/Doodles'
 
 const points = [
-  'Full-stack team under one roof',
-  'Transparent process, real-time updates',
-  'Design systems built to scale',
-  'Growth-focused marketing strategy',
+  'One team spans design, code and marketing',
+  'You see progress as it happens, not at the end',
+  'Design systems that outlast the first launch',
+  'Marketing decisions backed by actual data',
 ]
 
 export default function AboutPreview() {
   return (
-    <section className="section-pad">
-      <div className="container-x grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
+    <section className="relative overflow-hidden py-20 md:py-28">
+      <div className="container-x grid grid-cols-1 items-start gap-14 lg:grid-cols-[1.2fr_0.8fr] lg:gap-10 xl:gap-16">
+        {/* Statement column — wider, leads the section */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="relative"
-        >
-          <div className="glass-card aspect-square w-full max-w-md overflow-hidden p-8 sm:p-10">
-            <div className="noise-overlay" />
-            <div className="relative flex h-full flex-col justify-between">
-              <span className="eyebrow w-fit">Who We Are</span>
-
-              {/* Abstract orbital mark — keeps the card's center from
-                  reading as empty space instead of intentional stillness. */}
-              <div aria-hidden className="pointer-events-none relative mx-auto my-6 h-40 w-40 sm:h-48 sm:w-48">
-                <div
-                  className="absolute inset-0 rounded-full blur-2xl"
-                  style={{ background: 'radial-gradient(circle, rgba(0,233,247,0.12) 0%, rgba(0,233,247,0) 70%)' }}
-                />
-                <svg viewBox="0 0 200 200" className="h-full w-full" fill="none">
-                  <circle cx="100" cy="100" r="86" stroke="#00e9f7" strokeOpacity="0.16" />
-                  <circle cx="100" cy="100" r="58" stroke="#3b6dfb" strokeOpacity="0.2" />
-                  <circle
-                    cx="100"
-                    cy="100"
-                    r="86"
-                    stroke="#00e9f7"
-                    strokeOpacity="0.55"
-                    strokeWidth="1.5"
-                    strokeDasharray="3 9"
-                    strokeLinecap="round"
-                    transform="rotate(-35 100 100)"
-                  />
-                  <circle cx="100" cy="14" r="3" fill="#00e9f7" fillOpacity="0.85" />
-                  <circle cx="30" cy="145" r="2" fill="#8aa6ff" fillOpacity="0.6" />
-                  <circle cx="168" cy="70" r="2" fill="#7df3ff" fillOpacity="0.6" />
-                </svg>
-              </div>
-
-              <div>
-                <p className="font-display text-3xl font-bold leading-tight text-white sm:text-4xl">
-                  A team obsessed with{' '}
-                  <span className="gradient-text">craft &amp; results.</span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="glass-card absolute -bottom-8 -right-6 hidden w-48 p-5 sm:block"
-          >
-            <p className="font-display text-3xl font-bold text-white">8+</p>
-            <p className="text-xs uppercase tracking-widest text-ink-faint">Years of Experience</p>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          className="lg:pr-6"
         >
           <span className="eyebrow">About Alins</span>
-          <h2 className="mt-5 text-4xl font-bold text-white sm:text-5xl">
-            Digital craftsmanship, <span className="gradient-text">delivered end-to-end.</span>
+          <h2 className="mt-6 max-w-xl text-4xl font-bold leading-[1.05] text-ink sm:text-5xl lg:text-6xl">
+            One team, <span className="gradient-text">every discipline covered.</span>
           </h2>
-          <p className="mt-6 text-base leading-relaxed text-ink-muted sm:text-lg">
-            We&apos;re a multidisciplinary team of designers, engineers and strategists who
-            partner with startups and enterprises to build digital products that look
-            exceptional and perform even better.
+          <p className="mt-6 max-w-md text-base leading-relaxed text-ink-muted sm:text-lg">
+            Designers, engineers and strategists working from the same brief instead of
+            handing it off between agencies. We partner with startups and established
+            companies alike, and we stay accountable for how the work actually performs.
           </p>
 
-          <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <ul className="mt-9 grid grid-cols-1 gap-3 sm:grid-cols-2">
             {points.map((point) => (
               <li key={point} className="flex items-start gap-2.5 text-sm text-ink-muted">
                 <CheckCircle2 size={17} className="mt-0.5 shrink-0 text-primary-400" />
@@ -99,10 +43,56 @@ export default function AboutPreview() {
 
           <Link
             to="/about"
-            className="mt-9 inline-flex items-center gap-2 text-sm font-semibold text-primary-300 transition-colors hover:text-accent"
+            className="mt-9 inline-flex items-center gap-2 text-sm font-semibold text-primary-600 transition-colors hover:text-accent-deep"
           >
             More about our agency <ArrowUpRight size={15} />
           </Link>
+        </motion.div>
+
+        {/* Visual/stat column — narrower, offset down to break the centered feel */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="relative lg:mt-16"
+        >
+          <div
+            className="aspect-[4/5] w-full max-w-sm overflow-hidden rounded-3xl p-8 shadow-card sm:p-10 lg:ml-auto"
+            style={{
+              background: 'linear-gradient(160deg, rgba(59,109,251,0.12), rgba(139,92,246,0.10) 55%, rgba(8,145,168,0.09))',
+              border: '1px solid rgba(59,109,251,0.18)',
+            }}
+          >
+            <div className="relative flex h-full flex-col justify-between">
+              <span className="eyebrow w-fit">Who We Are</span>
+
+              {/* Colorful doodle cluster — keeps the card's center from
+                  reading as empty space instead of intentional stillness. */}
+              <div aria-hidden className="pointer-events-none relative mx-auto my-6 flex h-36 w-36 items-center justify-center gap-4 sm:h-44 sm:w-44">
+                <ScribbleCircle className="h-20 w-20 text-primary-500/60 sm:h-24 sm:w-24" />
+                <Sparkle className="absolute -right-2 -top-2 h-8 w-8 text-accent-deep animate-pulse-glow" />
+                <PlusCluster className="absolute -bottom-2 -left-2 h-9 w-9 text-accent" />
+              </div>
+
+              <div>
+                <p className="font-display text-2xl font-bold leading-tight text-ink sm:text-3xl">
+                  Obsessed with the details{' '}
+                  <span className="gradient-text">and the outcome.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="glass-card absolute -bottom-8 -left-6 hidden w-48 p-5 sm:block"
+          >
+            <p className="font-display text-3xl font-bold text-ink">8+</p>
+            <p className="text-xs uppercase tracking-widest text-ink-faint">Years of Experience</p>
+          </motion.div>
         </motion.div>
       </div>
     </section>

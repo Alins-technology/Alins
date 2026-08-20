@@ -27,13 +27,14 @@ export default function ServicesJourney() {
           index={i}
           total={services.length}
           reverse={i % 2 === 1}
+          isLast={i === services.length - 1}
           registerRef={(el) => (sectionEls.current[i] = el)}
         />
       ))}
 
       <ServicesProgressNav sectionEls={sectionEls} total={services.length} />
 
-      <CTA showCraft />
+      <CTA />
     </div>
   )
 }

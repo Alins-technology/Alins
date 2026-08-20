@@ -1,12 +1,12 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 import { services } from '../../data/services'
 import SectionHeading from '../common/SectionHeading'
+import { Sparkle, Zigzag } from '../common/Doodles'
 
 export default function ServicesPreview() {
-  const [active, setActive] = useState(null)
+  const [featured, ...rest] = services
 
   return (
     <section className="section-pad">
@@ -15,9 +15,9 @@ export default function ServicesPreview() {
           <SectionHeading
             align="left"
             eyebrow="What We Do"
-            title="Services engineered for"
-            highlight="growth."
-            description="From first pixel to first paying customer — everything your brand needs to compete online, under one roof."
+            title="Six disciplines, one"
+            highlight="accountable team."
+            description="From the first wireframe to the customer who actually converts — everything a brand needs to compete online, handled in-house."
           />
           <motion.div
             initial={{ opacity: 0 }}
@@ -31,55 +31,91 @@ export default function ServicesPreview() {
           </motion.div>
         </div>
 
-        <div className="mt-14 border-t border-bg-border">
-          {services.map((service, i) => {
-            const num = String(i + 1).padStart(2, '0')
-            const isActive = active === i
+        <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[11.5rem]">
+          {/* Featured cell — spans two columns and two rows, tinted to read as promoted */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.55 }}
+            className="group relative overflow-hidden rounded-3xl border border-primary-500/15 p-8 shadow-card sm:col-span-2 sm:p-10 lg:row-span-2"
+          >
+            <div
+              aria-hidden
+              className={`pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br ${featured.color} opacity-[0.10] transition-opacity duration-500 group-hover:opacity-[0.18]`}
+            />
+            <Sparkle aria-hidden className="pointer-events-none absolute right-24 top-6 h-5 w-5 text-accent-deep animate-pulse-glow sm:right-32" />
+            <div className="flex h-full flex-col justify-between">
+              <div className="flex items-start justify-between gap-4">
+                <div
+                  className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-card"
+                  style={{ color: featured.accent }}
+                >
+                  <featured.icon size={26} strokeWidth={1.75} />
+                </div>
+                <span className="index-num">01</span>
+              </div>
+
+              <div className="mt-8">
+                <h3 className="font-display text-3xl font-semibold text-ink transition-transform duration-300 group-hover:translate-x-1 sm:text-4xl">
+                  {featured.title}
+                </h3>
+                <p className="mt-4 max-w-md text-sm leading-relaxed text-ink-muted sm:text-base">
+                  {featured.description}
+                </p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {featured.features.map((f) => (
+                    <span
+                      key={f}
+                      className="rounded-full border border-bg-border bg-white px-3 py-1 text-xs text-ink-muted"
+                    >
+                      {f}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <ArrowUpRight
+                size={22}
+                className="mt-6 text-ink-faint transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-primary-600"
+              />
+            </div>
+          </motion.div>
+
+          {/* Remaining services — flat bordered cells, no blur so the grid stays cheap and calm */}
+          {rest.map((service, i) => {
+            const num = String(i + 2).padStart(2, '0')
             return (
               <motion.div
                 key={service.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
-                onMouseEnter={() => setActive(i)}
-                onMouseLeave={() => setActive(null)}
-                className="group relative flex items-center justify-between gap-6 border-b border-bg-border py-6 transition-colors duration-300 md:py-8"
+                transition={{ duration: 0.5, delay: 0.06 * (i + 1) }}
+                className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-bg-border bg-white p-6 shadow-card transition-colors duration-300 hover:border-primary-500/30"
               >
                 <div
                   aria-hidden
-                  className={`pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r ${service.color} opacity-0 transition-opacity duration-500 ${
-                    isActive ? 'opacity-[0.05]' : ''
-                  }`}
+                  className={`pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br ${service.color} opacity-[0.05] transition-opacity duration-500 group-hover:opacity-[0.12]`}
                 />
-
-                <div className="flex items-center gap-6 sm:gap-10">
-                  <span
-                    className={`index-num shrink-0 transition-colors duration-300 ${
-                      isActive ? 'text-primary-300' : ''
-                    }`}
+                <div className="flex items-start justify-between gap-4">
+                  <div
+                    className="flex h-10 w-10 items-center justify-center rounded-xl"
+                    style={{ color: service.accent, background: `${service.accent}1a` }}
                   >
-                    {num}
-                  </span>
-                  <h3
-                    className={`font-display text-2xl font-semibold text-white transition-transform duration-300 sm:text-3xl lg:text-4xl ${
-                      isActive ? 'translate-x-2' : ''
-                    }`}
-                  >
+                    <service.icon size={19} strokeWidth={1.75} />
+                  </div>
+                  <span className="index-num">{num}</span>
+                </div>
+                {i === 1 && (
+                  <Zigzag aria-hidden className="pointer-events-none absolute bottom-5 right-6 h-3 w-8 text-nebula/40" />
+                )}
+                <div className="mt-6">
+                  <h3 className="font-display text-lg font-semibold text-ink transition-transform duration-300 group-hover:translate-x-1 sm:text-xl">
                     {service.title}
                   </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-ink-muted">{service.short}</p>
                 </div>
-
-                <p className="hidden max-w-xs text-sm text-ink-muted transition-opacity duration-300 lg:block">
-                  {isActive ? service.short : ''}
-                </p>
-
-                <ArrowUpRight
-                  size={22}
-                  className={`shrink-0 text-ink-faint transition-all duration-300 ${
-                    isActive ? '-translate-y-1 translate-x-1 text-primary-300' : ''
-                  }`}
-                />
               </motion.div>
             )
           })}

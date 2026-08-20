@@ -1,29 +1,31 @@
+import TiltCard from '../common/TiltCard'
 import ServiceMotif from './ServiceMotif'
 
 /**
  * One sophisticated abstract composition per service — glass panels,
  * glowing linework and gradient atmosphere. No literal 3D objects, no
  * cartoon iconography. Pure CSS + SVG, GPU-friendly (transform/opacity
- * only for the ambient float), no per-frame JS.
+ * only for the ambient float), no per-frame JS beyond `TiltCard`'s
+ * pointer-tracking tilt, which only writes on `pointermove`/`pointerleave`.
  */
 export default function ServiceVisual({ service }) {
   const { motif, accent, glowFrom, glowTo } = service
 
   return (
-    <div className="relative mx-auto aspect-[4/3] w-full max-w-lg">
+    <TiltCard maxTilt={5} className="mx-auto aspect-[4/3] w-full max-w-xl rounded-[3rem] lg:max-w-2xl">
       {/* ambient atmosphere */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-10 -z-10 rounded-[3rem] blur-3xl"
+        className="pointer-events-none absolute -inset-14 -z-10 rounded-[3rem] blur-3xl"
         style={{
-          background: `radial-gradient(ellipse 65% 55% at 50% 45%, ${glowFrom}26, transparent 70%)`,
+          background: `radial-gradient(ellipse 65% 55% at 50% 45%, ${glowFrom}2c, transparent 70%)`,
         }}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-6 -z-10 rounded-[3rem] blur-2xl opacity-70"
+        className="pointer-events-none absolute -inset-8 -z-10 rounded-[3rem] blur-2xl opacity-70"
         style={{
-          background: `radial-gradient(ellipse 40% 40% at 70% 65%, ${glowTo}22, transparent 70%)`,
+          background: `radial-gradient(ellipse 40% 40% at 70% 65%, ${glowTo}26, transparent 70%)`,
         }}
       />
 
@@ -33,14 +35,14 @@ export default function ServiceVisual({ service }) {
       {motif === 'graph' && <MarketingVisual accent={accent} glowTo={glowTo} />}
       {motif === 'shards' && <GraphicVisual accent={accent} glowTo={glowTo} />}
       {motif === 'path' && <SeoVisual accent={accent} glowTo={glowTo} />}
-    </div>
+    </TiltCard>
   )
 }
 
 function GlassPanel({ className = '', style, children }) {
   return (
     <div
-      className={`absolute rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl shadow-card ${className}`}
+      className={`absolute rounded-2xl border border-bg-border bg-white/80 backdrop-blur-xl shadow-card ${className}`}
       style={style}
     >
       {children}
@@ -58,15 +60,15 @@ function WebDesignVisual({ accent }) {
         className="left-[8%] top-[10%] h-[62%] w-[72%] animate-float"
         style={{ boxShadow: `0 30px 80px -30px ${accent}40` }}
       >
-        <div className="flex items-center gap-1.5 border-b border-white/10 px-4 py-3">
-          <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
-          <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
-          <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
+        <div className="flex items-center gap-1.5 border-b border-bg-border px-4 py-3">
+          <span className="h-1.5 w-1.5 rounded-full bg-ink/15" />
+          <span className="h-1.5 w-1.5 rounded-full bg-ink/15" />
+          <span className="h-1.5 w-1.5 rounded-full bg-ink/15" />
         </div>
         <div className="space-y-3 p-5">
           <div className="h-2.5 w-2/3 rounded-full" style={{ background: `${accent}55` }} />
-          <div className="h-2 w-5/6 rounded-full bg-white/10" />
-          <div className="h-2 w-3/5 rounded-full bg-white/10" />
+          <div className="h-2 w-5/6 rounded-full bg-ink/10" />
+          <div className="h-2 w-3/5 rounded-full bg-ink/10" />
           <div className="mt-4 h-14 w-full rounded-lg" style={{ background: `${accent}18`, border: `1px solid ${accent}30` }} />
         </div>
       </GlassPanel>
@@ -76,9 +78,9 @@ function WebDesignVisual({ accent }) {
         style={{ boxShadow: `0 25px 60px -25px ${accent}35` }}
       >
         <div className="space-y-2.5 p-4">
-          <div className="h-2 w-1/2 rounded-full bg-white/10" />
+          <div className="h-2 w-1/2 rounded-full bg-ink/10" />
           <div className="h-8 w-8 rounded-full" style={{ background: `${accent}40` }} />
-          <div className="h-2 w-3/4 rounded-full bg-white/10" />
+          <div className="h-2 w-3/4 rounded-full bg-ink/10" />
         </div>
       </GlassPanel>
 
@@ -104,14 +106,14 @@ function WebDevVisual({ accent, glowTo }) {
       <GlassPanel className="left-[2%] top-[12%] w-[34%] animate-float px-3 py-2.5">
         <div className="space-y-1.5">
           <div className="h-1.5 w-3/5 rounded-full" style={{ background: `${accent}60` }} />
-          <div className="h-1.5 w-2/5 rounded-full bg-white/10" />
+          <div className="h-1.5 w-2/5 rounded-full bg-ink/10" />
           <div className="h-1.5 w-4/5 rounded-full" style={{ background: `${glowTo}40` }} />
         </div>
       </GlassPanel>
 
       <GlassPanel className="bottom-[10%] right-[6%] w-[32%] animate-float-delay px-3 py-2.5">
         <div className="space-y-1.5">
-          <div className="h-1.5 w-2/3 rounded-full bg-white/10" />
+          <div className="h-1.5 w-2/3 rounded-full bg-ink/10" />
           <div className="h-1.5 w-1/2 rounded-full" style={{ background: `${glowTo}55` }} />
         </div>
       </GlassPanel>
@@ -130,9 +132,9 @@ function AppDevVisual({ accent, glowTo }) {
         style={{ transform: 'rotate(-6deg)', boxShadow: `0 30px 70px -25px ${accent}35` }}
       >
         <div className="flex h-full flex-col gap-2.5 p-3.5">
-          <div className="h-1.5 w-1/2 rounded-full bg-white/15" />
+          <div className="h-1.5 w-1/2 rounded-full bg-ink/10" />
           <div className="mt-1 flex-1 rounded-lg" style={{ background: `${accent}16`, border: `1px solid ${accent}28` }} />
-          <div className="h-1.5 w-2/3 rounded-full bg-white/10" />
+          <div className="h-1.5 w-2/3 rounded-full bg-ink/10" />
         </div>
       </GlassPanel>
 
@@ -142,7 +144,7 @@ function AppDevVisual({ accent, glowTo }) {
       >
         <div className="flex h-full flex-col gap-2.5 p-3.5">
           <span className="h-6 w-6 rounded-full" style={{ background: `${glowTo}45` }} />
-          <div className="h-1.5 w-3/4 rounded-full bg-white/10" />
+          <div className="h-1.5 w-3/4 rounded-full bg-ink/10" />
           <div className="mt-auto h-8 w-full rounded-lg" style={{ background: `${glowTo}18` }} />
         </div>
       </GlassPanel>
@@ -169,7 +171,7 @@ function MarketingVisual({ accent, glowTo }) {
       <GlassPanel className="right-[4%] top-[8%] w-[30%] animate-float px-3 py-2.5">
         <div className="flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full" style={{ background: glowTo }} />
-          <div className="h-1.5 w-2/3 rounded-full bg-white/10" />
+          <div className="h-1.5 w-2/3 rounded-full bg-ink/10" />
         </div>
       </GlassPanel>
 
@@ -190,7 +192,7 @@ function GraphicVisual({ accent, glowTo }) {
     <div className="relative h-full w-full">
       <span
         aria-hidden
-        className="font-display absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none text-[13rem] font-bold leading-none opacity-[0.07]"
+        className="font-display absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none text-[9rem] font-bold leading-none opacity-[0.09]"
         style={{ color: accent }}
       >
         A
@@ -203,7 +205,7 @@ function GraphicVisual({ accent, glowTo }) {
       <GlassPanel className="bottom-[10%] left-[6%] w-[36%] animate-float px-3 py-2.5">
         <div className="space-y-1.5">
           <div className="h-1.5 w-3/5 rounded-full" style={{ background: `${accent}55` }} />
-          <div className="h-1.5 w-2/5 rounded-full bg-white/10" />
+          <div className="h-1.5 w-2/5 rounded-full bg-ink/10" />
         </div>
       </GlassPanel>
 
@@ -234,7 +236,7 @@ function SeoVisual({ accent, glowTo }) {
     <div className="relative h-full w-full">
       <svg viewBox="0 0 100 90" className="absolute inset-0 h-full w-full" fill="none">
         {stars.map(([x, y], i) => (
-          <circle key={i} cx={x} cy={y} r="0.9" fill="#fff" fillOpacity="0.4" />
+          <circle key={i} cx={x} cy={y} r="0.9" fill="#9294b3" fillOpacity="0.5" />
         ))}
       </svg>
 
@@ -245,7 +247,7 @@ function SeoVisual({ accent, glowTo }) {
       <GlassPanel className="right-[6%] top-[10%] w-[30%] animate-float-delay px-3 py-2.5">
         <div className="flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full" style={{ background: glowTo }} />
-          <div className="h-1.5 w-2/3 rounded-full bg-white/10" />
+          <div className="h-1.5 w-2/3 rounded-full bg-ink/10" />
         </div>
       </GlassPanel>
     </div>

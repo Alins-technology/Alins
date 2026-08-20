@@ -102,7 +102,7 @@ export default function Preloader() {
             {stars.map((s) => (
               <span
                 key={s.id}
-                className="absolute rounded-full bg-white animate-twinkle"
+                className="absolute rounded-full bg-primary-300 animate-twinkle"
                 style={{
                   left: `${s.left}%`,
                   top: `${s.top}%`,
@@ -213,12 +213,12 @@ export default function Preloader() {
                       Initializing Experience
                     </span>
 
-                    <div className="relative h-[3px] w-48 overflow-hidden rounded-full bg-white/10 sm:w-64 md:w-72">
+                    <div className="relative h-[3px] w-48 overflow-hidden rounded-full bg-bg-border sm:w-64 md:w-72">
                       <div
-                        className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary-400 via-accent to-accent-soft transition-[width] duration-150 ease-out"
+                        className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary-500 via-accent to-nebula transition-[width] duration-150 ease-out"
                         style={{
                           width: `${progress}%`,
-                          boxShadow: '0 0 10px rgba(0,233,247,0.65), 0 0 2px rgba(0,233,247,0.9)',
+                          boxShadow: '0 0 10px rgba(8,145,168,0.45), 0 0 2px rgba(8,145,168,0.6)',
                         }}
                       />
                       <motion.div
@@ -259,7 +259,7 @@ export default function Preloader() {
                     transition={{ duration: 0.4, ease: 'easeOut' }}
                     className="flex flex-col items-center gap-2"
                   >
-                    <span className="text-sm font-semibold uppercase tracking-[0.3em] text-white sm:text-base">
+                    <span className="text-sm font-semibold uppercase tracking-[0.3em] text-ink sm:text-base">
                       Alins Technologies
                     </span>
                     <span className="text-[11px] uppercase tracking-[0.35em] text-accent sm:text-xs">

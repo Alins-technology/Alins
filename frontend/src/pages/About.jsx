@@ -2,7 +2,6 @@ import PageTransition from '../components/common/PageTransition'
 import PageHeader from '../components/sections/PageHeader'
 import AboutPreview from '../components/sections/AboutPreview'
 import StoryMorph from '../components/sections/StoryMorph'
-import Stats from '../components/sections/Stats'
 import Values from '../components/sections/Values'
 import Difference from '../components/sections/Difference'
 import Process from '../components/sections/Process'
@@ -15,13 +14,12 @@ export default function About() {
       <PageHeader
         crumb="About"
         eyebrow="About Alins Technologies"
-        title="The agency behind your"
-        highlight="next big move."
-        description="We're a passionate team of strategists, designers and engineers dedicated to helping ambitious brands build, launch and grow."
+        title="The team behind your"
+        highlight="next launch."
+        description="Strategists, designers and engineers working as one team — not three vendors you have to keep in sync yourself."
       />
       <AboutPreview />
       <StoryMorph />
-      <Stats />
       <Values />
       <Difference />
       <Process />

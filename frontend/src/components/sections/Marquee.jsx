@@ -9,17 +9,19 @@ const words = [
   'UI/UX Design',
 ]
 
+const dotColors = ['bg-primary-500', 'bg-nebula', 'bg-accent-deep']
+
 export default function Marquee() {
   const loop = [...words, ...words]
   return (
-    <div className="relative overflow-hidden border-y border-bg-border bg-bg-soft/60 py-6">
-      <div className="flex w-max animate-marquee gap-10">
+    <div className="relative overflow-hidden border-y border-bg-border bg-bg-soft/60 py-7 sm:py-8">
+      <div className="flex w-max animate-marquee gap-14">
         {[...loop, ...loop].map((word, i) => (
-          <div key={i} className="flex items-center gap-10 whitespace-nowrap">
-            <span className="font-display text-xl font-medium text-ink-muted/70 sm:text-2xl">
+          <div key={i} className="flex items-center gap-14 whitespace-nowrap">
+            <span className="font-display text-2xl font-semibold uppercase tracking-tight text-ink-muted/80 transition-colors duration-300 hover:text-ink sm:text-3xl">
               {word}
             </span>
-            <span className="h-1.5 w-1.5 rounded-full bg-primary-500/60" />
+            <span className={`h-2 w-2 rounded-full ${dotColors[i % dotColors.length]}`} />
           </div>
         ))}
       </div>

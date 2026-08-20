@@ -3,6 +3,7 @@ import { Mail, Phone, MapPin, Clock } from 'lucide-react'
 import PageTransition from '../components/common/PageTransition'
 import PageHeader from '../components/sections/PageHeader'
 import ContactForm from '../components/sections/ContactForm'
+import { Sparkle, ScribbleCircle, Squiggle } from '../components/common/Doodles'
 
 const info = [
   { icon: Mail, label: 'Email Us', value: 'contact@alins.in' },
@@ -17,31 +18,73 @@ export default function Contact() {
       <PageHeader
         crumb="Contact"
         eyebrow="Get In Touch"
-        title="Let's build something"
-        highlight="great."
-        description="Tell us about your goals and we'll get back to you within 24 hours with a free strategy consultation."
+        title="Tell us where"
+        highlight="you're headed."
+        description="Share a few details about the project and we'll reply within 24 hours with a free strategy consultation."
       />
 
-      <section className="section-pad !pt-0">
-        <div className="container-x grid grid-cols-1 gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+      {/* Split-diagonal: a colorful info panel on one side, the form taking
+          the larger share on the other — asymmetric, not centered/stacked. */}
+      <section className="relative overflow-hidden pb-24 pt-0 md:pb-32">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute right-[-12%] top-[6%] h-[40vh] w-[40vh] rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(59,109,251,0.14) 0%, rgba(59,109,251,0) 70%)' }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute left-[-6%] bottom-[4%] h-[32vh] w-[32vh] rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(8,145,168,0.14) 0%, rgba(8,145,168,0) 70%)' }}
+        />
+
+        <div className="container-x relative z-10 grid grid-cols-1 items-stretch gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-10">
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="flex flex-col divide-y divide-bg-border border-y border-bg-border"
+            className="relative flex flex-col overflow-hidden rounded-[2rem] p-8 sm:p-10"
+            style={{
+              background: 'linear-gradient(160deg, rgba(59,109,251,0.10), rgba(139,92,246,0.08) 55%, rgba(8,145,168,0.08))',
+              border: '1px solid rgba(59,109,251,0.15)',
+            }}
           >
-            {info.map(({ icon: Icon, label, value }) => (
-              <div key={label} className="flex items-start gap-4 py-6">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-500/10 text-primary-300">
-                  <Icon size={17} />
+            <span aria-hidden className="pointer-events-none absolute right-6 top-6 text-accent-deep/70">
+              <Sparkle className="h-6 w-6 animate-pulse-glow" />
+            </span>
+
+            <span className="eyebrow">Direct Lines</span>
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-muted">
+              Prefer to skip the form? Here&apos;s every way to reach us directly — pick whichever&apos;s
+              fastest for you.
+            </p>
+
+            <div className="mt-8 space-y-4">
+              {info.map(({ icon: Icon, label, value }, i) => (
+                <div
+                  key={label}
+                  className="flex items-start gap-4 rounded-2xl border border-bg-border bg-white p-4 shadow-card transition-colors duration-300 hover:border-primary-500/40"
+                >
+                  <div
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-white"
+                    style={{ background: ['#3b6dfb', '#8b5cf6', '#ff7a30', '#0891a8'][i % 4] }}
+                  >
+                    <Icon size={17} />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-widest text-ink-faint">{label}</p>
+                    <p className="mt-1 font-medium text-ink">{value}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-xs uppercase tracking-widest text-ink-faint">{label}</p>
-                  <p className="mt-1 font-medium text-white">{value}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
+
+            {/* colorful doodle cluster instead of the old orbit-ring graphic */}
+            <div aria-hidden className="relative mt-10 flex flex-1 items-end justify-center gap-6 pb-2">
+              <ScribbleCircle className="h-16 w-16 text-primary-400/70" />
+              <Squiggle className="h-8 w-20 self-center text-nebula/70" />
+              <Sparkle className="h-9 w-9 self-start text-accent" />
+            </div>
           </motion.div>
 
           <ContactForm />

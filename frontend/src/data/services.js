@@ -14,7 +14,7 @@ export const services = [
     title: 'Web Design',
     short: 'Interfaces that feel as good as they look.',
     description:
-      'Pixel-perfect, conversion-focused web design that blends bold visuals with intuitive UX — built to represent your brand at its best.',
+      'Every screen designed to earn its place — bold visuals paired with UX that gets out of the way, built to represent your brand at its sharpest.',
     features: ['UI/UX Design', 'Wireframing & Prototyping', 'Design Systems', 'Responsive Layouts'],
     color: 'from-primary-500 to-nebula',
     accent: '#3b6dfb',
@@ -28,7 +28,7 @@ export const services = [
     title: 'Web Development',
     short: 'Fast, scalable, future-proof builds.',
     description:
-      'From marketing sites to complex web apps — we engineer performant, SEO-friendly, and secure products using modern frameworks.',
+      'From marketing sites to complex web apps, engineered with modern frameworks so speed, SEO and security are the default, not a later fix.',
     features: ['Custom Web Apps', 'E-commerce', 'CMS & Headless', 'API Integration'],
     color: 'from-accent to-primary-500',
     accent: '#00e9f7',
@@ -42,7 +42,7 @@ export const services = [
     title: 'App Development',
     short: 'Native-grade mobile experiences.',
     description:
-      'iOS, Android and cross-platform apps engineered for speed and stability — designed to keep users coming back.',
+      'iOS, Android and cross-platform apps built for speed and stability first — the two things that decide whether people come back.',
     features: ['iOS & Android', 'React Native', 'App Store Launch', 'Maintenance & Support'],
     color: 'from-nebula to-primary-600',
     accent: '#8b5cf6',
@@ -56,7 +56,7 @@ export const services = [
     title: 'Digital Marketing',
     short: 'Data-driven growth, not guesswork.',
     description:
-      'Full-funnel marketing across search, social and paid channels — engineered around measurable ROI and real growth.',
+      'Full-funnel marketing across search, social and paid channels, run against a number you actually care about — not vanity metrics.',
     features: ['SEO Strategy', 'Paid Ads (PPC)', 'Social Media', 'Analytics & Reporting'],
     color: 'from-flame to-flame-hot',
     accent: '#ff7a30',
@@ -70,7 +70,7 @@ export const services = [
     title: 'Graphic Designing',
     short: 'Visual identity that sticks.',
     description:
-      'Brand identity, marketing collateral and motion graphics crafted to make every touchpoint unmistakably yours.',
+      'Brand identity, marketing collateral and motion work built as one coherent system, so every touchpoint is unmistakably yours.',
     features: ['Brand Identity', 'Logo & Guidelines', 'Social Creatives', 'Motion & Animation'],
     color: 'from-nebula to-flame',
     accent: '#d946a8',
@@ -84,7 +84,7 @@ export const services = [
     title: 'SEO & Growth',
     short: 'Rank higher. Convert more.',
     description:
-      'Technical SEO, content strategy and CRO working together to compound your organic visibility and revenue over time.',
+      'Technical SEO, content strategy and CRO working as one loop, so organic visibility and revenue keep compounding after we hand it over.',
     features: ['Technical SEO', 'Content Strategy', 'CRO & A/B Testing', 'Local SEO'],
     color: 'from-primary-400 to-accent',
     accent: '#5c81ff',

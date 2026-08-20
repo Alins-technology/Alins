@@ -24,10 +24,9 @@ export default function Home() {
       <Testimonials />
       <CTA
         eyebrow="Ready When You Are"
-        title="Let's build something"
-        highlight="that moves."
+        title="Bring us the brief."
+        highlight="We'll bring the build."
         cta="Start a Project"
-        showCraft
       />
     </PageTransition>
   )

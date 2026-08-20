@@ -76,7 +76,7 @@ export default function ContactForm() {
   }
 
   const inputClass =
-    'w-full rounded-xl border border-bg-border bg-white/[0.02] px-4 py-3.5 text-sm text-white placeholder:text-ink-faint outline-none transition-all duration-300 focus:border-primary-500/60 focus:bg-primary-500/[0.04] focus:ring-4 focus:ring-primary-500/10'
+    'w-full rounded-2xl border border-bg-border bg-bg-surface px-4 py-3.5 text-sm text-ink placeholder:text-ink-faint outline-none transition-all duration-300 focus:border-primary-500/60 focus:bg-primary-500/[0.04] focus:ring-4 focus:ring-primary-500/10'
 
   return (
     <motion.form
@@ -85,8 +85,22 @@ export default function ContactForm() {
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
       onSubmit={handleSubmit}
-      className="glass-card space-y-5 p-8 sm:p-10"
+      className="glass-card relative overflow-hidden p-8 sm:p-10 lg:p-11"
     >
+      {/* Premium card treatment: a soft corner glow, same recipe as the
+          Hero/CTA blobs, purely decorative. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full"
+        style={{ background: 'radial-gradient(circle, rgba(59,109,251,0.10) 0%, rgba(59,109,251,0) 70%)' }}
+      />
+
+      <div className="relative mb-8">
+        <span className="eyebrow">Start the Conversation</span>
+        <h3 className="mt-3 text-2xl font-bold text-ink sm:text-3xl">Tell us about the project.</h3>
+      </div>
+
+      <div className="relative space-y-6">
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>
           <label className="mb-2 block text-xs font-medium uppercase tracking-widest text-ink-faint">
@@ -159,32 +173,36 @@ export default function ContactForm() {
         />
       </div>
 
-      <button
-        type="submit"
-        disabled={status === 'loading'}
-        className="btn-primary w-full sm:w-auto disabled:cursor-not-allowed disabled:opacity-70"
-      >
-        {status === 'loading' ? (
-          <>
-            <Loader2 size={16} className="animate-spin" /> Sending...
-          </>
-        ) : (
-          <>
-            Send Message <Send size={15} />
-          </>
-        )}
-      </button>
+      <div className="flex flex-wrap items-center gap-4">
+        <button
+          type="submit"
+          disabled={status === 'loading'}
+          className="btn-primary w-full sm:w-auto disabled:cursor-not-allowed disabled:opacity-70"
+        >
+          {status === 'loading' ? (
+            <>
+              <Loader2 size={16} className="animate-spin" /> Sending...
+            </>
+          ) : (
+            <>
+              Send Message <Send size={15} />
+            </>
+          )}
+        </button>
+        <span className="text-xs text-ink-faint">We typically reply within 24 hours.</span>
+      </div>
 
       {status === 'success' && (
-        <div className="flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-300">
-          <CheckCircle2 size={16} /> Thanks! Your message has been sent — redirecting you to WhatsApp to connect with us instantly.
+        <div className="flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-700">
+          <CheckCircle2 size={16} /> Got it — we're sending you to WhatsApp so we can keep talking right away.
         </div>
       )}
       {status === 'error' && (
-        <div className="flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
-          <AlertCircle size={16} /> Something went wrong. Please make sure the server is running, or email us directly.
+        <div className="flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700">
+          <AlertCircle size={16} /> That didn't go through. Double-check your connection, or email us directly at contact@alins.in.
         </div>
       )}
+      </div>
     </motion.form>
   )
 }

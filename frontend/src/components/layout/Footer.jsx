@@ -16,11 +16,11 @@ export default function Footer() {
     <footer className="relative overflow-hidden border-t border-bg-border bg-bg-soft">
       <div
         className="pointer-events-none absolute -left-40 top-0 h-72 w-72 rounded-full"
-        style={{ background: 'radial-gradient(circle, rgba(59,109,251,0.2) 0%, rgba(59,109,251,0) 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(59,109,251,0.14) 0%, rgba(59,109,251,0) 70%)' }}
       />
       <div
         className="pointer-events-none absolute -right-40 bottom-0 h-72 w-72 rounded-full"
-        style={{ background: 'radial-gradient(circle, rgba(56,223,255,0.2) 0%, rgba(56,223,255,0) 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(8,145,168,0.12) 0%, rgba(8,145,168,0) 70%)' }}
       />
 
       <div className="container-x section-pad !py-16">
@@ -37,7 +37,7 @@ export default function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-bg-border text-ink-muted transition-all duration-300 hover:-translate-y-1 hover:border-primary-500/60 hover:text-white hover:shadow-glow"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-bg-border bg-white text-ink-muted transition-all duration-300 hover:-translate-y-1 hover:border-transparent hover:bg-gradient-to-br hover:from-primary-500 hover:to-nebula hover:text-white hover:shadow-glow"
                 >
                   <Icon size={16} />
                 </a>
@@ -46,7 +46,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-white">
+            <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-ink">
               Navigation
             </h4>
             <ul className="space-y-3">
@@ -64,7 +64,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-white">
+            <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-ink">
               Services
             </h4>
             <ul className="space-y-3">
@@ -82,7 +82,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-white">
+            <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-ink">
               Get in touch
             </h4>
             <ul className="space-y-4">

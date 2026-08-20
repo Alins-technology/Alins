@@ -18,23 +18,23 @@ export default function Portfolio() {
     <PageTransition>
       <PageHeader
         crumb="Portfolio"
-        eyebrow="Our Work"
-        title="Selected projects,"
-        highlight="real results."
-        description="A curated look at the websites, apps, brands and campaigns we've crafted for our clients."
+        eyebrow="Case Studies"
+        title="Work that speaks"
+        highlight="for itself."
+        description="A look at the sites, apps, brands and campaigns we've shipped — and the results they've kept producing after launch."
       />
 
-      <section className="section-pad !pt-0">
+      <section className="pb-20 pt-0 md:pb-28">
         <div className="container-x">
-          <div className="mb-12 flex flex-wrap justify-center gap-3">
+          <div className="mb-10 flex flex-wrap justify-center gap-3 md:mb-14">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActive(cat)}
                 className={`rounded-full border px-5 py-2.5 text-sm font-medium transition-all duration-300 ${
                   active === cat
-                    ? 'border-primary-500/60 bg-primary-500/10 text-white shadow-glow'
-                    : 'border-bg-border text-ink-muted hover:border-primary-500/40 hover:text-white'
+                    ? 'border-primary-500/60 bg-primary-500/10 text-primary-700 shadow-glow'
+                    : 'border-bg-border text-ink-muted hover:border-primary-500/40 hover:text-ink'
                 }`}
               >
                 {cat}
@@ -42,10 +42,19 @@ export default function Portfolio() {
             ))}
           </div>
 
-          <motion.div layout className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          {/* Bento grid: the first result reads as the featured project
+              (spans two of three columns, larger everything), the rest sit
+              in a regular single-column rhythm beside/below it — instead of
+              a uniform equal-size grid. */}
+          <motion.div layout className="grid grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <AnimatePresence mode="popLayout">
               {filtered.map((project, i) => (
-                <PortfolioCard key={project.id} project={project} index={i} />
+                <PortfolioCard
+                  key={project.id}
+                  project={project}
+                  index={i}
+                  size={i === 0 ? 'featured' : 'default'}
+                />
               ))}
             </AnimatePresence>
           </motion.div>

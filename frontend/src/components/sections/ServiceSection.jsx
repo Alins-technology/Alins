@@ -10,8 +10,9 @@ import ServiceVisual from './ServiceVisual'
  * (and reverses on re-entry) via ScrollTrigger's toggleActions. Text
  * slides in from alternating sides; the visual settles in alongside it.
  */
-export default function ServiceSection({ service, index, total, reverse, registerRef }) {
+export default function ServiceSection({ service, index, total, reverse, isLast, registerRef }) {
   const sectionRef = useRef(null)
+  const bigNumRef = useRef(null)
   const numRef = useRef(null)
   const titleRef = useRef(null)
   const shortRef = useRef(null)
@@ -42,11 +43,12 @@ export default function ServiceSection({ service, index, total, reverse, registe
 
       if (prefersReduced) {
         tl.from(
-          [numRef.current, titleRef.current, shortRef.current, descRef.current, ...featureItems, ctaRef.current, visualRef.current],
+          [bigNumRef.current, numRef.current, titleRef.current, shortRef.current, descRef.current, ...featureItems, ctaRef.current, visualRef.current],
           { opacity: 0, duration: 0.6, stagger: 0.04 },
         )
       } else {
-        tl.from(numRef.current, { opacity: 0, x: textFrom * 0.5, duration: 0.8 }, 0)
+        tl.from(bigNumRef.current, { opacity: 0, scale: 1.12, duration: 1.3, ease: 'power2.out' }, 0)
+          .from(numRef.current, { opacity: 0, x: textFrom * 0.5, duration: 0.8 }, 0.05)
           .from(titleRef.current, { opacity: 0, x: textFrom, duration: 1.05 }, 0.08)
           .from(shortRef.current, { opacity: 0, x: textFrom * 0.6, duration: 0.9 }, 0.16)
           .from(descRef.current, { opacity: 0, x: textFrom * 0.5, duration: 0.9 }, 0.18)
@@ -67,7 +69,9 @@ export default function ServiceSection({ service, index, total, reverse, registe
         sectionRef.current = el
         registerRef?.(el)
       }}
-      className="relative flex min-h-[92vh] items-center overflow-hidden py-20 lg:min-h-screen"
+      className={`relative overflow-hidden py-24 md:py-32 lg:min-h-screen lg:flex lg:items-center lg:py-0 ${
+        isLast ? '' : 'border-b border-bg-border/70'
+      }`}
     >
       <div
         aria-hidden
@@ -77,31 +81,48 @@ export default function ServiceSection({ service, index, total, reverse, registe
         }}
       />
 
-      <div className="container-x">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      {/* Oversized index numeral — a graphic element in its own right, not
+          just a label. Anchored to whichever edge the text column sits on. */}
+      <span
+        ref={bigNumRef}
+        aria-hidden
+        className={`pointer-events-none absolute top-6 select-none font-display text-[6rem] font-bold leading-none sm:text-[8.5rem] lg:top-10 lg:text-[10rem] ${
+          reverse ? 'right-1 sm:right-4 lg:right-8' : 'left-1 sm:left-4 lg:left-8'
+        }`}
+        style={{ color: `${service.accent}14` }}
+      >
+        {String(index + 1).padStart(2, '0')}
+      </span>
+
+      <div className="container-x relative w-full">
+        <div
+          className={`grid items-center gap-16 lg:gap-20 xl:gap-28 ${
+            reverse ? 'lg:grid-cols-[1.05fr_0.95fr]' : 'lg:grid-cols-[0.95fr_1.05fr]'
+          }`}
+        >
           {reverse && (
-            <div ref={visualRef} className="lg:order-1">
+            <div ref={visualRef} className="lg:order-1 lg:-ml-4 xl:-ml-10">
               <ServiceVisual service={service} />
             </div>
           )}
 
-          <div className={`max-w-xl ${reverse ? 'lg:order-2' : ''}`}>
+          <div className={`relative max-w-xl ${reverse ? 'lg:order-2 lg:justify-self-end' : ''}`}>
             <span
               ref={numRef}
               className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-ink-faint"
             >
-              <Icon size={13} className="text-primary-300" />
+              <Icon size={13} className="text-primary-500" />
               {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
             </span>
 
             <h2
               ref={titleRef}
-              className="mt-5 text-4xl font-bold uppercase leading-[1.03] text-white sm:text-5xl lg:text-6xl"
+              className="mt-5 text-3xl font-bold uppercase leading-[1.05] text-ink sm:text-4xl lg:text-5xl xl:text-6xl"
             >
               {service.title}
             </h2>
 
-            <p ref={shortRef} className="mt-5 text-base font-medium text-primary-300 sm:text-lg">
+            <p ref={shortRef} className="mt-5 text-base font-medium text-primary-600 sm:text-lg">
               {service.short}
             </p>
 
@@ -121,16 +142,16 @@ export default function ServiceSection({ service, index, total, reverse, registe
             <div ref={ctaRef}>
               <Link
                 to="/contact"
-                className="group mt-9 inline-flex items-center gap-1.5 text-sm font-semibold text-primary-300 transition-colors hover:text-accent"
+                className="group mt-9 inline-flex items-center gap-1.5 text-sm font-semibold text-primary-600 transition-colors hover:text-accent"
               >
-                Learn More
+                Talk to the team
                 <ArrowUpRight size={14} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             </div>
           </div>
 
           {!reverse && (
-            <div ref={visualRef}>
+            <div ref={visualRef} className="lg:-mr-4 xl:-mr-10">
               <ServiceVisual service={service} />
             </div>
           )}

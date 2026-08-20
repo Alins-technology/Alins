@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 
-const WHATSAPP_NUMBER = '919876543210'
+const WHATSAPP_NUMBER = '919354080179'
 const WHATSAPP_MESSAGE = "Hi Alins Technologies! I'd like to know more about your services."
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
 const INSTAGRAM_LINK = 'https://instagram.com/alinstechnologies'
@@ -91,7 +91,7 @@ export default function FloatingSocials() {
   const bottomStyle = { bottom: `calc(var(--fs-b) + ${footerOverlap}px)` }
 
   const shellClass =
-    'group fixed z-40 grid grid-cols-[auto_0fr] items-stretch overflow-hidden rounded-full border border-white/10 bg-bg-card/70 backdrop-blur-xl transition-[grid-template-columns,box-shadow,opacity] duration-500 ease-out hover:grid-cols-[auto_1fr] focus-visible:grid-cols-[auto_1fr] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg'
+    'group fixed z-40 grid grid-cols-[auto_0fr] items-stretch overflow-hidden rounded-full border border-bg-border bg-bg-card/90 shadow-card backdrop-blur-xl transition-[grid-template-columns,box-shadow,opacity] duration-500 ease-out hover:grid-cols-[auto_1fr] focus-visible:grid-cols-[auto_1fr] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg'
 
   const visibilityClass = hiddenByFooter
     ? 'pointer-events-none opacity-0'
@@ -117,7 +117,7 @@ export default function FloatingSocials() {
           <WhatsAppIcon className="h-5 w-5 text-white md:h-[22px] md:w-[22px]" />
         </span>
         <span className="min-w-0 overflow-hidden">
-          <span className="flex h-full items-center gap-1.5 whitespace-nowrap pl-3 pr-5 text-sm font-semibold text-white">
+          <span className="flex h-full items-center gap-1.5 whitespace-nowrap pl-3 pr-5 text-sm font-semibold text-ink">
             Chat on WhatsApp
             <ArrowUpRight size={14} className="shrink-0 text-accent" />
           </span>
@@ -142,7 +142,7 @@ export default function FloatingSocials() {
           <InstagramIcon className="h-5 w-5 text-white md:h-[22px] md:w-[22px]" />
         </span>
         <span className="min-w-0 overflow-hidden">
-          <span className="flex h-full items-center gap-1.5 whitespace-nowrap pl-3 pr-5 text-sm font-semibold text-white">
+          <span className="flex h-full items-center gap-1.5 whitespace-nowrap pl-3 pr-5 text-sm font-semibold text-ink">
             Follow us on Instagram
             <ArrowUpRight size={14} className="shrink-0 text-accent" />
           </span>

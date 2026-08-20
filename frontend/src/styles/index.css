@@ -3,21 +3,21 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 html,
 body {
-  background-color: #05070d;
+  background-color: #ffffff;
   overflow-x: hidden;
 }
 
 body {
-  @apply bg-bg text-ink font-sans antialiased bg-grid-glow;
+  @apply bg-bg text-ink font-sans antialiased;
 }
 
 ::selection {
-  background: #8b5cf6;
+  background: #3b6dfb;
   color: #fff;
 }
 
@@ -26,12 +26,12 @@ body {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #040309;
+  background: #f2f3fb;
 }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #3b6dfb, #8b5cf6, #ff7a30);
   border-radius: 10px;
-  border: 2px solid #040309;
+  border: 2px solid #f2f3fb;
 }
 
 h1,
@@ -52,35 +52,35 @@ h5 {
   }
 
   .gradient-text {
-    @apply bg-gradient-to-r from-primary-300 to-accent bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary-600 via-nebula to-accent-deep bg-clip-text text-transparent;
   }
 
   .flame-text {
-    @apply bg-gradient-to-r from-flame-hot via-flame to-flame-deep bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient;
+    @apply bg-gradient-to-r from-flame-deep via-flame to-flame-hot bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient;
   }
 
   .btn-primary {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary-500 to-accent-deep px-7 py-3.5 text-sm font-semibold text-white shadow-glow transition-all duration-300 hover:shadow-glow-cyan hover:-translate-y-0.5 active:translate-y-0;
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary-500 to-nebula px-7 py-3.5 text-sm font-semibold text-white shadow-glow transition-all duration-300 hover:shadow-glow-nebula hover:-translate-y-0.5 active:translate-y-0;
   }
 
   .btn-flame {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-flame to-flame-hot px-7 py-3.5 text-sm font-semibold text-bg shadow-glow-flame transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0;
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-flame to-flame-hot px-7 py-3.5 text-sm font-semibold text-white shadow-glow-flame transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0;
   }
 
   .btn-outline {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-full border border-bg-border bg-white/[0.02] px-7 py-3.5 text-sm font-semibold text-ink backdrop-blur transition-all duration-300 hover:border-primary-500/60 hover:bg-primary-500/[0.08] hover:-translate-y-0.5;
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full border border-bg-border bg-white px-7 py-3.5 text-sm font-semibold text-ink backdrop-blur transition-all duration-300 hover:border-primary-500/60 hover:bg-primary-500/[0.06] hover:-translate-y-0.5;
   }
 
   .glass-card {
-    @apply relative rounded-3xl border border-bg-border bg-white/[0.025] backdrop-blur-xl shadow-card;
+    @apply relative rounded-3xl border border-bg-border bg-white/70 backdrop-blur-xl shadow-card;
   }
 
   .eyebrow {
-    @apply inline-flex items-center gap-2 rounded-full border border-primary-500/30 bg-primary-500/[0.08] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary-300;
+    @apply inline-flex items-center gap-2 rounded-full border border-primary-500/25 bg-primary-500/[0.06] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary-700;
   }
 
   .noise-overlay {
-    @apply pointer-events-none absolute inset-0 bg-noise opacity-40;
+    @apply pointer-events-none absolute inset-0 bg-noise opacity-[0.15];
   }
 
   .hairline {
