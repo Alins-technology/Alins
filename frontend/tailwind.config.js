@@ -39,6 +39,14 @@ export default {
         },
         accent: {
           DEFAULT: '#0891a8',
+          50: '#eafcff',
+          100: '#cef7fd',
+          200: '#9cecf9',
+          300: '#5fdaf2',
+          400: '#22d3ee',
+          500: '#0891a8',
+          600: '#0b7285',
+          700: '#0e5c6c',
           soft: '#00c2d6',
           deep: '#0b7285',
         },
@@ -52,6 +60,29 @@ export default {
         display: ['"Clash Display"', '"Space Grotesk"', 'sans-serif'],
         sans: ['"Inter"', 'system-ui', 'sans-serif'],
       },
+      // Fluid, clamp()-based type scale — every heading/body size in the
+      // site should pull from here instead of ad-hoc `text-4xl sm:text-5xl
+      // lg:text-6xl` combos. Clamp interpolates smoothly between the two
+      // ends instead of jumping at Tailwind's fixed breakpoints.
+      //
+      // Sizes are deliberately restrained — only the real page hero (Hero.jsx)
+      // uses `fluid-display`. Everything else that reads as "a section's big
+      // statement" (AgencyIntro, StoryMorph, PageHeader, ServiceSection, ...)
+      // shares `fluid-h1`, capped well under the old 60-68px range, so the
+      // page has ONE clear largest element instead of six equally shouting
+      // ones stacked on top of each other.
+      fontSize: {
+        'fluid-xs': ['clamp(0.75rem, 0.72rem + 0.1vw, 0.8125rem)', { lineHeight: '1.5' }],
+        'fluid-sm': ['clamp(0.8125rem, 0.78rem + 0.15vw, 0.9375rem)', { lineHeight: '1.55' }],
+        'fluid-base': ['clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem)', { lineHeight: '1.65' }],
+        'fluid-lg': ['clamp(1.0625rem, 1rem + 0.3vw, 1.25rem)', { lineHeight: '1.6' }],
+        'fluid-xl': ['clamp(1.125rem, 1.02rem + 0.5vw, 1.375rem)', { lineHeight: '1.5' }],
+        'fluid-stat': ['clamp(1.75rem, 1.45rem + 1.3vw, 2.75rem)', { lineHeight: '1.05' }],
+        'fluid-h3': ['clamp(1.375rem, 1.2rem + 0.8vw, 2rem)', { lineHeight: '1.25' }],
+        'fluid-h2': ['clamp(1.625rem, 1.35rem + 1.2vw, 2.5rem)', { lineHeight: '1.15' }],
+        'fluid-h1': ['clamp(1.875rem, 1.5rem + 1.6vw, 3.25rem)', { lineHeight: '1.1' }],
+        'fluid-display': ['clamp(2.25rem, 1.6rem + 2.5vw, 3.75rem)', { lineHeight: '1.05' }],
+      },
       backgroundImage: {
         'grid-glow':
           'radial-gradient(ellipse 70% 50% at 15% 0%, rgba(8,145,168,0.09), transparent 55%), radial-gradient(ellipse 60% 50% at 85% 15%, rgba(59,109,251,0.10), transparent 50%), radial-gradient(ellipse 50% 40% at 50% 100%, rgba(255,122,48,0.06), transparent 55%)',
@@ -60,9 +91,12 @@ export default {
       boxShadow: {
         glow: '0 0 40px rgba(59,109,251,0.22)',
         'glow-cyan': '0 0 40px rgba(8,145,168,0.2)',
+        'glow-accent': '0 0 36px rgba(34,211,238,0.35)',
         'glow-nebula': '0 0 50px rgba(139,92,246,0.22)',
         'glow-flame': '0 0 45px rgba(255,122,48,0.25)',
         card: '0 10px 40px -12px rgba(20,20,50,0.12)',
+        nav: '0 8px 30px -12px rgba(8,145,168,0.16)',
+        'nav-scrolled': '0 16px 44px -14px rgba(8,145,168,0.26)',
       },
       animation: {
         'spin-slow': 'spin 14s linear infinite',

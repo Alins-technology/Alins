@@ -76,7 +76,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="mt-7 max-w-4xl text-4xl font-bold leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-6xl"
+          className="text-display mt-7 max-w-4xl text-ink"
         >
           We craft brands that feel{' '}
           <span className="relative inline-block">
@@ -89,7 +89,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.22 }}
-          className="mt-6 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg"
+          className="mt-6 max-w-xl text-lede"
         >
           A full-service digital studio blending sharp design, solid engineering and
           data-backed marketing — so ambitious brands don&apos;t just launch, they stand out.

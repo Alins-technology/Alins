@@ -52,14 +52,14 @@ export default function CTA({
 
         <div className="relative">
           <span className="eyebrow">{eyebrow}</span>
-          <h2 className="relative mx-auto mt-6 max-w-2xl text-3xl font-bold leading-[1.15] text-ink sm:text-4xl lg:text-5xl">
+          <h2 className="text-h2 relative mx-auto mt-6 max-w-2xl leading-[1.15] text-ink">
             {title}{' '}
             <span className="relative inline-block">
               <span className="gradient-text">{highlight}</span>
               <Squiggle className="pointer-events-none absolute -bottom-2 left-0 h-2.5 w-full text-accent/60" />
             </span>
           </h2>
-          <p className="mx-auto mt-5 max-w-lg text-base text-ink-muted sm:text-lg">{description}</p>
+          <p className="text-lede mx-auto mt-5 max-w-lg">{description}</p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
             <MagneticButton as={Link} to="/contact" className="btn-primary">
               {cta} <ArrowUpRight size={16} />

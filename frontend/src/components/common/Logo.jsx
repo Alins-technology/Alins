@@ -7,7 +7,7 @@ export default function Logo({ className = '' }) {
       <img
         src={logo}
         alt="Alins Technologies"
-        className="h-8 w-auto object-contain transition-transform duration-300 group-hover:scale-105 sm:h-9"
+        className="h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105 sm:h-10"
       />
     </Link>
   )

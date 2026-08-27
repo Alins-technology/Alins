@@ -2,7 +2,9 @@ import { motion } from 'framer-motion'
 import { stats } from '../../data/content'
 import AnimatedCounter from '../common/AnimatedCounter'
 
-const numColors = ['text-primary-600', 'text-nebula', 'text-accent-deep', 'text-primary-600']
+// Two brand tones alternating (logo cyan, site blue) instead of four
+// unrelated hues — the row reads as one coordinated set, not a rainbow.
+const numColors = ['text-accent-500', 'text-primary-600']
 
 export default function Stats() {
   return (
@@ -23,12 +25,10 @@ export default function Stats() {
               transition={{ duration: 0.55, delay: i * 0.08 }}
               className={`text-center sm:px-6 sm:text-left ${i === 0 ? 'sm:pl-0' : ''}`}
             >
-              <p
-                className={`font-display text-4xl font-bold leading-none tracking-tight sm:text-5xl lg:text-6xl ${numColors[i % numColors.length]}`}
-              >
+              <p className={`text-stat ${numColors[i % numColors.length]}`}>
                 <AnimatedCounter value={stat.value} suffix={stat.suffix} />
               </p>
-              <p className="mt-4 text-xs uppercase tracking-widest text-ink-faint sm:text-sm">
+              <p className="mt-4 text-fluid-xs uppercase tracking-widest text-ink-faint">
                 {stat.label}
               </p>
             </motion.div>

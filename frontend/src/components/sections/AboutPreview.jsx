@@ -23,10 +23,10 @@ export default function AboutPreview() {
           className="lg:pr-6"
         >
           <span className="eyebrow">About Alins</span>
-          <h2 className="mt-6 max-w-xl text-4xl font-bold leading-[1.05] text-ink sm:text-5xl lg:text-6xl">
+          <h2 className="text-h1 mt-6 max-w-xl leading-[1.05] text-ink">
             One team, <span className="gradient-text">every discipline covered.</span>
           </h2>
-          <p className="mt-6 max-w-md text-base leading-relaxed text-ink-muted sm:text-lg">
+          <p className="text-lede mt-6 max-w-md">
             Designers, engineers and strategists working from the same brief instead of
             handing it off between agencies. We partner with startups and established
             companies alike, and we stay accountable for how the work actually performs.

@@ -59,7 +59,7 @@ export default function Testimonials() {
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               className="relative text-center"
             >
-              <p className="text-2xl font-medium leading-snug text-ink sm:text-3xl lg:text-4xl">
+              <p className="text-fluid-h2 font-medium leading-snug text-ink">
                 “{active.quote}”
               </p>
 

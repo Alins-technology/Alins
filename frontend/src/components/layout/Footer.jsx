@@ -37,7 +37,7 @@ export default function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-bg-border bg-white text-ink-muted transition-all duration-300 hover:-translate-y-1 hover:border-transparent hover:bg-gradient-to-br hover:from-primary-500 hover:to-nebula hover:text-white hover:shadow-glow"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-bg-border bg-white text-ink-muted transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:border-transparent hover:bg-gradient-to-br hover:from-accent-400 hover:to-primary-500 hover:text-white hover:shadow-glow-accent"
                 >
                   <Icon size={16} />
                 </a>
@@ -54,7 +54,7 @@ export default function Footer() {
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-sm text-ink-muted transition-colors hover:text-primary-300"
+                    className="link-underline text-fluid-sm"
                   >
                     {link.label}
                   </Link>
@@ -72,7 +72,7 @@ export default function Footer() {
                 <li key={s.id}>
                   <Link
                     to="/services"
-                    className="text-sm text-ink-muted transition-colors hover:text-primary-300"
+                    className="link-underline text-fluid-sm"
                   >
                     {s.title}
                   </Link>
@@ -86,22 +86,22 @@ export default function Footer() {
               Get in touch
             </h4>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-sm text-ink-muted">
-                <Mail size={16} className="mt-0.5 shrink-0 text-primary-400" />
+              <li className="text-fluid-sm flex items-start gap-3 text-ink-muted">
+                <Mail size={16} className="mt-0.5 shrink-0 text-accent-400" />
                 contact@alins.in
               </li>
-              <li className="flex items-start gap-3 text-sm text-ink-muted">
-                <Phone size={16} className="mt-0.5 shrink-0 text-primary-400" />
+              <li className="text-fluid-sm flex items-start gap-3 text-ink-muted">
+                <Phone size={16} className="mt-0.5 shrink-0 text-accent-400" />
                 +91 93540 80179
               </li>
-              <li className="flex items-start gap-3 text-sm text-ink-muted">
-                <MapPin size={16} className="mt-0.5 shrink-0 text-primary-400" />
+              <li className="text-fluid-sm flex items-start gap-3 text-ink-muted">
+                <MapPin size={16} className="mt-0.5 shrink-0 text-accent-400" />
                 Shop no 220 Rajhans Plaza, Indrapuram 201014
               </li>
             </ul>
             <Link
               to="/contact"
-              className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary-300 transition-colors hover:text-accent"
+              className="text-fluid-sm mt-6 inline-flex items-center gap-1.5 font-semibold text-accent-500 transition-colors hover:text-primary-600"
             >
               Let&apos;s start a project <ArrowUpRight size={14} />
             </Link>

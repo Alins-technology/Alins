@@ -51,7 +51,7 @@ export default function PageHeader({ eyebrow, title, highlight, description, cru
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="mx-auto mt-6 max-w-3xl text-5xl font-bold leading-tight text-ink sm:text-6xl"
+          className="mx-auto mt-6 max-w-3xl text-h1 text-ink"
         >
           {title}{' '}
           <span className="relative inline-block">
@@ -65,7 +65,7 @@ export default function PageHeader({ eyebrow, title, highlight, description, cru
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.18 }}
-            className="mx-auto mt-6 max-w-xl text-base text-ink-muted sm:text-lg"
+            className="mx-auto mt-6 max-w-xl text-lede"
           >
             {description}
           </motion.p>

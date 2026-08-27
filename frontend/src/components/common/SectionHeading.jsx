@@ -27,7 +27,7 @@ export default function SectionHeading({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.05 }}
-        className="max-w-2xl text-4xl font-bold text-ink sm:text-5xl"
+        className="max-w-2xl text-h2 text-ink"
       >
         {title} {highlight && <span className="gradient-text">{highlight}</span>}
       </motion.h2>
@@ -37,7 +37,7 @@ export default function SectionHeading({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="max-w-xl text-base text-ink-muted sm:text-lg"
+          className="max-w-xl text-lede"
         >
           {description}
         </motion.p>

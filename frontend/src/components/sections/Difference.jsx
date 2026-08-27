@@ -41,7 +41,7 @@ export default function Difference() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.08 }}
-          className="max-w-3xl text-3xl font-medium leading-[1.2] tracking-tight text-ink sm:text-4xl lg:text-5xl"
+          className="max-w-3xl text-fluid-h2 font-medium leading-[1.2] tracking-tight text-ink"
         >
           Design, development and marketing don&apos;t sit in separate departments here.{' '}
           <span className="text-ink-muted">

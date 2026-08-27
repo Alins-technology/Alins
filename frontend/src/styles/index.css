@@ -17,7 +17,7 @@ body {
 }
 
 ::selection {
-  background: #3b6dfb;
+  background: #0891a8;
   color: #fff;
 }
 
@@ -29,7 +29,7 @@ body {
   background: #f2f3fb;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #3b6dfb, #8b5cf6, #ff7a30);
+  background: linear-gradient(180deg, #22d3ee, #3b6dfb, #8b5cf6);
   border-radius: 10px;
   border: 2px solid #f2f3fb;
 }
@@ -42,6 +42,27 @@ h5 {
   @apply font-display tracking-tight;
 }
 
+/* A visible, on-brand focus ring everywhere instead of the browser default —
+   keeps keyboard navigation legible without relying on a mouse hover state. */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid rgba(34, 211, 238, 0.55);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 @layer components {
   .container-x {
     @apply mx-auto w-full max-w-[1320px] px-6 md:px-10;
@@ -51,8 +72,11 @@ h5 {
     @apply py-24 md:py-32;
   }
 
+  /* Cyan → blue → violet, in that order — leads with the logo's electric
+     cyan instead of burying it as the third stop, so the site's signature
+     gradient actually reads as "the same brand" as the mark in the navbar. */
   .gradient-text {
-    @apply bg-gradient-to-r from-primary-600 via-nebula to-accent-deep bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-accent-400 via-primary-500 to-nebula bg-clip-text text-transparent;
   }
 
   .flame-text {
@@ -60,7 +84,7 @@ h5 {
   }
 
   .btn-primary {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary-500 to-nebula px-7 py-3.5 text-sm font-semibold text-white shadow-glow transition-all duration-300 hover:shadow-glow-nebula hover:-translate-y-0.5 active:translate-y-0;
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-accent-500 via-primary-500 to-primary-600 bg-[length:160%_auto] bg-left px-7 py-3.5 text-sm font-semibold text-white shadow-glow-accent transition-all duration-300 hover:bg-right hover:shadow-glow-nebula hover:-translate-y-0.5 active:translate-y-0;
   }
 
   .btn-flame {
@@ -68,15 +92,15 @@ h5 {
   }
 
   .btn-outline {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-full border border-bg-border bg-white px-7 py-3.5 text-sm font-semibold text-ink backdrop-blur transition-all duration-300 hover:border-primary-500/60 hover:bg-primary-500/[0.06] hover:-translate-y-0.5;
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full border border-bg-border bg-white px-7 py-3.5 text-sm font-semibold text-ink backdrop-blur transition-all duration-300 hover:border-accent-400/60 hover:bg-accent-400/[0.06] hover:-translate-y-0.5;
   }
 
   .glass-card {
-    @apply relative rounded-3xl border border-bg-border bg-white/70 backdrop-blur-xl shadow-card;
+    @apply relative rounded-3xl border border-bg-border bg-white/70 backdrop-blur-xl shadow-card transition-all duration-300;
   }
 
   .eyebrow {
-    @apply inline-flex items-center gap-2 rounded-full border border-primary-500/25 bg-primary-500/[0.06] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary-700;
+    @apply inline-flex items-center gap-2 rounded-full border border-accent-400/30 bg-accent-400/[0.07] px-4 py-1.5 text-fluid-xs font-semibold uppercase tracking-[0.2em] text-accent-600;
   }
 
   .noise-overlay {
@@ -88,7 +112,43 @@ h5 {
   }
 
   .index-num {
-    @apply font-display text-sm font-medium tabular-nums text-ink-faint;
+    @apply font-display text-fluid-sm font-medium tabular-nums text-ink-faint;
+  }
+
+  /* ---- Shared fluid heading scale --------------------------------------
+     One role → one size, everywhere. Swap a component's bespoke
+     `text-4xl sm:text-5xl lg:text-6xl` guess for the matching class below
+     and it will always match every other section using the same role. */
+  .text-display {
+    @apply font-display text-fluid-display font-bold tracking-tight;
+  }
+  .text-h1 {
+    @apply font-display text-fluid-h1 font-bold tracking-tight;
+  }
+  .text-h2 {
+    @apply font-display text-fluid-h2 font-bold tracking-tight;
+  }
+  .text-h3 {
+    @apply font-display text-fluid-h3 font-semibold tracking-tight;
+  }
+  .text-lede {
+    @apply text-fluid-lg leading-relaxed text-ink-muted;
+  }
+  .text-stat {
+    @apply font-display text-fluid-stat font-bold leading-none tracking-tight;
+  }
+
+  /* Animated underline for inline text links (footer, breadcrumbs) — same
+     visual language as the navbar's active-link treatment. */
+  .link-underline {
+    @apply relative text-ink-muted transition-colors duration-300 hover:text-ink;
+  }
+  .link-underline::after {
+    content: '';
+    @apply absolute -bottom-0.5 left-0 h-px w-0 bg-gradient-to-r from-accent-400 to-primary-500 transition-all duration-300;
+  }
+  .link-underline:hover::after {
+    @apply w-full;
   }
 }
 

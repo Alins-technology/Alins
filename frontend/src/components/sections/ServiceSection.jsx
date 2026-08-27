@@ -117,23 +117,23 @@ export default function ServiceSection({ service, index, total, reverse, isLast,
 
             <h2
               ref={titleRef}
-              className="mt-5 text-3xl font-bold uppercase leading-[1.05] text-ink sm:text-4xl lg:text-5xl xl:text-6xl"
+              className="text-h1 mt-5 uppercase leading-[1.05] text-ink"
             >
               {service.title}
             </h2>
 
-            <p ref={shortRef} className="mt-5 text-base font-medium text-primary-600 sm:text-lg">
+            <p ref={shortRef} className="text-fluid-lg mt-5 font-medium text-accent-500">
               {service.short}
             </p>
 
-            <p ref={descRef} className="mt-4 text-sm leading-relaxed text-ink-muted sm:text-base">
+            <p ref={descRef} className="text-fluid-sm mt-4 leading-relaxed text-ink-muted">
               {service.description}
             </p>
 
-            <ul ref={featuresRef} className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2.5 text-xs uppercase tracking-wide text-ink sm:text-sm">
+            <ul ref={featuresRef} className="text-fluid-xs mt-7 flex flex-wrap items-center gap-x-6 gap-y-2.5 uppercase tracking-wide text-ink">
               {service.features.map((f) => (
                 <li key={f} className="flex items-center gap-2">
-                  <span className="h-1 w-1 rounded-full bg-primary-300" />
+                  <span className="h-1 w-1 rounded-full bg-accent-400" />
                   {f}
                 </li>
               ))}

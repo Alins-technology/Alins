@@ -7,7 +7,16 @@ import { navLinks } from '../../data/content'
 import { Sparkle, ScribbleCircle } from '../common/Doodles'
 import { gsap, ScrollTrigger } from '../../lib/gsap'
 
-const linkAccents = ['#3b6dfb', '#8b5cf6', '#0891a8', '#8b5cf6', '#3b6dfb']
+// Framer can animate a Link straight up — this is what gives nav items their
+// tactile press/hover feel without wiring individual mouse handlers.
+const MotionNavLink = motion(NavLink)
+
+// One brand gradient (logo cyan → site blue), not five unrelated hues, so
+// the bar reads as the same brand as the mark sitting inside it. The dot
+// beside each mobile link alternates the two ends of that same gradient
+// instead of cycling through purple/orange accents that don't appear in
+// the logo at all.
+const railDots = ['#22d3ee', '#3b6dfb']
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
@@ -17,27 +26,29 @@ export default function Navbar() {
   useEffect(() => {
     // A binary "scrolled past 24px" UI state doesn't need React re-renders —
     // GSAP tweens the two elements directly off a ScrollTrigger toggle. The
-    // bar is a colorful floating pill from the very first frame (not
-    // transparent-until-scroll like a plain header); scrolling just tightens
-    // it and deepens the shadow/border for more presence.
+    // bar is a floating pill from the very first frame (not transparent-
+    // until-scroll like a plain header); scrolling tightens it, deepens the
+    // shadow and warms the glass so it reads as "lifted" off the page.
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         start: 'top -24',
         onEnter: () => {
-          gsap.to(headerRef.current, { paddingTop: '0.6rem', paddingBottom: '0.6rem', duration: 0.3, ease: 'power2.out' })
+          gsap.to(headerRef.current, { paddingTop: '0.6rem', paddingBottom: '0.6rem', duration: 0.35, ease: 'power2.out' })
           gsap.to(barRef.current, {
-            boxShadow: '0 12px 40px -12px rgba(59,109,251,0.22)',
-            borderColor: 'rgba(59,109,251,0.22)',
-            duration: 0.3,
+            boxShadow: '0 16px 44px -14px rgba(8,145,168,0.28)',
+            borderColor: 'rgba(34,211,238,0.3)',
+            backgroundColor: 'rgba(255,255,255,0.92)',
+            duration: 0.35,
             ease: 'power2.out',
           })
         },
         onLeaveBack: () => {
-          gsap.to(headerRef.current, { paddingTop: '1.25rem', paddingBottom: '1.25rem', duration: 0.3, ease: 'power2.out' })
+          gsap.to(headerRef.current, { paddingTop: '1.25rem', paddingBottom: '1.25rem', duration: 0.35, ease: 'power2.out' })
           gsap.to(barRef.current, {
-            boxShadow: '0 8px 30px -14px rgba(59,109,251,0.14)',
-            borderColor: 'rgba(59,109,251,0.14)',
-            duration: 0.3,
+            boxShadow: '0 8px 30px -12px rgba(8,145,168,0.16)',
+            borderColor: 'rgba(8,145,168,0.14)',
+            backgroundColor: 'rgba(255,255,255,0.8)',
+            duration: 0.35,
             ease: 'power2.out',
           })
         },
@@ -59,60 +70,68 @@ export default function Navbar() {
         <div className="container-x">
           <div
             ref={barRef}
-            className="flex items-center justify-between gap-4 rounded-[1.75rem] border bg-white/85 px-5 py-2.5 shadow-[0_8px_30px_-14px_rgba(59,109,251,0.14)] backdrop-blur-xl"
-            style={{ borderColor: 'rgba(59,109,251,0.14)' }}
+            className="flex items-center justify-between gap-4 rounded-[1.75rem] border bg-white/80 px-5 py-2.5 shadow-nav backdrop-blur-xl transition-colors"
+            style={{ borderColor: 'rgba(8,145,168,0.14)' }}
           >
+            {/* No decorative blur/glow behind the mark — a crisp logo reads
+                more premium than a hazy halo, and it's the one thing on
+                the page that should never look soft. */}
             <Logo />
 
-            <nav className="hidden items-center lg:flex">
-              {navLinks.map((link, i) => (
-                <NavLink
+            <nav className="hidden items-center gap-1 lg:flex">
+              {navLinks.map((link) => (
+                <MotionNavLink
                   key={link.path}
                   to={link.path}
+                  whileHover={{ scale: 1.045 }}
+                  whileTap={{ scale: 0.96 }}
+                  transition={{ type: 'spring', stiffness: 420, damping: 24 }}
                   className={({ isActive }) =>
-                    `group relative flex flex-col items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 ${
-                      isActive ? 'text-ink' : 'text-ink-muted hover:text-ink'
+                    `group relative rounded-full px-4 py-2 text-fluid-sm font-medium ${
+                      isActive ? 'text-white' : 'text-ink-muted hover:text-ink'
                     }`
                   }
                 >
                   {({ isActive }) => (
                     <>
-                      {link.label}
-                      <span className="relative h-[3px] w-5 overflow-hidden rounded-full bg-transparent">
-                        {isActive ? (
-                          <motion.span
-                            layoutId="nav-underline"
-                            className="absolute inset-0 rounded-full"
-                            style={{ background: `linear-gradient(90deg, ${linkAccents[i % linkAccents.length]}, #8b5cf6)` }}
-                            transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-                          />
-                        ) : (
-                          <span
-                            className="absolute inset-0 scale-x-0 rounded-full transition-transform duration-300 group-hover:scale-x-100"
-                            style={{ background: linkAccents[i % linkAccents.length], opacity: 0.4 }}
-                          />
-                        )}
-                      </span>
+                      {isActive ? (
+                        <motion.span
+                          layoutId="nav-active-pill"
+                          className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-accent-500 via-accent-400 to-primary-500 shadow-glow-accent"
+                          transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                        />
+                      ) : (
+                        <span className="absolute inset-0 -z-10 scale-90 rounded-full bg-accent-400/0 opacity-0 transition-all duration-300 ease-out group-hover:scale-100 group-hover:bg-accent-400/[0.09] group-hover:opacity-100" />
+                      )}
+                      <span className="relative">{link.label}</span>
                     </>
                   )}
-                </NavLink>
+                </MotionNavLink>
               ))}
             </nav>
 
             <div className="hidden lg:block">
-              <Link to="/contact" className="btn-primary !py-2.5 !px-5 text-xs">
-                Start a Project
-                <ArrowUpRight size={15} />
-              </Link>
+              <MagneticCta />
             </div>
 
             <button
               aria-label="Toggle menu"
               onClick={() => setOpen((v) => !v)}
-              className="flex h-10 w-10 items-center justify-center rounded-full text-ink lg:hidden"
-              style={{ background: 'linear-gradient(135deg, rgba(59,109,251,0.12), rgba(139,92,246,0.12))' }}
+              className="flex h-10 w-10 items-center justify-center rounded-full text-ink transition-transform duration-200 active:scale-90 lg:hidden"
+              style={{ background: 'linear-gradient(135deg, rgba(34,211,238,0.16), rgba(59,109,251,0.14))' }}
             >
-              {open ? <X size={18} /> : <Menu size={18} />}
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={open ? 'close' : 'menu'}
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex"
+                >
+                  {open ? <X size={18} /> : <Menu size={18} />}
+                </motion.span>
+              </AnimatePresence>
             </button>
           </div>
         </div>
@@ -124,13 +143,14 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[99] overflow-hidden backdrop-blur-2xl lg:hidden"
-            style={{ background: 'linear-gradient(160deg, #ffffff 0%, #f3f0ff 55%, #eef8fb 100%)' }}
+            style={{ background: 'linear-gradient(160deg, #ffffff 0%, #eafcff 45%, #f3f0ff 100%)' }}
           >
-            <span aria-hidden className="pointer-events-none absolute left-[12%] top-[16%] text-primary-500/70">
+            <span aria-hidden className="pointer-events-none absolute left-[12%] top-[16%] text-accent-400/70">
               <ScribbleCircle className="h-16 w-16" />
             </span>
-            <span aria-hidden className="pointer-events-none absolute right-[14%] bottom-[22%] text-accent-deep/70">
+            <span aria-hidden className="pointer-events-none absolute right-[14%] bottom-[22%] text-primary-500/70">
               <Sparkle className="h-9 w-9 animate-pulse-glow" />
             </span>
 
@@ -145,13 +165,13 @@ export default function Navbar() {
                 >
                   <span
                     className="h-1.5 w-1.5 rounded-full"
-                    style={{ background: linkAccents[i % linkAccents.length] }}
+                    style={{ background: railDots[i % railDots.length] }}
                   />
                   <NavLink
                     to={link.path}
                     onClick={() => setOpen(false)}
                     className={({ isActive }) =>
-                      `font-display text-3xl font-semibold ${isActive ? 'gradient-text' : 'text-ink'}`
+                      `font-display text-fluid-h3 font-semibold ${isActive ? 'gradient-text' : 'text-ink'}`
                     }
                   >
                     {link.label}
@@ -173,5 +193,37 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </>
+  )
+}
+
+// Small local component so the desktop CTA gets the same magnetic-cursor
+// pull the rest of the site's primary buttons use, without pulling in the
+// full MagneticButton wrapper just for a Link.
+function MagneticCta() {
+  const ref = useRef(null)
+
+  const handleMove = (e) => {
+    const el = ref.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const x = e.clientX - rect.left - rect.width / 2
+    const y = e.clientY - rect.top - rect.height / 2
+    el.style.transform = `translate(${x * 0.2}px, ${y * 0.3}px)`
+  }
+  const handleLeave = () => {
+    if (ref.current) ref.current.style.transform = 'translate(0px, 0px)'
+  }
+
+  return (
+    <Link
+      ref={ref}
+      to="/contact"
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      className="btn-primary !py-2.5 !px-5 text-fluid-xs will-change-transform transition-transform duration-200 ease-out"
+    >
+      Start a Project
+      <ArrowUpRight size={15} />
+    </Link>
   )
 }

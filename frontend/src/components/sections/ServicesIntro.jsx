@@ -59,16 +59,16 @@ export default function ServicesIntro() {
 
             <h1
               data-anim="heading"
-              className="gradient-text mt-7 text-4xl font-bold uppercase leading-[0.95] sm:text-5xl lg:text-6xl"
+              className="text-h1 gradient-text mt-7 uppercase leading-[0.95]"
             >
               Services
             </h1>
 
             <div data-anim="lede" className="mt-8 max-w-lg">
-              <p className="text-lg font-medium text-primary-600 sm:text-xl">
+              <p className="text-fluid-xl font-medium text-accent-500">
                 Six disciplines. One team that actually talks to itself.
               </p>
-              <p className="mt-4 text-sm leading-relaxed text-ink-muted sm:text-base">
+              <p className="text-fluid-sm mt-4 leading-relaxed text-ink-muted">
                 Design, development, apps, marketing and SEO — each one built to hold up on its
                 own, and built better because the same team runs all of them.
               </p>

@@ -125,12 +125,12 @@ export default function StoryMorph() {
           <Sparkle aria-hidden className="pointer-events-none absolute right-8 top-8 h-6 w-6 text-accent-deep animate-pulse-glow" />
           <Loop aria-hidden className="pointer-events-none absolute bottom-6 right-10 hidden h-8 w-12 text-nebula/50 sm:block" />
 
-          <div className="relative flex h-[4rem] items-center sm:h-[5rem] lg:h-[5.5rem]">
+          <div className="relative flex h-[4.5rem] items-center sm:h-[5.5rem] lg:h-[6.25rem]">
             {words.map((word, i) => (
               <h2
                 key={word}
                 ref={(el) => (wordRefs.current[i] = el)}
-                className="gradient-text absolute font-display text-4xl font-bold uppercase tracking-tight sm:text-5xl lg:text-6xl"
+                className="text-h1 gradient-text absolute uppercase"
               >
                 {word}
               </h2>
@@ -142,7 +142,7 @@ export default function StoryMorph() {
               <p
                 key={step.word}
                 ref={(el) => (descRefs.current[i] = el)}
-                className="absolute text-sm leading-relaxed text-ink-muted sm:text-base"
+                className="text-fluid-sm absolute leading-relaxed text-ink-muted"
               >
                 {step.desc}
               </p>

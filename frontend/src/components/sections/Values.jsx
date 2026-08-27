@@ -56,7 +56,7 @@ export default function Values() {
                   <h3
                     className={
                       featured
-                        ? 'font-display text-3xl font-bold text-ink sm:text-4xl'
+                        ? 'font-display text-fluid-h3 font-bold text-ink'
                         : 'text-lg font-semibold text-ink'
                     }
                   >

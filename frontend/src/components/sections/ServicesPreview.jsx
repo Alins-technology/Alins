@@ -57,10 +57,10 @@ export default function ServicesPreview() {
               </div>
 
               <div className="mt-8">
-                <h3 className="font-display text-3xl font-semibold text-ink transition-transform duration-300 group-hover:translate-x-1 sm:text-4xl">
+                <h3 className="text-h3 text-ink transition-transform duration-300 group-hover:translate-x-1">
                   {featured.title}
                 </h3>
-                <p className="mt-4 max-w-md text-sm leading-relaxed text-ink-muted sm:text-base">
+                <p className="text-fluid-sm mt-4 max-w-md leading-relaxed text-ink-muted">
                   {featured.description}
                 </p>
                 <div className="mt-6 flex flex-wrap gap-2">

@@ -3,7 +3,9 @@ import { gsap, ScrollTrigger } from '../../lib/gsap'
 import { Sparkle, ScribbleCircle } from '../common/Doodles'
 
 const lines = ['Design.', 'Build.', 'Grow.']
-const lineColors = ['text-primary-600', 'text-nebula', 'text-accent-deep']
+// Cyan → blue → violet — same direction as the site's gradient-text instead
+// of three disconnected hues, so the sequence still feels like one brand.
+const lineColors = ['text-accent-500', 'text-primary-600', 'text-nebula']
 
 export default function AgencyIntro() {
   const sectionRef = useRef(null)
@@ -53,7 +55,7 @@ export default function AgencyIntro() {
             <h2
               key={line}
               ref={(el) => (lineRefs.current[i] = el)}
-              className={`${indents[i]} ${lineColors[i]} text-4xl font-bold uppercase leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl`}
+              className={`${indents[i]} ${lineColors[i]} text-h1 uppercase leading-[1.05]`}
             >
               {line}
             </h2>
@@ -79,7 +81,7 @@ export default function AgencyIntro() {
               <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse-glow" />
               <p
                 ref={subRef}
-                className="mt-4 font-display text-2xl font-semibold leading-snug text-ink sm:text-3xl"
+                className="text-h3 mt-4 leading-snug text-ink"
               >
                 One team, start to finish.
               </p>
