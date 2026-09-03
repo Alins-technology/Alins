@@ -110,6 +110,13 @@ export default {
         gradient: 'gradientShift 8s ease infinite',
         twinkle: 'twinkle 2.4s ease-in-out infinite',
         flicker: 'flicker 0.4s ease-in-out infinite',
+        // Preloader liquid-wave drift — same seamless-tile technique as
+        // `marquee` above, but a fixed -1000px shift (matching the SVG
+        // wordmark's WAVE_TILE/viewBox width in Preloader.jsx) instead of a
+        // percentage, since percentage-based transforms don't resolve
+        // consistently against an SVG child element's box across browsers.
+        'wave-drift-back': 'waveDrift 10s linear infinite',
+        'wave-drift-front': 'waveDrift 6.5s linear infinite',
       },
       keyframes: {
         float: {
@@ -139,6 +146,10 @@ export default {
         flicker: {
           '0%, 100%': { transform: 'scaleY(1) scaleX(1)', opacity: 1 },
           '50%': { transform: 'scaleY(0.85) scaleX(1.08)', opacity: 0.85 },
+        },
+        waveDrift: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-1000px)' },
         },
       },
     },

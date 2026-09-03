@@ -1,275 +1,297 @@
 import { useEffect, useMemo, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import mark from '../../assets/alins-mark.png'
+import {
+  motion,
+  AnimatePresence,
+  animate,
+  useMotionValue,
+  useTransform,
+  useMotionTemplate,
+} from 'framer-motion'
 
-const STATUS_MESSAGES = [
-  'Initializing Alins...',
-  'Loading digital experience...',
-  'Preparing creative systems...',
-  'Building your experience...',
-]
-const READY_MESSAGE = 'Welcome to Alins.'
+/**
+ * Cinematic liquid-typography preloader — a single oversized ALINS wordmark
+ * fills up like liquid as the site loads, then the loader itself opens up
+ * into the homepage (already mounted underneath) instead of just fading out.
+ *
+ * Design direction: this must read as the SAME brand as the light homepage
+ * underneath it, not a separate dark-mode moment. Colors below are all
+ * existing homepage tokens — `bg.soft` is the same very-light cool-white
+ * already used as a section background elsewhere (Stats, Footer, Marquee,
+ * Team); the base wordmark uses `ink`, the site's own deep-navy text color;
+ * the liquid is the exact same accent→primary→nebula (cyan → blue → violet)
+ * gradient as the homepage's `.gradient-text` utility, just laid out
+ * left-to-right the same way that utility does. Wordmark typography is
+ * Playfair Display — a genuine editorial serif, loaded in index.html but
+ * scoped to just this component via inline `fontFamily` rather than the
+ * shared `font-display` token, so it doesn't change any other heading
+ * site-wide. The small "loading…" label uses the project's existing Inter
+ * (`font-sans`) in the same muted navy (`ink-muted`) as homepage body copy.
+ */
 
-const RING_RADIUS = 46
+// ---- centralized timing / tuning ------------------------------------------
+// Total runtime is intro + progress + hold + reveal ≈ 0.5 + 3.7 + 0.15 + 0.7 = ~4.5s.
+const INTRO_DURATION = 0.5
+const PROGRESS_DURATION = 3.7
+const HOLD_DURATION = 0.15
+const REVEAL_DURATION = 0.7
 
-function useStars(count) {
-  // Generated once per mount — a cheap DOM/CSS starfield, not a WebGL scene,
-  // since the preloader should stay lightweight.
-  return useMemo(
-    () =>
-      Array.from({ length: count }, (_, i) => ({
-        id: i,
-        left: Math.random() * 100,
-        top: Math.random() * 100,
-        size: Math.random() * 1.6 + 0.6,
-        delay: Math.random() * 4,
-        duration: Math.random() * 2.5 + 2.8,
-      })),
-    [count],
-  )
+// Sophisticated, unhurried curves — different eases for different feels.
+const EASE_STANDARD = [0.65, 0, 0.35, 1]
+const EASE_FINAL = [0.83, 0, 0.17, 1]
+const EASE_REVEAL = [0.76, 0, 0.24, 1]
+
+// 0 -> 10 (slow) -> 75 (steady) -> 90 (slower) -> 100 (deliberate).
+const PROGRESS_KEYFRAMES = [0, 10, 75, 90, 100]
+const PROGRESS_TIMES = [0, 0.1, 0.75, 0.9, 1]
+const PROGRESS_EASE = [EASE_STANDARD, EASE_STANDARD, EASE_FINAL, EASE_FINAL]
+
+// SVG wordmark geometry. WAVE_TILE must stay equal to VIEW_W — the
+// `wave-drift-*` keyframes in tailwind.config.js shift by exactly -1000px to
+// match this tile width for a seamless horizontal loop.
+const VIEW_W = 1000
+const VIEW_H = 320
+const BASELINE_Y = 224
+const FONT_SIZE = 252
+const WORDMARK_FONT = "'Playfair Display', Georgia, 'Times New Roman', serif"
+const LETTER_TOP_Y = -30
+const LETTER_BOTTOM_Y = 270
+const WAVE_TILE = VIEW_W
+const WAVE_AMPLITUDE_BACK = 8
+const WAVE_AMPLITUDE_FRONT = 5
+
+/** Two seamlessly-tileable wavy fill shapes (back = wider/slower, front = tighter/faster). */
+function buildWavePath(tileWidth, amplitude, cycles, bottomY) {
+  const totalWidth = tileWidth * 2
+  const samples = 64
+  let d = `M0,${bottomY} `
+  for (let i = 0; i <= samples; i++) {
+    const x = (totalWidth * i) / samples
+    const y = Math.sin((x / tileWidth) * cycles * Math.PI * 2) * amplitude
+    d += `L${x.toFixed(1)},${y.toFixed(1)} `
+  }
+  d += `L${totalWidth},${bottomY} Z`
+  return d
+}
+
+/** Just the crest line of the front wave — traced separately for a thin light-catching highlight. */
+function buildWaveCrest(tileWidth, amplitude, cycles) {
+  const totalWidth = tileWidth * 2
+  const samples = 64
+  let d = ''
+  for (let i = 0; i <= samples; i++) {
+    const x = (totalWidth * i) / samples
+    const y = Math.sin((x / tileWidth) * cycles * Math.PI * 2) * amplitude
+    d += `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)} `
+  }
+  return d
 }
 
 export default function Preloader() {
-  const [visible, setVisible] = useState(true)
-  const [progress, setProgress] = useState(0)
-  const [ready, setReady] = useState(false)
-  const stars = useStars(42)
+  const [phase, setPhase] = useState('intro') // intro -> loading -> revealing -> done
+  const [displayProgress, setDisplayProgress] = useState(0)
 
-  // Simulated progress — same increment-until-100 approach as before (no
-  // resource-loading signal exists to hook into yet), just re-timed a touch
-  // so the new entrance/ring/status choreography has room to read.
+  const progressMV = useMotionValue(0)
+  const clipPercent = useMotionValue(150)
+  const clipPath = useMotionTemplate`circle(${clipPercent}% at 50% 50%)`
+  const liquidY = useTransform(progressMV, [0, 100], [LETTER_BOTTOM_Y, LETTER_TOP_Y])
+
+  const reducedMotion = useMemo(
+    () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    [],
+  )
+
+  const backWave = useMemo(() => buildWavePath(WAVE_TILE, WAVE_AMPLITUDE_BACK, 2, 400), [])
+  const frontWave = useMemo(() => buildWavePath(WAVE_TILE, WAVE_AMPLITUDE_FRONT, 3, 400), [])
+  const frontCrest = useMemo(() => buildWaveCrest(WAVE_TILE, WAVE_AMPLITUDE_FRONT, 3), [])
+
+  // Lock scroll while the loader is up — the homepage is already mounted
+  // underneath, this just keeps it from being scrollable/visible-behind.
   useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((p) => {
-        if (p >= 100) {
-          clearInterval(interval)
-          return 100
-        }
-        return Math.min(100, p + Math.floor(Math.random() * 7) + 3)
-      })
-    }, 140)
-    return () => clearInterval(interval)
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prevOverflow
+    }
   }, [])
 
   useEffect(() => {
-    if (progress < 100) return
-    const readyTimer = setTimeout(() => setReady(true), 150)
-    const hideTimer = setTimeout(() => setVisible(false), 150 + 480)
-    return () => {
-      clearTimeout(readyTimer)
-      clearTimeout(hideTimer)
-    }
-  }, [progress])
+    let cancelled = false
+    const wait = (seconds) => new Promise((resolve) => setTimeout(resolve, seconds * 1000))
 
-  const statusIndex = Math.min(
-    STATUS_MESSAGES.length - 1,
-    Math.floor((progress / 100) * STATUS_MESSAGES.length),
-  )
-  const statusMessage = progress >= 100 ? READY_MESSAGE : STATUS_MESSAGES[statusIndex]
+    const run = async () => {
+      await wait(reducedMotion ? 0.15 : INTRO_DURATION)
+      if (cancelled) return
+      setPhase('loading')
+
+      await new Promise((resolve) => {
+        animate(progressMV, PROGRESS_KEYFRAMES, {
+          duration: reducedMotion ? 1.2 : PROGRESS_DURATION,
+          times: PROGRESS_TIMES,
+          ease: reducedMotion ? 'easeInOut' : PROGRESS_EASE,
+          onComplete: resolve,
+        })
+      })
+      if (cancelled) return
+
+      await wait(HOLD_DURATION)
+      if (cancelled) return
+      setPhase('revealing')
+
+      await new Promise((resolve) => {
+        animate(clipPercent, 0, {
+          duration: reducedMotion ? 0.4 : REVEAL_DURATION,
+          ease: reducedMotion ? 'easeInOut' : EASE_REVEAL,
+          onComplete: resolve,
+        })
+      })
+      if (cancelled) return
+      setPhase('done')
+    }
+
+    run()
+    return () => {
+      cancelled = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Only re-render the percentage label when the rounded integer changes —
+  // the SVG liquid itself is driven straight off the motion value below.
+  useEffect(() => {
+    const unsubscribe = progressMV.on('change', (v) => {
+      const rounded = Math.round(v)
+      setDisplayProgress((prev) => (prev === rounded ? prev : rounded))
+    })
+    return unsubscribe
+  }, [progressMV])
+
+  const visible = phase !== 'done'
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
-          exit={{ opacity: 0, scale: 1.04, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }}
           role="status"
           aria-live="polite"
-          aria-label={`Loading Alins Technologies, ${progress}%`}
-          className="fixed inset-0 z-[10000] flex items-center justify-center overflow-hidden bg-bg"
+          aria-label={`Loading Alins, ${displayProgress}%`}
+          className="fixed inset-0 z-[10000] overflow-hidden"
+          exit={{ opacity: 0, transition: { duration: 0.3 } }}
         >
-          {/* ---- ambient space background: stars, haze, faint orbits ---- */}
-          <div aria-hidden className="pointer-events-none absolute inset-0">
+          {/* light backdrop — same soft cool-white as the homepage's own
+              section background, so it wipes open into the homepage below
+              with no dark→light jump — wipes open via the circular clip-path
+              on reveal */}
+          <motion.div aria-hidden className="absolute inset-0 bg-bg-soft" style={{ clipPath }} />
+
+          {/* wordmark, kept as a separate layer so it can scale/fade on its
+              own pace instead of getting cut off by the backdrop's clip */}
+          <motion.div
+            aria-hidden
+            className="relative flex h-full w-full items-center justify-center px-6"
+            initial={{ opacity: 0, y: reducedMotion ? 0 : 10, scale: reducedMotion ? 1 : 0.97 }}
+            animate={{
+              // Visible only during 'loading' — faded in from 'intro', then
+              // faded back out (alongside the scale-up) into 'revealing' so
+              // it doesn't just sit there while the backdrop wipes open.
+              opacity: phase === 'loading' ? 1 : 0,
+              y: 0,
+              scale: phase === 'revealing' && !reducedMotion ? 1.08 : 1,
+            }}
+            transition={{
+              duration: phase === 'revealing' ? REVEAL_DURATION : INTRO_DURATION,
+              ease: EASE_STANDARD,
+            }}
+          >
             <div
-              className="absolute left-1/2 top-1/2 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full"
-              style={{ background: 'radial-gradient(circle, rgba(0,233,247,0.10) 0%, rgba(0,233,247,0) 70%)' }}
-            />
-            <div
-              className="absolute -left-24 -top-24 h-72 w-72 rounded-full"
-              style={{ background: 'radial-gradient(circle, rgba(59,109,251,0.14) 0%, rgba(59,109,251,0) 70%)' }}
-            />
-            <div
-              className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full"
-              style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.12) 0%, rgba(139,92,246,0) 70%)' }}
-            />
-            <svg
-              className="absolute left-1/2 top-1/2 h-[140vmin] w-[140vmin] -translate-x-1/2 -translate-y-1/2 opacity-[0.06]"
-              viewBox="0 0 800 800"
-              fill="none"
+              className="relative w-full"
+              style={{ maxWidth: 'clamp(280px, 85vw, 1400px)' }}
             >
-              <ellipse cx="400" cy="400" rx="380" ry="220" stroke="#00e9f7" strokeWidth="1" />
-              <ellipse cx="400" cy="400" rx="260" ry="340" stroke="#3b6dfb" strokeWidth="1" />
-            </svg>
-            {stars.map((s) => (
-              <span
-                key={s.id}
-                className="absolute rounded-full bg-primary-300 animate-twinkle"
-                style={{
-                  left: `${s.left}%`,
-                  top: `${s.top}%`,
-                  width: s.size,
-                  height: s.size,
-                  animationDelay: `${s.delay}s`,
-                  animationDuration: `${s.duration}s`,
-                }}
-              />
-            ))}
-          </div>
+              <svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} className="block w-full" role="presentation">
+                <defs>
+                  <clipPath id="alinsWordClip">
+                    <text
+                      x={VIEW_W / 2}
+                      y={BASELINE_Y}
+                      textAnchor="middle"
+                      fontSize={FONT_SIZE}
+                      fontWeight="900"
+                      letterSpacing={-3}
+                      style={{ fontFamily: WORDMARK_FONT }}
+                    >
+                      ALINS
+                    </text>
+                  </clipPath>
 
-          {/* ---------------------------- content ---------------------------- */}
-          <div className="relative flex flex-col items-center px-6">
-            {/* logo stage: glow + orbital ring + logo + light trace + pulse */}
-            <div className="relative flex h-20 w-20 items-center justify-center sm:h-24 sm:w-24">
-              <motion.div
-                aria-hidden
-                className="absolute -inset-4 rounded-full blur-2xl"
-                style={{ background: 'radial-gradient(circle, rgba(0,233,247,0.5) 0%, rgba(0,233,247,0) 72%)' }}
-                initial={{ opacity: 0, scale: 0.6 }}
-                animate={
-                  ready
-                    ? { opacity: 0, scale: 2.4, transition: { duration: 0.7, ease: 'easeOut' } }
-                    : {
-                        opacity: [0, 0.85, 0.55, 0.75, 0.55],
-                        scale: [0.6, 1.05, 1, 1.06, 1],
-                        transition: { duration: 3, delay: 0.2, ease: 'easeInOut', repeat: Infinity },
-                      }
-                }
-              />
+                  {/* subtle top-lit tonal variation for the unfilled base letters —
+                      a deep-navy tint (matching the homepage's own `ink` text
+                      color), not flat grey, so they read as translucent
+                      material rather than a solid-color font. */}
+                  <linearGradient id="alinsBaseGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="rgba(21,22,46,0.16)" />
+                    <stop offset="100%" stopColor="rgba(21,22,46,0.06)" />
+                  </linearGradient>
 
-              <svg aria-hidden viewBox="0 0 100 100" className="absolute -inset-2 h-[calc(100%+16px)] w-[calc(100%+16px)]">
-                <motion.circle
-                  cx="50"
-                  cy="50"
-                  r={RING_RADIUS}
-                  fill="none"
-                  stroke="#00e9f7"
-                  strokeWidth="1"
-                  strokeLinecap="round"
-                  strokeOpacity="0.55"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: ready ? 0.9 : 0.55 }}
-                  transition={{ pathLength: { duration: 1.3, delay: 0.15, ease: 'easeInOut' }, opacity: { duration: 0.4 } }}
-                />
+                  {/* cyan → blue → violet liquid — the exact same stops as the
+                      homepage's `.gradient-text` utility (Hero's headline),
+                      laid out the same left-to-right way, so the loader and
+                      the homepage read as one continuous identity. */}
+                  <linearGradient id="alinsLiquidGradient" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#22d3ee" />
+                    <stop offset="52%" stopColor="#3b6dfb" />
+                    <stop offset="100%" stopColor="#8b5cf6" />
+                  </linearGradient>
+                </defs>
+
+                {/* base (unfilled) wordmark — always visible, muted, subtly graded */}
+                <text
+                  x={VIEW_W / 2}
+                  y={BASELINE_Y}
+                  textAnchor="middle"
+                  fontSize={FONT_SIZE}
+                  fontWeight="900"
+                  letterSpacing={-3}
+                  style={{ fontFamily: WORDMARK_FONT }}
+                  fill="url(#alinsBaseGradient)"
+                  stroke="rgba(21,22,46,0.22)"
+                  strokeWidth={1}
+                >
+                  ALINS
+                </text>
+
+                {/* liquid — clipped to the exact letter shapes, never behind them */}
+                <g clipPath="url(#alinsWordClip)">
+                  <motion.g style={{ y: liquidY }}>
+                    <g
+                      className={reducedMotion ? undefined : 'animate-wave-drift-back'}
+                      style={{ opacity: 0.5 }}
+                    >
+                      <path d={backWave} fill="url(#alinsLiquidGradient)" />
+                    </g>
+                    <g className={reducedMotion ? undefined : 'animate-wave-drift-front'}>
+                      <path d={frontWave} fill="url(#alinsLiquidGradient)" />
+                      {/* thin, restrained highlight tracing the crest — a hint
+                          of light on the surface, not a glow */}
+                      <path
+                        d={frontCrest}
+                        fill="none"
+                        stroke="rgba(255,255,255,0.4)"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                      />
+                    </g>
+                  </motion.g>
+                </g>
               </svg>
 
-              <motion.img
-                src={mark}
-                alt=""
-                className="relative h-full w-full object-contain"
-                style={{ filter: 'drop-shadow(0 0 16px rgba(0,233,247,0.55))' }}
-                initial={{ opacity: 0, scale: 0.88, filter: 'blur(6px) drop-shadow(0 0 0px rgba(0,233,247,0))' }}
-                animate={{
-                  opacity: 1,
-                  scale: 1,
-                  filter: 'blur(0px) drop-shadow(0 0 16px rgba(0,233,247,0.55))',
-                }}
-                transition={{ duration: 0.7, ease: 'easeOut' }}
-              />
-
-              {/* thin cyan light tracing the logo's own silhouette */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 overflow-hidden"
-                style={{
-                  WebkitMaskImage: `url(${mark})`,
-                  maskImage: `url(${mark})`,
-                  WebkitMaskSize: 'contain',
-                  maskSize: 'contain',
-                  WebkitMaskRepeat: 'no-repeat',
-                  maskRepeat: 'no-repeat',
-                  WebkitMaskPosition: 'center',
-                  maskPosition: 'center',
-                }}
+              <span
+                className="absolute bottom-[7%] right-[1%] font-sans text-[clamp(0.6rem,0.48rem+0.55vw,0.85rem)] font-medium uppercase tracking-[0.32em] text-ink-muted tabular-nums"
               >
-                <motion.div
-                  className="h-full w-1/3 bg-gradient-to-r from-transparent via-white to-transparent"
-                  initial={{ x: '-140%' }}
-                  animate={{ x: '220%' }}
-                  transition={{ duration: 0.9, delay: 0.4, ease: 'easeInOut' }}
-                />
-              </div>
-
-              {/* a single light pulse rippling outward once settled */}
-              <motion.div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 rounded-full border border-accent"
-                initial={{ opacity: 0, scale: 0.85 }}
-                animate={{ opacity: [0, 0.5, 0], scale: [0.85, 1.35] }}
-                transition={{ duration: 0.9, delay: 1.1, ease: 'easeOut' }}
-              />
+                loading&hellip; {displayProgress}%
+              </span>
             </div>
-
-            {/* status / progress ↔ ready headline */}
-            <div className="mt-8 flex min-h-[6.5rem] flex-col items-center sm:mt-10">
-              <AnimatePresence mode="wait">
-                {!ready ? (
-                  <motion.div
-                    key="loading-ui"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0, transition: { duration: 0.25 } }}
-                    className="flex flex-col items-center gap-3"
-                  >
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.35em] text-ink-faint sm:text-xs">
-                      Initializing Experience
-                    </span>
-
-                    <div className="relative h-[3px] w-48 overflow-hidden rounded-full bg-bg-border sm:w-64 md:w-72">
-                      <div
-                        className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary-500 via-accent to-nebula transition-[width] duration-150 ease-out"
-                        style={{
-                          width: `${progress}%`,
-                          boxShadow: '0 0 10px rgba(8,145,168,0.45), 0 0 2px rgba(8,145,168,0.6)',
-                        }}
-                      />
-                      <motion.div
-                        aria-hidden
-                        className="absolute inset-y-0 w-10 bg-gradient-to-r from-transparent via-white/80 to-transparent mix-blend-screen"
-                        animate={{ left: ['-12%', '112%'] }}
-                        transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut', repeatDelay: 0.35 }}
-                      />
-                    </div>
-
-                    <span className="font-mono text-xs tracking-[0.15em] text-accent tabular-nums sm:text-sm">
-                      {progress}%
-                    </span>
-
-                    <div className="relative h-4">
-                      {/* Overlapping (not mode="wait") so the outgoing line
-                          fades under the incoming one — a true crossfade
-                          with no blank gap between messages. */}
-                      <AnimatePresence>
-                        <motion.p
-                          key={statusMessage}
-                          initial={{ opacity: 0, y: 6 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -6 }}
-                          transition={{ duration: 0.45, ease: 'easeInOut' }}
-                          className="absolute inset-x-0 text-[11px] uppercase tracking-[0.2em] text-ink-muted sm:text-xs"
-                        >
-                          {statusMessage}
-                        </motion.p>
-                      </AnimatePresence>
-                    </div>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="ready-ui"
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, ease: 'easeOut' }}
-                    className="flex flex-col items-center gap-2"
-                  >
-                    <span className="text-sm font-semibold uppercase tracking-[0.3em] text-ink sm:text-base">
-                      Alins Technologies
-                    </span>
-                    <span className="text-[11px] uppercase tracking-[0.35em] text-accent sm:text-xs">
-                      Ready to launch
-                    </span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
