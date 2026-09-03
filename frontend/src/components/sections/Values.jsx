@@ -26,10 +26,11 @@ export default function Values() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.5, delay: i * 0.07 }}
+                whileHover={featured ? undefined : { y: -6 }}
                 className={
                   featured
                     ? 'group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-primary-500/20 p-8 shadow-card sm:col-span-2 lg:col-span-2 lg:row-span-2 lg:p-10'
-                    : 'group relative flex flex-col justify-between rounded-2xl border border-bg-border bg-white p-6 shadow-card transition-colors duration-300 hover:border-primary-500/30'
+                    : 'group relative flex flex-col justify-between rounded-2xl border border-bg-border bg-white p-6 shadow-card transition-[border-color,box-shadow] duration-300 hover:border-primary-500/30 hover:shadow-glow-cyan'
                 }
                 style={
                   featured
@@ -49,7 +50,13 @@ export default function Values() {
                 {!featured && i === 1 && (
                   <Zigzag aria-hidden className="pointer-events-none absolute right-5 top-5 h-4 w-9 text-nebula/50" />
                 )}
-                <span className={featured ? 'index-num relative text-base' : 'index-num relative'}>
+                <span
+                  className={
+                    featured
+                      ? 'index-num relative text-base'
+                      : 'index-num relative transition-colors duration-300 group-hover:text-primary-600'
+                  }
+                >
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <div className={featured ? 'relative mt-10' : 'relative mt-6'}>

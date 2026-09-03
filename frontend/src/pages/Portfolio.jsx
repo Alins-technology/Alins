@@ -28,17 +28,25 @@ export default function Portfolio() {
         <div className="container-x">
           <div className="mb-10 flex flex-wrap justify-center gap-3 md:mb-14">
             {categories.map((cat) => (
-              <button
+              <motion.button
                 key={cat}
                 onClick={() => setActive(cat)}
-                className={`rounded-full border px-5 py-2.5 text-sm font-medium transition-all duration-300 ${
-                  active === cat
-                    ? 'border-primary-500/60 bg-primary-500/10 text-primary-700 shadow-glow'
-                    : 'border-bg-border text-ink-muted hover:border-primary-500/40 hover:text-ink'
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+                transition={{ type: 'spring', stiffness: 420, damping: 24 }}
+                className={`relative rounded-full border px-5 py-2.5 text-sm font-medium transition-colors duration-300 ${
+                  active === cat ? 'border-primary-500/60 text-primary-700' : 'border-bg-border text-ink-muted hover:border-primary-500/40 hover:text-ink'
                 }`}
               >
-                {cat}
-              </button>
+                {active === cat && (
+                  <motion.span
+                    layoutId="portfolio-filter-pill"
+                    className="absolute inset-0 -z-10 rounded-full bg-primary-500/10 shadow-glow"
+                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                  />
+                )}
+                <span className="relative">{cat}</span>
+              </motion.button>
             ))}
           </div>
 

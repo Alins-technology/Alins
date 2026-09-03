@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { Facebook, Instagram, Linkedin, Twitter, Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react'
 import Logo from '../common/Logo'
 import { navLinks } from '../../data/content'
 import { services } from '../../data/services'
+import { staggerContainer, fadeUpChild, springTap } from '../../lib/motion'
 
 const socials = [
   { icon: Facebook, href: '#', label: 'Facebook' },
@@ -23,9 +25,15 @@ export default function Footer() {
         style={{ background: 'radial-gradient(circle, rgba(8,145,168,0.12) 0%, rgba(8,145,168,0) 70%)' }}
       />
 
-      <div className="container-x section-pad !py-16">
+      <motion.div
+        className="container-x section-pad !py-16"
+        variants={staggerContainer(0.1)}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: '-80px' }}
+      >
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
-          <div>
+          <motion.div variants={fadeUpChild()}>
             <Logo />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-ink-muted">
               Alins Technologies is a modern digital agency crafting bold websites, apps, brands
@@ -33,19 +41,22 @@ export default function Footer() {
             </p>
             <div className="mt-6 flex gap-3">
               {socials.map(({ icon: Icon, href, label }) => (
-                <a
+                <motion.a
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-bg-border bg-white text-ink-muted transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:border-transparent hover:bg-gradient-to-br hover:from-accent-400 hover:to-primary-500 hover:text-white hover:shadow-glow-accent"
+                  whileHover={{ y: -4, scale: 1.05 }}
+                  whileTap={{ scale: 0.94 }}
+                  transition={springTap}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-bg-border bg-white text-ink-muted transition-colors duration-300 hover:border-transparent hover:bg-gradient-to-br hover:from-accent-400 hover:to-primary-500 hover:text-white hover:shadow-glow-accent"
                 >
                   <Icon size={16} />
-                </a>
+                </motion.a>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          <div>
+          <motion.div variants={fadeUpChild()}>
             <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-ink">
               Navigation
             </h4>
@@ -61,9 +72,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          <div>
+          <motion.div variants={fadeUpChild()}>
             <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-ink">
               Services
             </h4>
@@ -79,9 +90,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          <div>
+          <motion.div variants={fadeUpChild()}>
             <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-ink">
               Get in touch
             </h4>
@@ -105,17 +116,20 @@ export default function Footer() {
             >
               Let&apos;s start a project <ArrowUpRight size={14} />
             </Link>
-          </div>
+          </motion.div>
         </div>
 
-        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-bg-border pt-8 text-xs text-ink-faint sm:flex-row">
+        <motion.div
+          variants={fadeUpChild()}
+          className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-bg-border pt-8 text-xs text-ink-faint sm:flex-row"
+        >
           <p>© {new Date().getFullYear()} Alins Technologies. All rights reserved.</p>
           <div className="flex gap-6">
             <span className="cursor-default transition-colors hover:text-ink-muted">Privacy Policy</span>
             <span className="cursor-default transition-colors hover:text-ink-muted">Terms of Service</span>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </footer>
   )
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Send, Loader2, CheckCircle2, AlertCircle } from 'lucide-react'
+import { staggerContainer, fadeUpChild } from '../../lib/motion'
 
 // Same-origin in production (Vercel rewrites /api/* to the backend service) —
 // only needed as an absolute URL for local dev where frontend/backend run on different ports.
@@ -80,10 +81,10 @@ export default function ContactForm() {
 
   return (
     <motion.form
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      variants={staggerContainer(0.08)}
+      initial="hidden"
+      whileInView="show"
       viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
       onSubmit={handleSubmit}
       className="glass-card relative overflow-hidden p-8 sm:p-10 lg:p-11"
     >
@@ -95,14 +96,14 @@ export default function ContactForm() {
         style={{ background: 'radial-gradient(circle, rgba(59,109,251,0.10) 0%, rgba(59,109,251,0) 70%)' }}
       />
 
-      <div className="relative mb-8">
+      <motion.div variants={fadeUpChild(14)} className="relative mb-8">
         <span className="eyebrow">Start the Conversation</span>
         <h3 className="mt-3 text-2xl font-bold text-ink sm:text-3xl">Tell us about the project.</h3>
-      </div>
+      </motion.div>
 
       <div className="relative space-y-6">
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <div>
+        <motion.div variants={fadeUpChild(14)}>
           <label className="mb-2 block text-xs font-medium uppercase tracking-widest text-ink-faint">
             Full Name
           </label>
@@ -114,8 +115,8 @@ export default function ContactForm() {
             placeholder="Your name"
             className={inputClass}
           />
-        </div>
-        <div>
+        </motion.div>
+        <motion.div variants={fadeUpChild(14)}>
           <label className="mb-2 block text-xs font-medium uppercase tracking-widest text-ink-faint">
             Email Address
           </label>
@@ -128,11 +129,11 @@ export default function ContactForm() {
             placeholder="you@company.com"
             className={inputClass}
           />
-        </div>
+        </motion.div>
       </div>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <div>
+        <motion.div variants={fadeUpChild(14)}>
           <label className="mb-2 block text-xs font-medium uppercase tracking-widest text-ink-faint">
             Phone Number
           </label>
@@ -143,8 +144,8 @@ export default function ContactForm() {
             placeholder="+91 98765 43210"
             className={inputClass}
           />
-        </div>
-        <div>
+        </motion.div>
+        <motion.div variants={fadeUpChild(14)}>
           <label className="mb-2 block text-xs font-medium uppercase tracking-widest text-ink-faint">
             Service Needed
           </label>
@@ -155,10 +156,10 @@ export default function ContactForm() {
               </option>
             ))}
           </select>
-        </div>
+        </motion.div>
       </div>
 
-      <div>
+      <motion.div variants={fadeUpChild(14)}>
         <label className="mb-2 block text-xs font-medium uppercase tracking-widest text-ink-faint">
           Project Details
         </label>
@@ -171,9 +172,9 @@ export default function ContactForm() {
           placeholder="Tell us a bit about your project, goals and timeline..."
           className={`${inputClass} resize-none`}
         />
-      </div>
+      </motion.div>
 
-      <div className="flex flex-wrap items-center gap-4">
+      <motion.div variants={fadeUpChild(14)} className="flex flex-wrap items-center gap-4">
         <button
           type="submit"
           disabled={status === 'loading'}
@@ -190,18 +191,34 @@ export default function ContactForm() {
           )}
         </button>
         <span className="text-xs text-ink-faint">We typically reply within 24 hours.</span>
-      </div>
+      </motion.div>
 
-      {status === 'success' && (
-        <div className="flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-700">
-          <CheckCircle2 size={16} /> Got it — we're sending you to WhatsApp so we can keep talking right away.
-        </div>
-      )}
-      {status === 'error' && (
-        <div className="flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700">
-          <AlertCircle size={16} /> That didn't go through. Double-check your connection, or email us directly at contact@alins.in.
-        </div>
-      )}
+      <AnimatePresence mode="wait">
+        {status === 'success' && (
+          <motion.div
+            key="success"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-700"
+          >
+            <CheckCircle2 size={16} /> Got it — we're sending you to WhatsApp so we can keep talking right away.
+          </motion.div>
+        )}
+        {status === 'error' && (
+          <motion.div
+            key="error"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
+          >
+            <AlertCircle size={16} /> That didn't go through. Double-check your connection, or email us directly at contact@alins.in.
+          </motion.div>
+        )}
+      </AnimatePresence>
       </div>
     </motion.form>
   )

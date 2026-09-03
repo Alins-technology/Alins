@@ -3,6 +3,7 @@ import { NavLink, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, ArrowUpRight } from 'lucide-react'
 import Logo from '../common/Logo'
+import MagneticButton from '../common/MagneticButton'
 import { navLinks } from '../../data/content'
 import { Sparkle, ScribbleCircle } from '../common/Doodles'
 import { gsap, ScrollTrigger } from '../../lib/gsap'
@@ -111,7 +112,14 @@ export default function Navbar() {
             </nav>
 
             <div className="hidden lg:block">
-              <MagneticCta />
+              <MagneticButton
+                as={Link}
+                to="/contact"
+                className="btn-primary !py-2.5 !px-5 text-fluid-xs"
+              >
+                Start a Project
+                <ArrowUpRight size={15} />
+              </MagneticButton>
             </div>
 
             <button
@@ -193,37 +201,5 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </>
-  )
-}
-
-// Small local component so the desktop CTA gets the same magnetic-cursor
-// pull the rest of the site's primary buttons use, without pulling in the
-// full MagneticButton wrapper just for a Link.
-function MagneticCta() {
-  const ref = useRef(null)
-
-  const handleMove = (e) => {
-    const el = ref.current
-    if (!el) return
-    const rect = el.getBoundingClientRect()
-    const x = e.clientX - rect.left - rect.width / 2
-    const y = e.clientY - rect.top - rect.height / 2
-    el.style.transform = `translate(${x * 0.2}px, ${y * 0.3}px)`
-  }
-  const handleLeave = () => {
-    if (ref.current) ref.current.style.transform = 'translate(0px, 0px)'
-  }
-
-  return (
-    <Link
-      ref={ref}
-      to="/contact"
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-      className="btn-primary !py-2.5 !px-5 text-fluid-xs will-change-transform transition-transform duration-200 ease-out"
-    >
-      Start a Project
-      <ArrowUpRight size={15} />
-    </Link>
   )
 }

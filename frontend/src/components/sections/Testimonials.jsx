@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Quote, Star, ArrowLeft, ArrowRight } from 'lucide-react'
 import { testimonials } from '../../data/content'
@@ -7,11 +7,15 @@ import { Sparkle } from '../common/Doodles'
 
 export default function Testimonials() {
   const [index, setIndex] = useState(0)
+  // A ref, not state — pausing on hover/focus shouldn't re-run the interval
+  // effect, just make its next tick a no-op.
+  const pausedRef = useRef(false)
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) return
     const id = setInterval(() => {
+      if (pausedRef.current) return
       setIndex((i) => (i + 1) % testimonials.length)
     }, 6500)
     return () => clearInterval(id)
@@ -43,7 +47,13 @@ export default function Testimonials() {
 
         {/* One oversized pull-quote at a time, minimal chrome — the quote
             itself is the section's visual content, not a grid of cards. */}
-        <div className="relative mx-auto mt-16 max-w-3xl">
+        <div
+          className="relative mx-auto mt-16 max-w-3xl"
+          onMouseEnter={() => (pausedRef.current = true)}
+          onMouseLeave={() => (pausedRef.current = false)}
+          onFocus={() => (pausedRef.current = true)}
+          onBlur={() => (pausedRef.current = false)}
+        >
           <Quote
             aria-hidden
             size={90}

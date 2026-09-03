@@ -61,6 +61,7 @@ const PortfolioCard = forwardRef(function PortfolioCard({ project, index, size =
         featured ? 'border-primary-500/15 bg-primary-500/[0.08] lg:col-span-2' : 'border-bg-border bg-bg-card'
       }`}
       data-cursor-hover
+      data-cursor-label="View"
     >
       {featured && (
         <span className="absolute left-6 top-6 z-10 rounded-full border border-white/40 bg-white/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-primary-700 backdrop-blur">

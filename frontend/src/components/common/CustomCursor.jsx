@@ -7,6 +7,7 @@ export default function CustomCursor() {
   const ringRef = useRef(null)
   const [isTouch, setIsTouch] = useState(false)
   const [hovering, setHovering] = useState(false)
+  const [label, setLabel] = useState('')
   const [ready, setReady] = useState(false)
   const [sparkles, setSparkles] = useState([])
 
@@ -43,11 +44,20 @@ export default function CustomCursor() {
       raf = requestAnimationFrame(animate)
     }
 
+    // Most hoverable elements just expand the ring; a few (like PortfolioCard,
+    // via `data-cursor-label="View"`) additionally swap in a short word so
+    // the cursor itself hints at what clicking will do.
     const onOver = (e) => {
-      if (e.target.closest('a, button, [data-cursor-hover]')) setHovering(true)
+      const el = e.target.closest('a, button, [data-cursor-hover]')
+      if (!el) return
+      setHovering(true)
+      setLabel(el.getAttribute('data-cursor-label') || '')
     }
     const onOut = (e) => {
-      if (e.target.closest('a, button, [data-cursor-hover]')) setHovering(false)
+      if (e.target.closest('a, button, [data-cursor-hover]')) {
+        setHovering(false)
+        setLabel('')
+      }
     }
 
     // A tiny playful surprise: a doodle sparkle pops at every click and
@@ -88,10 +98,18 @@ export default function CustomCursor() {
       />
       <div
         ref={ringRef}
-        className={`pointer-events-none fixed left-0 top-0 z-[9998] hidden items-center justify-center rounded-full border transition-[width,height,border-color,opacity] duration-200 ease-out md:flex ${
+        className={`pointer-events-none fixed left-0 top-0 z-[9998] hidden items-center justify-center rounded-full border transition-[width,height,border-color,background-color,opacity] duration-200 ease-out md:flex ${
           ready ? 'opacity-100' : 'opacity-0'
-        } ${hovering ? 'h-12 w-12 border-accent bg-accent/10' : 'h-8 w-8 border-primary-500/50'}`}
-      />
+        } ${
+          label
+            ? 'h-16 w-16 border-accent bg-accent text-white'
+            : hovering
+              ? 'h-12 w-12 border-accent bg-accent/10'
+              : 'h-8 w-8 border-primary-500/50'
+        }`}
+      >
+        {label && <span className="text-[10px] font-semibold uppercase tracking-wider">{label}</span>}
+      </div>
       <AnimatePresence>
         {sparkles.map((s) => (
           <motion.span

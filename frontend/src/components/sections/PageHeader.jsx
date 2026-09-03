@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
 import { Sparkle, WavyUnderline } from '../common/Doodles'
+import { fadeUp } from '../../lib/motion'
 
 export default function PageHeader({ eyebrow, title, highlight, description, crumb }) {
   return (
@@ -26,9 +27,7 @@ export default function PageHeader({ eyebrow, title, highlight, description, cru
 
       <div className="container-x relative z-10 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          {...fadeUp({ delay: 0, y: 16 })}
           className="mb-5 flex items-center justify-center gap-2 text-xs text-ink-faint"
         >
           <Link to="/" className="transition-colors hover:text-primary-600">Home</Link>
@@ -37,20 +36,13 @@ export default function PageHeader({ eyebrow, title, highlight, description, cru
         </motion.div>
 
         {eyebrow && (
-          <motion.span
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.05 }}
-            className="eyebrow"
-          >
+          <motion.span {...fadeUp({ delay: 0.05, y: 16 })} className="eyebrow">
             {eyebrow}
           </motion.span>
         )}
 
         <motion.h1
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          {...fadeUp({ delay: 0.1, y: 24 })}
           className="mx-auto mt-6 max-w-3xl text-h1 text-ink"
         >
           {title}{' '}
@@ -61,12 +53,7 @@ export default function PageHeader({ eyebrow, title, highlight, description, cru
         </motion.h1>
 
         {description && (
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.18 }}
-            className="mx-auto mt-6 max-w-xl text-lede"
-          >
+          <motion.p {...fadeUp({ delay: 0.18, y: 24 })} className="mx-auto mt-6 max-w-xl text-lede">
             {description}
           </motion.p>
         )}
