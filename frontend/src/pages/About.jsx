@@ -17,6 +17,8 @@ export default function About() {
         title="The team behind your"
         highlight="next launch."
         description="Strategists, designers and engineers working as one team — not three vendors you have to keep in sync yourself."
+        orbColor="#8b5cf6"
+        orbRingColor="#22d3ee"
       />
       <AboutPreview />
       <StoryMorph />

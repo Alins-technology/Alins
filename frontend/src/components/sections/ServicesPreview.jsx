@@ -3,7 +3,6 @@ import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 import { services } from '../../data/services'
 import SectionHeading from '../common/SectionHeading'
-import { Sparkle, Zigzag } from '../common/Doodles'
 
 export default function ServicesPreview() {
   const [featured, ...rest] = services
@@ -38,17 +37,17 @@ export default function ServicesPreview() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.55 }}
-            className="group relative overflow-hidden rounded-3xl border border-primary-500/15 p-8 shadow-card sm:col-span-2 sm:p-10 lg:row-span-2"
+            whileHover={{ y: -6 }}
+            className="group relative overflow-hidden rounded-3xl border border-primary-500/15 p-8 shadow-card transition-shadow duration-300 hover:shadow-glow sm:col-span-2 sm:p-10 lg:row-span-2"
           >
             <div
               aria-hidden
               className={`pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br ${featured.color} opacity-[0.10] transition-opacity duration-500 group-hover:opacity-[0.18]`}
             />
-            <Sparkle aria-hidden className="pointer-events-none absolute right-24 top-6 h-5 w-5 text-accent-deep animate-pulse-glow sm:right-32" />
             <div className="flex h-full flex-col justify-between">
               <div className="flex items-start justify-between gap-4">
                 <div
-                  className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-card"
+                  className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/[0.06] shadow-card"
                   style={{ color: featured.accent }}
                 >
                   <featured.icon size={26} strokeWidth={1.75} />
@@ -67,7 +66,7 @@ export default function ServicesPreview() {
                   {featured.features.map((f) => (
                     <span
                       key={f}
-                      className="rounded-full border border-bg-border bg-white px-3 py-1 text-xs text-ink-muted"
+                      className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-ink-muted"
                     >
                       {f}
                     </span>
@@ -77,7 +76,7 @@ export default function ServicesPreview() {
 
               <ArrowUpRight
                 size={22}
-                className="mt-6 text-ink-faint transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-primary-600"
+                className="mt-6 text-ink-faint transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-primary-400"
               />
             </div>
           </motion.div>
@@ -92,11 +91,12 @@ export default function ServicesPreview() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.5, delay: 0.06 * (i + 1) }}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-bg-border bg-white p-6 shadow-card transition-colors duration-300 hover:border-primary-500/30"
+                whileHover={{ y: -5 }}
+                className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 shadow-card backdrop-blur-xl transition-[border-color,box-shadow] duration-300 hover:border-primary-500/30 hover:shadow-glow-cyan"
               >
                 <div
                   aria-hidden
-                  className={`pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br ${service.color} opacity-[0.05] transition-opacity duration-500 group-hover:opacity-[0.12]`}
+                  className={`pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br ${service.color} opacity-[0.08] transition-opacity duration-500 group-hover:opacity-[0.16]`}
                 />
                 <div className="flex items-start justify-between gap-4">
                   <div
@@ -107,9 +107,6 @@ export default function ServicesPreview() {
                   </div>
                   <span className="index-num">{num}</span>
                 </div>
-                {i === 1 && (
-                  <Zigzag aria-hidden className="pointer-events-none absolute bottom-5 right-6 h-3 w-8 text-nebula/40" />
-                )}
                 <div className="mt-6">
                   <h3 className="font-display text-lg font-semibold text-ink transition-transform duration-300 group-hover:translate-x-1 sm:text-xl">
                     {service.title}

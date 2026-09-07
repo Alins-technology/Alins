@@ -8,13 +8,11 @@ import { useEffect, useRef } from 'react'
  * a tiny pointer-parallax drift is not enough visual payload to justify a
  * WebGL context (and the Three.js bundle weight that comes with it) — this
  * is the one case in the whole app where dropping 3D is the right call.
- * This is the only ambient background layer in the app; the Hero has its
- * own colorful gradient wash instead of a 3D scene.
  *
- * Light-theme note: on a white page a literal "starfield" of white dots
- * would be invisible, so the dots render as soft brand-tinted specks
- * (alternating cool blue / violet) instead of white — same twinkle/parallax
- * behaviour, just visible against a bright background.
+ * Dark theme: the dots are genuine near-white specks (with a few brand-cyan
+ * ones mixed in) since the page is dark enough now for a literal starfield
+ * to read as one, instead of the brand-tinted-dot workaround a white page
+ * needed.
  */
 export default function Starfield() {
   const canvasRef = useRef(null)
@@ -31,7 +29,7 @@ export default function Starfield() {
     let pointer = { x: 0, y: 0 }
     let raf
 
-    const DOT_COLORS = ['#5c81ff', '#8b5cf6', '#0891a8']
+    const DOT_COLORS = ['#ffffff', '#ffffff', '#ffffff', '#8ab4ff', '#22d3ee']
 
     const buildStars = () => {
       const count = Math.round((width * height) / 9000)
@@ -90,6 +88,6 @@ export default function Starfield() {
   }, [])
 
   return (
-    <canvas ref={canvasRef} aria-hidden className="pointer-events-none fixed inset-0 z-0 opacity-40" />
+    <canvas ref={canvasRef} aria-hidden className="pointer-events-none fixed inset-0 z-0 opacity-60" />
   )
 }

@@ -3,10 +3,10 @@ import Hero from '../components/sections/Hero'
 import Marquee from '../components/sections/Marquee'
 import AgencyIntro from '../components/sections/AgencyIntro'
 import Stats from '../components/sections/Stats'
+import DashboardShowcase from '../components/sections/DashboardShowcase'
 import AboutPreview from '../components/sections/AboutPreview'
 import ServicesPreview from '../components/sections/ServicesPreview'
 import Process from '../components/sections/Process'
-import PortfolioPreview from '../components/sections/PortfolioPreview'
 import Testimonials from '../components/sections/Testimonials'
 import CTA from '../components/sections/CTA'
 
@@ -17,10 +17,10 @@ export default function Home() {
       <Marquee />
       <AgencyIntro />
       <Stats />
+      <DashboardShowcase />
       <AboutPreview />
       <ServicesPreview />
       <Process />
-      <PortfolioPreview />
       <Testimonials />
       <CTA
         eyebrow="Ready When You Are"

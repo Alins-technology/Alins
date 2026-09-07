@@ -1,11 +1,10 @@
 import { useEffect, useRef } from 'react'
 import { gsap, ScrollTrigger } from '../../lib/gsap'
-import { Sparkle, ScribbleCircle } from '../common/Doodles'
 
 const lines = ['Design.', 'Build.', 'Grow.']
 // Cyan → blue → violet — same direction as the site's gradient-text instead
 // of three disconnected hues, so the sequence still feels like one brand.
-const lineColors = ['text-accent-500', 'text-primary-600', 'text-nebula']
+const lineColors = ['text-accent-400', 'text-primary-400', 'text-nebula']
 
 export default function AgencyIntro() {
   const sectionRef = useRef(null)
@@ -41,7 +40,7 @@ export default function AgencyIntro() {
       <div
         aria-hidden
         className="pointer-events-none absolute right-[6%] top-1/2 hidden h-64 w-64 -translate-y-1/2 rounded-full lg:block"
-        style={{ background: 'radial-gradient(circle, rgba(8,145,168,0.12) 0%, rgba(8,145,168,0) 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(34,211,238,0.12) 0%, rgba(34,211,238,0) 70%)' }}
       />
       {/* A faint diagonal seam marking the 60/40 split — reinforced, not
           literal: a soft rotated gradient rather than a hard rule. */}
@@ -62,19 +61,13 @@ export default function AgencyIntro() {
           ))}
         </div>
 
-        {/* Right column: a colorful doodle cluster behind a card carrying
-            the supporting line — asymmetric weight, not a mirrored hero. */}
+        {/* Right column: a liquid-glass card carrying the supporting line —
+            asymmetric weight, not a mirrored hero. */}
         <div className="relative">
-          <div aria-hidden className="pointer-events-none absolute -right-4 -top-8 hidden gap-3 lg:flex">
-            <ScribbleCircle className="h-12 w-12 text-primary-400/70" />
-            <Sparkle className="h-6 w-6 self-end text-accent-deep animate-pulse-glow" />
-          </div>
-
           <div
-            className="relative overflow-hidden rounded-3xl p-8 shadow-card lg:p-10"
+            className="liquid-glass relative p-8 lg:p-10"
             style={{
-              background: 'linear-gradient(150deg, rgba(59,109,251,0.10), rgba(139,92,246,0.10) 60%, rgba(8,145,168,0.09))',
-              border: '1px solid rgba(139,92,246,0.18)',
+              background: 'linear-gradient(150deg, rgba(59,109,251,0.12), rgba(139,92,246,0.12) 60%, rgba(34,211,238,0.09)), rgba(255,255,255,0.03)',
             }}
           >
             <div className="relative">

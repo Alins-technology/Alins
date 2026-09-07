@@ -5,7 +5,6 @@ import { Menu, X, ArrowUpRight } from 'lucide-react'
 import Logo from '../common/Logo'
 import MagneticButton from '../common/MagneticButton'
 import { navLinks } from '../../data/content'
-import { Sparkle, ScribbleCircle } from '../common/Doodles'
 import { gsap, ScrollTrigger } from '../../lib/gsap'
 
 // Framer can animate a Link straight up — this is what gives nav items their
@@ -36,9 +35,9 @@ export default function Navbar() {
         onEnter: () => {
           gsap.to(headerRef.current, { paddingTop: '0.6rem', paddingBottom: '0.6rem', duration: 0.35, ease: 'power2.out' })
           gsap.to(barRef.current, {
-            boxShadow: '0 16px 44px -14px rgba(8,145,168,0.28)',
+            boxShadow: '0 16px 44px -14px rgba(0,0,0,0.6)',
             borderColor: 'rgba(34,211,238,0.3)',
-            backgroundColor: 'rgba(255,255,255,0.92)',
+            backgroundColor: 'rgba(12,12,14,0.75)',
             duration: 0.35,
             ease: 'power2.out',
           })
@@ -46,9 +45,9 @@ export default function Navbar() {
         onLeaveBack: () => {
           gsap.to(headerRef.current, { paddingTop: '1.25rem', paddingBottom: '1.25rem', duration: 0.35, ease: 'power2.out' })
           gsap.to(barRef.current, {
-            boxShadow: '0 8px 30px -12px rgba(8,145,168,0.16)',
-            borderColor: 'rgba(8,145,168,0.14)',
-            backgroundColor: 'rgba(255,255,255,0.8)',
+            boxShadow: '0 8px 30px -12px rgba(0,0,0,0.45)',
+            borderColor: 'rgba(255,255,255,0.10)',
+            backgroundColor: 'rgba(12,12,14,0.55)',
             duration: 0.35,
             ease: 'power2.out',
           })
@@ -71,8 +70,8 @@ export default function Navbar() {
         <div className="container-x">
           <div
             ref={barRef}
-            className="flex items-center justify-between gap-4 rounded-[1.75rem] border bg-white/80 px-5 py-2.5 shadow-nav backdrop-blur-xl transition-colors"
-            style={{ borderColor: 'rgba(8,145,168,0.14)' }}
+            className="flex items-center justify-between gap-4 rounded-[1.75rem] border bg-black/55 px-5 py-2.5 shadow-nav backdrop-blur-xl transition-colors"
+            style={{ borderColor: 'rgba(255,255,255,0.10)' }}
           >
             {/* No decorative blur/glow behind the mark — a crisp logo reads
                 more premium than a hazy halo, and it's the one thing on
@@ -98,7 +97,7 @@ export default function Navbar() {
                       {isActive ? (
                         <motion.span
                           layoutId="nav-active-pill"
-                          className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-accent-500 via-accent-400 to-primary-500 shadow-glow-accent"
+                          className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-accent-400 via-primary-500 to-nebula shadow-glow-accent"
                           transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                         />
                       ) : (
@@ -153,15 +152,8 @@ export default function Navbar() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[99] overflow-hidden backdrop-blur-2xl lg:hidden"
-            style={{ background: 'linear-gradient(160deg, #ffffff 0%, #eafcff 45%, #f3f0ff 100%)' }}
+            style={{ background: 'linear-gradient(160deg, #0c0c0c 0%, #10111d 55%, #0c0c0c 100%)' }}
           >
-            <span aria-hidden className="pointer-events-none absolute left-[12%] top-[16%] text-accent-400/70">
-              <ScribbleCircle className="h-16 w-16" />
-            </span>
-            <span aria-hidden className="pointer-events-none absolute right-[14%] bottom-[22%] text-primary-500/70">
-              <Sparkle className="h-9 w-9 animate-pulse-glow" />
-            </span>
-
             <div className="relative flex h-full flex-col items-center justify-center gap-7">
               {navLinks.map((link, i) => (
                 <motion.div

@@ -1,11 +1,16 @@
 import { Link } from 'react-router-dom'
+import { Suspense, lazy } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowLeft } from 'lucide-react'
 import PageTransition from '../components/common/PageTransition'
 import RocketBuddy from '../components/common/RocketBuddy'
-import { Sparkle, ScribbleCircle } from '../components/common/Doodles'
+import { usePrefersReducedMotion } from '../lib/motion'
+
+const PageOrb = lazy(() => import('../components/three/PageOrb'))
 
 export default function NotFound() {
+  const reduced = usePrefersReducedMotion()
+
   return (
     <PageTransition>
       <section className="relative flex min-h-[85vh] flex-col items-center justify-center overflow-hidden px-6 text-center">
@@ -15,6 +20,22 @@ export default function NotFound() {
           style={{ background: 'radial-gradient(circle, rgba(59,109,251,0.08) 0%, rgba(59,109,251,0) 70%)' }}
         />
 
+        {/* the rocket is genuinely "lost in orbit" now — a real 3D orbit
+            ring drifting behind it, not just the copy saying so. Kept small
+            and soft (low opacity + blur) so it reads as an ambient halo
+            behind the rocket, not a solid ball fighting the 404 copy for
+            attention. */}
+        {!reduced && (
+          <div
+            aria-hidden
+            className="pointer-events-none absolute left-1/2 top-[18%] -z-10 h-[34vh] w-[34vh] -translate-x-1/2 opacity-40 blur-[2px] sm:h-[38vh] sm:w-[38vh]"
+          >
+            <Suspense fallback={null}>
+              <PageOrb color="#3b6dfb" ringColor="#22d3ee" distort={0.38} />
+            </Suspense>
+          </div>
+        )}
+
         {/* the character — genuinely lost, waving for help */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8, y: -10 }}
@@ -23,25 +44,6 @@ export default function NotFound() {
           className="relative z-10"
         >
           <RocketBuddy size={130} />
-        </motion.div>
-
-        <motion.div
-          aria-hidden
-          initial={{ opacity: 0, rotate: -20 }}
-          animate={{ opacity: 1, rotate: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="pointer-events-none absolute left-[18%] top-[22%] text-accent/70 sm:left-[26%]"
-        >
-          <Sparkle className="h-6 w-6 animate-pulse-glow" />
-        </motion.div>
-        <motion.div
-          aria-hidden
-          initial={{ opacity: 0, rotate: 20 }}
-          animate={{ opacity: 1, rotate: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="pointer-events-none absolute right-[18%] top-[30%] text-nebula/50 sm:right-[26%]"
-        >
-          <ScribbleCircle className="h-10 w-10" />
         </motion.div>
 
         <motion.span

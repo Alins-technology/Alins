@@ -39,10 +39,15 @@ export default function ServiceVisual({ service }) {
   )
 }
 
+// These panels stay deliberately light regardless of the site's own theme —
+// they represent a literal browser/app UI mockup floating in the dark
+// atmosphere, so their "text line" fills are pinned to black/ tints rather
+// than the `ink` token (which is white on this dark site and would vanish
+// against a light panel).
 function GlassPanel({ className = '', style, children }) {
   return (
     <div
-      className={`absolute rounded-2xl border border-bg-border bg-white/80 backdrop-blur-xl shadow-card ${className}`}
+      className={`absolute rounded-2xl border border-black/10 bg-white/85 backdrop-blur-xl shadow-card ${className}`}
       style={style}
     >
       {children}
@@ -60,15 +65,15 @@ function WebDesignVisual({ accent }) {
         className="left-[8%] top-[10%] h-[62%] w-[72%] animate-float"
         style={{ boxShadow: `0 30px 80px -30px ${accent}40` }}
       >
-        <div className="flex items-center gap-1.5 border-b border-bg-border px-4 py-3">
-          <span className="h-1.5 w-1.5 rounded-full bg-ink/15" />
-          <span className="h-1.5 w-1.5 rounded-full bg-ink/15" />
-          <span className="h-1.5 w-1.5 rounded-full bg-ink/15" />
+        <div className="flex items-center gap-1.5 border-b border-black/10 px-4 py-3">
+          <span className="h-1.5 w-1.5 rounded-full bg-black/15" />
+          <span className="h-1.5 w-1.5 rounded-full bg-black/15" />
+          <span className="h-1.5 w-1.5 rounded-full bg-black/15" />
         </div>
         <div className="space-y-3 p-5">
           <div className="h-2.5 w-2/3 rounded-full" style={{ background: `${accent}55` }} />
-          <div className="h-2 w-5/6 rounded-full bg-ink/10" />
-          <div className="h-2 w-3/5 rounded-full bg-ink/10" />
+          <div className="h-2 w-5/6 rounded-full bg-black/10" />
+          <div className="h-2 w-3/5 rounded-full bg-black/10" />
           <div className="mt-4 h-14 w-full rounded-lg" style={{ background: `${accent}18`, border: `1px solid ${accent}30` }} />
         </div>
       </GlassPanel>
@@ -78,9 +83,9 @@ function WebDesignVisual({ accent }) {
         style={{ boxShadow: `0 25px 60px -25px ${accent}35` }}
       >
         <div className="space-y-2.5 p-4">
-          <div className="h-2 w-1/2 rounded-full bg-ink/10" />
+          <div className="h-2 w-1/2 rounded-full bg-black/10" />
           <div className="h-8 w-8 rounded-full" style={{ background: `${accent}40` }} />
-          <div className="h-2 w-3/4 rounded-full bg-ink/10" />
+          <div className="h-2 w-3/4 rounded-full bg-black/10" />
         </div>
       </GlassPanel>
 
@@ -106,14 +111,14 @@ function WebDevVisual({ accent, glowTo }) {
       <GlassPanel className="left-[2%] top-[12%] w-[34%] animate-float px-3 py-2.5">
         <div className="space-y-1.5">
           <div className="h-1.5 w-3/5 rounded-full" style={{ background: `${accent}60` }} />
-          <div className="h-1.5 w-2/5 rounded-full bg-ink/10" />
+          <div className="h-1.5 w-2/5 rounded-full bg-black/10" />
           <div className="h-1.5 w-4/5 rounded-full" style={{ background: `${glowTo}40` }} />
         </div>
       </GlassPanel>
 
       <GlassPanel className="bottom-[10%] right-[6%] w-[32%] animate-float-delay px-3 py-2.5">
         <div className="space-y-1.5">
-          <div className="h-1.5 w-2/3 rounded-full bg-ink/10" />
+          <div className="h-1.5 w-2/3 rounded-full bg-black/10" />
           <div className="h-1.5 w-1/2 rounded-full" style={{ background: `${glowTo}55` }} />
         </div>
       </GlassPanel>
@@ -127,31 +132,77 @@ function WebDevVisual({ accent, glowTo }) {
 function AppDevVisual({ accent, glowTo }) {
   return (
     <div className="relative h-full w-full">
+      {/* Phone 1 — a real "screen" with a notch, a hero card, two content
+          rows and a bottom tab bar, instead of a couple of empty bars. */}
       <GlassPanel
-        className="left-[26%] top-[6%] h-[80%] w-[30%] animate-float"
+        className="left-[24%] top-[5%] h-[82%] w-[32%] animate-float"
         style={{ transform: 'rotate(-6deg)', boxShadow: `0 30px 70px -25px ${accent}35` }}
       >
-        <div className="flex h-full flex-col gap-2.5 p-3.5">
-          <div className="h-1.5 w-1/2 rounded-full bg-ink/10" />
-          <div className="mt-1 flex-1 rounded-lg" style={{ background: `${accent}16`, border: `1px solid ${accent}28` }} />
-          <div className="h-1.5 w-2/3 rounded-full bg-ink/10" />
+        <div className="flex h-full flex-col gap-2.5 p-3">
+          <div className="mx-auto h-1 w-8 rounded-full bg-black/15" />
+          <div
+            className="mt-1 flex h-16 shrink-0 flex-col justify-end rounded-lg p-2"
+            style={{ background: `${accent}20`, border: `1px solid ${accent}30` }}
+          >
+            <div className="h-1.5 w-2/3 rounded-full" style={{ background: `${accent}70` }} />
+          </div>
+          <div className="h-1.5 w-full rounded-full bg-black/10" />
+          <div className="h-1.5 w-4/5 rounded-full bg-black/10" />
+          <div className="mt-1 grid grid-cols-3 gap-1.5">
+            {[accent, glowTo, accent].map((c, i) => (
+              <div key={i} className="h-6 rounded-md" style={{ background: `${c}18`, border: `1px solid ${c}28` }} />
+            ))}
+          </div>
+          <div className="mt-auto flex items-center justify-around border-t border-black/10 pt-2">
+            {[0, 1, 2, 3].map((i) => (
+              <span
+                key={i}
+                className="h-1.5 w-1.5 rounded-full"
+                style={{ background: i === 0 ? accent : 'rgba(0,0,0,0.15)' }}
+              />
+            ))}
+          </div>
         </div>
       </GlassPanel>
 
+      {/* Phone 2 — an overlapping second screen (a detail/profile view),
+          reinforcing "multiple real screens", not one card duplicated. */}
       <GlassPanel
-        className="left-[46%] top-[16%] h-[70%] w-[28%] animate-float-delay"
+        className="left-[47%] top-[15%] h-[70%] w-[28%] animate-float-delay"
         style={{ transform: 'rotate(5deg)', boxShadow: `0 30px 70px -25px ${glowTo}35` }}
       >
-        <div className="flex h-full flex-col gap-2.5 p-3.5">
-          <span className="h-6 w-6 rounded-full" style={{ background: `${glowTo}45` }} />
-          <div className="h-1.5 w-3/4 rounded-full bg-ink/10" />
-          <div className="mt-auto h-8 w-full rounded-lg" style={{ background: `${glowTo}18` }} />
+        <div className="flex h-full flex-col gap-2.5 p-3">
+          <div className="flex items-center gap-2">
+            <span className="h-7 w-7 shrink-0 rounded-full" style={{ background: `${glowTo}55` }} />
+            <div className="flex-1 space-y-1">
+              <div className="h-1.5 w-3/4 rounded-full bg-black/12" />
+              <div className="h-1 w-1/2 rounded-full bg-black/8" />
+            </div>
+          </div>
+          <div className="h-1.5 w-full rounded-full bg-black/10" />
+          <div className="h-1.5 w-2/3 rounded-full bg-black/10" />
+          <div
+            className="mt-auto flex h-9 w-full items-center justify-center rounded-full text-[9px] font-semibold"
+            style={{ background: `${glowTo}22`, color: glowTo, border: `1px solid ${glowTo}40` }}
+          >
+            Open App
+          </div>
         </div>
       </GlassPanel>
+
+      {/* A small floating rating chip — a bit of real personality instead
+          of just a bare pulsing dot. */}
+      <div
+        aria-hidden
+        className="absolute right-[8%] top-[8%] flex items-center gap-1 rounded-full border px-2.5 py-1 text-[10px] font-semibold shadow-card animate-float"
+        style={{ background: 'rgba(255,255,255,0.9)', borderColor: `${accent}30`, color: '#15162e' }}
+      >
+        <span aria-hidden style={{ color: accent }}>★</span> 4.9
+      </div>
 
       <span
         aria-hidden
-        className="absolute bottom-[10%] left-[16%] h-2 w-2 rounded-full animate-pulse-glow"
+        className="absolute bottom-[8%] left-[14%] h-2 w-2 rounded-full animate-pulse-glow"
         style={{ background: accent, boxShadow: `0 0 14px 2px ${accent}` }}
       />
     </div>
@@ -171,7 +222,7 @@ function MarketingVisual({ accent, glowTo }) {
       <GlassPanel className="right-[4%] top-[8%] w-[30%] animate-float px-3 py-2.5">
         <div className="flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full" style={{ background: glowTo }} />
-          <div className="h-1.5 w-2/3 rounded-full bg-ink/10" />
+          <div className="h-1.5 w-2/3 rounded-full bg-black/10" />
         </div>
       </GlassPanel>
 
@@ -205,7 +256,7 @@ function GraphicVisual({ accent, glowTo }) {
       <GlassPanel className="bottom-[10%] left-[6%] w-[36%] animate-float px-3 py-2.5">
         <div className="space-y-1.5">
           <div className="h-1.5 w-3/5 rounded-full" style={{ background: `${accent}55` }} />
-          <div className="h-1.5 w-2/5 rounded-full bg-ink/10" />
+          <div className="h-1.5 w-2/5 rounded-full bg-black/10" />
         </div>
       </GlassPanel>
 
@@ -236,7 +287,7 @@ function SeoVisual({ accent, glowTo }) {
     <div className="relative h-full w-full">
       <svg viewBox="0 0 100 90" className="absolute inset-0 h-full w-full" fill="none">
         {stars.map(([x, y], i) => (
-          <circle key={i} cx={x} cy={y} r="0.9" fill="#9294b3" fillOpacity="0.5" />
+          <circle key={i} cx={x} cy={y} r="0.9" fill="#ffffff" fillOpacity="0.5" />
         ))}
       </svg>
 
@@ -247,7 +298,7 @@ function SeoVisual({ accent, glowTo }) {
       <GlassPanel className="right-[6%] top-[10%] w-[30%] animate-float-delay px-3 py-2.5">
         <div className="flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full" style={{ background: glowTo }} />
-          <div className="h-1.5 w-2/3 rounded-full bg-ink/10" />
+          <div className="h-1.5 w-2/3 rounded-full bg-black/10" />
         </div>
       </GlassPanel>
     </div>

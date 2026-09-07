@@ -15,14 +15,14 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-bg-border bg-bg-soft">
+    <footer className="relative overflow-hidden border-t border-white/10 bg-black/40 backdrop-blur-xl">
       <div
         className="pointer-events-none absolute -left-40 top-0 h-72 w-72 rounded-full"
-        style={{ background: 'radial-gradient(circle, rgba(59,109,251,0.14) 0%, rgba(59,109,251,0) 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(59,109,251,0.18) 0%, rgba(59,109,251,0) 70%)' }}
       />
       <div
         className="pointer-events-none absolute -right-40 bottom-0 h-72 w-72 rounded-full"
-        style={{ background: 'radial-gradient(circle, rgba(8,145,168,0.12) 0%, rgba(8,145,168,0) 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(34,211,238,0.14) 0%, rgba(34,211,238,0) 70%)' }}
       />
 
       <motion.div
@@ -48,7 +48,7 @@ export default function Footer() {
                   whileHover={{ y: -4, scale: 1.05 }}
                   whileTap={{ scale: 0.94 }}
                   transition={springTap}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-bg-border bg-white text-ink-muted transition-colors duration-300 hover:border-transparent hover:bg-gradient-to-br hover:from-accent-400 hover:to-primary-500 hover:text-white hover:shadow-glow-accent"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-ink-muted transition-colors duration-300 hover:border-transparent hover:bg-gradient-to-br hover:from-accent-400 hover:to-primary-500 hover:text-white hover:shadow-glow-accent"
                 >
                   <Icon size={16} />
                 </motion.a>
@@ -112,7 +112,7 @@ export default function Footer() {
             </ul>
             <Link
               to="/contact"
-              className="text-fluid-sm mt-6 inline-flex items-center gap-1.5 font-semibold text-accent-500 transition-colors hover:text-primary-600"
+              className="text-fluid-sm mt-6 inline-flex items-center gap-1.5 font-semibold text-accent-300 transition-colors hover:text-primary-400"
             >
               Let&apos;s start a project <ArrowUpRight size={14} />
             </Link>

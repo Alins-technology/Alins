@@ -201,7 +201,7 @@ export default function ContactForm() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.3 }}
-            className="flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-700"
+            className="flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-300"
           >
             <CheckCircle2 size={16} /> Got it — we're sending you to WhatsApp so we can keep talking right away.
           </motion.div>
@@ -213,7 +213,7 @@ export default function ContactForm() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.3 }}
-            className="flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700"
+            className="flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300"
           >
             <AlertCircle size={16} /> That didn't go through. Double-check your connection, or email us directly at contact@alins.in.
           </motion.div>

@@ -90,7 +90,7 @@ const PortfolioCard = forwardRef(function PortfolioCard({ project, index, size =
 
       <div className={`flex flex-1 flex-col ${featured ? 'p-8 sm:p-10' : 'p-7 sm:p-8'}`}>
         <div className="flex items-center justify-between gap-4">
-          <span className="text-fluid-xs font-semibold uppercase tracking-widest text-accent-600">
+          <span className="text-fluid-xs font-semibold uppercase tracking-widest text-accent-300">
             {project.category}
           </span>
           <span className="index-num">{String(project.id).padStart(2, '0')}</span>

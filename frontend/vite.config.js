@@ -14,6 +14,11 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
+          // three.js + R3F/drei are only pulled in by the lazily-loaded
+          // HeroOrb/PageOrb scenes, but split them into their own chunk
+          // anyway so they never bleed into the main vendor bundle even if
+          // a future import changes the load order.
+          three: ['three', '@react-three/fiber', '@react-three/drei'],
         },
       },
     },

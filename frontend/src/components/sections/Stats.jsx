@@ -1,19 +1,30 @@
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { stats } from '../../data/content'
 import AnimatedCounter from '../common/AnimatedCounter'
 
 // Two brand tones alternating (logo cyan, site blue) instead of four
 // unrelated hues — the row reads as one coordinated set, not a rainbow.
-const numColors = ['text-accent-500', 'text-primary-600']
+const numColors = ['text-accent-400', 'text-primary-400']
 
 export default function Stats() {
+  const sectionRef = useRef(null)
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] })
+  const glowX = useTransform(scrollYProgress, [0, 1], ['-6%', '6%'])
+  const glowScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1.15, 0.9])
+
   return (
-    <section className="relative overflow-hidden bg-bg-soft/60 py-16 md:py-20">
-      <div
+    <section ref={sectionRef} className="relative overflow-hidden border-y border-white/5 bg-black/20 py-16 md:py-20">
+      <motion.div
         aria-hidden
+        style={{ x: glowX, scale: glowScale }}
         className="pointer-events-none absolute left-1/2 top-0 h-full w-full max-w-5xl -translate-x-1/2"
-        style={{ background: 'radial-gradient(ellipse 60% 70% at 50% 40%, rgba(59,109,251,0.10) 0%, rgba(59,109,251,0) 70%)' }}
-      />
+      >
+        <div
+          className="h-full w-full"
+          style={{ background: 'radial-gradient(ellipse 60% 70% at 50% 40%, rgba(59,109,251,0.10) 0%, rgba(59,109,251,0) 70%)' }}
+        />
+      </motion.div>
       <div className="container-x relative">
         <div className="grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-4 sm:divide-x sm:divide-bg-border">
           {stats.map((stat, i) => (

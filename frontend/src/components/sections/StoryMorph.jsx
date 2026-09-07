@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react'
 import { gsap, ScrollTrigger } from '../../lib/gsap'
-import { Sparkle, Loop } from '../common/Doodles'
 
 const steps = [
   { word: 'Idea.', desc: 'We start with your goals and your market, not a template we reuse on everyone.' },
@@ -33,8 +32,8 @@ export default function StoryMorph() {
       gsap.set(els[els.length - 1], { opacity: 1 })
       gsap.set(descs, { opacity: 0 })
       gsap.set(descs[descs.length - 1], { opacity: 1 })
-      gsap.set(labels, { color: '#9294b3' })
-      gsap.set(labels[labels.length - 1], { color: '#15162e' })
+      gsap.set(labels, { color: 'rgba(255,255,255,0.4)' })
+      gsap.set(labels[labels.length - 1], { color: '#ffffff' })
       return
     }
 
@@ -43,8 +42,8 @@ export default function StoryMorph() {
       gsap.set(els[0], { opacity: 1, y: 0, scale: 1 })
       gsap.set(descs, { opacity: 0, y: 8 })
       gsap.set(descs[0], { opacity: 1, y: 0 })
-      gsap.set(labels, { color: '#9294b3' })
-      gsap.set(labels[0], { color: '#15162e' })
+      gsap.set(labels, { color: 'rgba(255,255,255,0.4)' })
+      gsap.set(labels[0], { color: '#ffffff' })
 
       const tl = gsap.timeline({ repeat: -1, paused: true })
       words.forEach((_, i) => {
@@ -64,8 +63,8 @@ export default function StoryMorph() {
             { opacity: 1, y: 0, duration: TRANSITION, ease: 'power2.inOut' },
             '<',
           )
-          .to(labels[i], { color: '#9294b3', duration: TRANSITION, ease: 'power2.inOut' }, '<')
-          .to(labels[next], { color: '#15162e', duration: TRANSITION, ease: 'power2.inOut' }, '<')
+          .to(labels[i], { color: 'rgba(255,255,255,0.4)', duration: TRANSITION, ease: 'power2.inOut' }, '<')
+          .to(labels[next], { color: '#ffffff', duration: TRANSITION, ease: 'power2.inOut' }, '<')
       })
 
       // A genuine viewport-entrance trigger — starts the clock once, never
@@ -116,15 +115,11 @@ export default function StoryMorph() {
             one-line description underneath so the space carries actual
             content instead of one word floating in a lot of whitespace. */}
         <div
-          className="relative overflow-hidden rounded-[2rem] px-8 py-12 shadow-card sm:px-12 sm:py-14"
+          className="liquid-glass relative px-8 py-12 sm:px-12 sm:py-14"
           style={{
-            background: 'linear-gradient(150deg, rgba(59,109,251,0.08), rgba(139,92,246,0.08) 60%, rgba(8,145,168,0.07))',
-            border: '1px solid rgba(59,109,251,0.14)',
+            background: 'linear-gradient(150deg, rgba(59,109,251,0.1), rgba(139,92,246,0.1) 60%, rgba(34,211,238,0.08)), rgba(255,255,255,0.03)',
           }}
         >
-          <Sparkle aria-hidden className="pointer-events-none absolute right-8 top-8 h-6 w-6 text-accent-deep animate-pulse-glow" />
-          <Loop aria-hidden className="pointer-events-none absolute bottom-6 right-10 hidden h-8 w-12 text-nebula/50 sm:block" />
-
           <div className="relative flex h-[4.5rem] items-center sm:h-[5.5rem] lg:h-[6.25rem]">
             {words.map((word, i) => (
               <h2

@@ -1,3 +1,5 @@
+import React from 'react'
+
 /**
  * Shared Framer Motion primitives — centralizing durations/eases/variant
  * shapes that were already the site's de facto convention (hand-copied
@@ -70,3 +72,21 @@ export function fadeUpChild(y = 20, duration = DURATION.reveal) {
 
 // Shared spring for tactile hover/tap feedback (matches Navbar's existing feel).
 export const springTap = { type: 'spring', stiffness: 400, damping: 26 }
+
+/**
+ * True once we know the visitor prefers reduced motion — false during SSR/
+ * first paint, updated in an effect. Used to gate the 3D scenes (HeroOrb/
+ * PageOrb) and any other heavy motion so nothing spins for people who've
+ * asked their OS to keep things still.
+ */
+export function usePrefersReducedMotion() {
+  const [reduced, setReduced] = React.useState(false)
+  React.useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReduced(mq.matches)
+    const onChange = (e) => setReduced(e.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
+  return reduced
+}

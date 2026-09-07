@@ -13,13 +13,13 @@ import {
  * fills up like liquid as the site loads, then the loader itself opens up
  * into the homepage (already mounted underneath) instead of just fading out.
  *
- * Design direction: this must read as the SAME brand as the light homepage
- * underneath it, not a separate dark-mode moment. Colors below are all
- * existing homepage tokens — `bg.soft` is the same very-light cool-white
- * already used as a section background elsewhere (Stats, Footer, Marquee,
- * Team); the base wordmark uses `ink`, the site's own deep-navy text color;
- * the liquid is the exact same accent→primary→nebula (cyan → blue → violet)
- * gradient as the homepage's `.gradient-text` utility, just laid out
+ * Design direction: this must read as the SAME brand as the dark homepage
+ * underneath it, not a separate moment. Colors below are all existing
+ * homepage tokens — `bg.soft` is the same near-black ground already used as
+ * a section background elsewhere (Stats, Footer, Marquee, Team); the base
+ * wordmark is a faint white tint (the site's `ink` is white on this dark
+ * theme); the liquid is the exact same accent→primary→nebula (cyan → blue →
+ * violet) gradient as the homepage's `.gradient-text` utility, just laid out
  * left-to-right the same way that utility does. Wordmark typography is
  * Playfair Display — a genuine editorial serif, loaded in index.html but
  * scoped to just this component via inline `fontFamily` rather than the
@@ -179,10 +179,9 @@ export default function Preloader() {
           className="fixed inset-0 z-[10000] overflow-hidden"
           exit={{ opacity: 0, transition: { duration: 0.3 } }}
         >
-          {/* light backdrop — same soft cool-white as the homepage's own
-              section background, so it wipes open into the homepage below
-              with no dark→light jump — wipes open via the circular clip-path
-              on reveal */}
+          {/* backdrop — same near-black as the homepage's own section
+              background, so it wipes open into the homepage below with no
+              color jump — wipes open via the circular clip-path on reveal */}
           <motion.div aria-hidden className="absolute inset-0 bg-bg-soft" style={{ clipPath }} />
 
           {/* wordmark, kept as a separate layer so it can scale/fade on its
@@ -225,12 +224,13 @@ export default function Preloader() {
                   </clipPath>
 
                   {/* subtle top-lit tonal variation for the unfilled base letters —
-                      a deep-navy tint (matching the homepage's own `ink` text
-                      color), not flat grey, so they read as translucent
-                      material rather than a solid-color font. */}
+                      a faint white tint (matching the homepage's own `ink`
+                      text color on this dark theme), not flat grey, so they
+                      read as translucent material rather than a solid-color
+                      font. */}
                   <linearGradient id="alinsBaseGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="rgba(21,22,46,0.16)" />
-                    <stop offset="100%" stopColor="rgba(21,22,46,0.06)" />
+                    <stop offset="0%" stopColor="rgba(255,255,255,0.18)" />
+                    <stop offset="100%" stopColor="rgba(255,255,255,0.07)" />
                   </linearGradient>
 
                   {/* cyan → blue → violet liquid — the exact same stops as the
@@ -254,7 +254,7 @@ export default function Preloader() {
                   letterSpacing={-3}
                   style={{ fontFamily: WORDMARK_FONT }}
                   fill="url(#alinsBaseGradient)"
-                  stroke="rgba(21,22,46,0.22)"
+                  stroke="rgba(255,255,255,0.22)"
                   strokeWidth={1}
                 >
                   ALINS

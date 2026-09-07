@@ -119,7 +119,7 @@ export default function FloatingSocials() {
         <span className="min-w-0 overflow-hidden">
           <span className="flex h-full items-center gap-1.5 whitespace-nowrap pl-3 pr-5 text-sm font-semibold text-ink">
             Chat on WhatsApp
-            <ArrowUpRight size={14} className="shrink-0 text-accent" />
+            <ArrowUpRight size={14} className="shrink-0 text-accent-400" />
           </span>
         </span>
       </a>
@@ -144,7 +144,7 @@ export default function FloatingSocials() {
         <span className="min-w-0 overflow-hidden">
           <span className="flex h-full items-center gap-1.5 whitespace-nowrap pl-3 pr-5 text-sm font-semibold text-ink">
             Follow us on Instagram
-            <ArrowUpRight size={14} className="shrink-0 text-accent" />
+            <ArrowUpRight size={14} className="shrink-0 text-accent-400" />
           </span>
         </span>
       </a>

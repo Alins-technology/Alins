@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { Sparkle } from '../common/Doodles'
 import { gsap, ScrollTrigger } from '../../lib/gsap'
 
 const STATEMENT_MAIN = "Design, development and marketing don't sit in separate departments here."
@@ -11,12 +10,19 @@ const STATEMENT_SUB = 'One team carries the work from brief to launch to the res
  * them progressively as the paragraph scrolls through view, so the
  * statement "writes itself in" rather than just fading up as one block.
  * Falls back to plain text under reduced-motion (no split needed at all).
+ *
+ * Plain `inline` on purpose, not `inline-block`: a trailing space that's the
+ * last character inside an inline-block box gets collapsed to zero width by
+ * the browser (it establishes its own formatting context, so that space
+ * reads as "end of line" and is trimmed) — every word ran into the next
+ * with no gap at all. Plain inline spans don't have that problem and still
+ * animate `opacity` perfectly fine.
  */
 function Words({ text, reducedMotion }) {
   const words = useMemo(() => text.split(' '), [text])
   if (reducedMotion) return text
   return words.map((word, i) => (
-    <span key={i} className="difference-word inline-block" style={{ opacity: 0.18 }}>
+    <span key={i} className="difference-word" style={{ opacity: 0.18 }}>
       {word}
       {i < words.length - 1 ? ' ' : ''}
     </span>
@@ -53,7 +59,7 @@ export default function Difference() {
   return (
     <section
       className="relative overflow-hidden py-24 md:py-32"
-      style={{ background: 'linear-gradient(120deg, rgba(59,109,251,0.10), rgba(139,92,246,0.10) 55%, rgba(8,145,168,0.09))' }}
+      style={{ background: 'linear-gradient(120deg, rgba(59,109,251,0.10), rgba(139,92,246,0.10) 55%, rgba(34,211,238,0.09))' }}
     >
       {/* Full-bleed decorative wash + oversized ghost mark — the section's
           entire visual weight is typographic, this just keeps the band from
@@ -70,10 +76,6 @@ export default function Difference() {
       >
         “
       </span>
-      <span aria-hidden className="pointer-events-none absolute bottom-8 right-[14%] hidden text-accent-deep/70 sm:block">
-        <Sparkle className="h-8 w-8 animate-pulse-glow" />
-      </span>
-
       <div className="container-x relative grid grid-cols-1 gap-10 lg:grid-cols-[0.32fr_1fr] lg:gap-16">
         <motion.span
           initial={{ opacity: 0, y: 16 }}

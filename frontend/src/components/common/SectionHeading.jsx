@@ -22,11 +22,16 @@ export default function SectionHeading({
           {eyebrow}
         </motion.span>
       )}
+      {/* Wipe-reveal instead of a plain fade+slide — the heading uncovers
+          itself left-to-right via clip-path, a sharper "this just wrote
+          itself in" moment than a fade, and it's the one heading style
+          nearly every section on the site shares, so this one change lifts
+          the whole site's perceived motion quality. */}
       <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 14, clipPath: 'inset(0 100% 0 0)' }}
+        whileInView={{ opacity: 1, y: 0, clipPath: 'inset(0 0% 0 0)' }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.05 }}
+        transition={{ duration: 0.85, delay: 0.05, ease: [0.65, 0, 0.35, 1] }}
         className="max-w-2xl text-h2 text-ink"
       >
         {title} {highlight && <span className="gradient-text">{highlight}</span>}

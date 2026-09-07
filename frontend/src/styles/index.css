@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 html,
 body {
-  background-color: #ffffff;
+  background-color: #0c0c0c;
   overflow-x: hidden;
 }
 
@@ -17,8 +17,8 @@ body {
 }
 
 ::selection {
-  background: #0891a8;
-  color: #fff;
+  background: #22d3ee;
+  color: #0c0c0c;
 }
 
 /* Scrollbar */
@@ -26,12 +26,12 @@ body {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #f2f3fb;
+  background: #111113;
 }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #22d3ee, #3b6dfb, #8b5cf6);
   border-radius: 10px;
-  border: 2px solid #f2f3fb;
+  border: 2px solid #111113;
 }
 
 h1,
@@ -74,9 +74,26 @@ button:focus-visible,
 
   /* Cyan → blue → violet, in that order — leads with the logo's electric
      cyan instead of burying it as the third stop, so the site's signature
-     gradient actually reads as "the same brand" as the mark in the navbar. */
+     gradient actually reads as "the same brand" as the mark in the navbar.
+     "Shiny" treatment: a wide gradient that sweeps across the text on a
+     loop, finished with the SVG grain filter mounted once in Layout.jsx
+     (#alins-noise) so the fill reads as brushed metal, not flat color. */
   .gradient-text {
     @apply bg-gradient-to-r from-accent-400 via-primary-500 to-nebula bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      to right,
+      #22d3ee 0%,
+      #3b6dfb 25%,
+      #8b5cf6 50%,
+      #3b6dfb 75%,
+      #22d3ee 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: url(#alins-noise);
+    animation: shiny 6s linear infinite;
   }
 
   .flame-text {
@@ -84,7 +101,36 @@ button:focus-visible,
   }
 
   .btn-primary {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-accent-500 via-primary-500 to-primary-600 bg-[length:160%_auto] bg-left px-7 py-3.5 text-sm font-semibold text-white shadow-glow-accent transition-all duration-300 hover:bg-right hover:shadow-glow-nebula hover:-translate-y-0.5 active:translate-y-0;
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-accent-400 via-primary-500 to-nebula bg-[length:160%_auto] bg-left px-7 py-3.5 text-sm font-semibold text-white shadow-glow-accent transition-all duration-300 hover:bg-right hover:shadow-glow-nebula hover:-translate-y-0.5 active:translate-y-0;
+  }
+  /* Diagonal light sweep across the button on hover — a thin bright bar
+     that travels left to right, the classic "premium SaaS button" tell.
+     Pure CSS transform, no JS; sits above the gradient fill, clipped by
+     the button's own overflow-hidden + rounded-full above. */
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      115deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.45) 48%,
+      rgba(255, 255, 255, 0.45) 52%,
+      transparent 70%
+    );
+    transform: translateX(-120%);
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+  .btn-primary:hover::after {
+    transform: translateX(120%);
+  }
+  /* Keep the label/icon above the sweep layer (the ::after has no z-index
+     of its own to compete with, but being absolutely positioned it would
+     otherwise paint over static in-flow text). */
+  .btn-primary > * {
+    position: relative;
+    z-index: 1;
   }
 
   .btn-flame {
@@ -92,15 +138,48 @@ button:focus-visible,
   }
 
   .btn-outline {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-full border border-bg-border bg-white px-7 py-3.5 text-sm font-semibold text-ink backdrop-blur transition-all duration-300 hover:border-accent-400/60 hover:bg-accent-400/[0.06] hover:-translate-y-0.5;
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-7 py-3.5 text-sm font-semibold text-ink backdrop-blur transition-all duration-300 hover:border-accent-400/50 hover:bg-white/[0.07] hover:-translate-y-0.5;
   }
 
-  .glass-card {
-    @apply relative rounded-3xl border border-bg-border bg-white/70 backdrop-blur-xl shadow-card transition-all duration-300;
+  /* Liquid-glass: the site's one card treatment from here on. A near-
+     invisible fill + backdrop blur + a hairline gradient border drawn with
+     a masked ::before (so it can fade top/bottom instead of being a flat
+     1px stroke) — this single recipe is what every "card" class resolves
+     to, on dark. `.glass-card` is kept as the name most components already
+     use; `.liquid-glass` is an alias for new markup that wants it directly. */
+  .glass-card,
+  .liquid-glass {
+    @apply relative overflow-hidden rounded-3xl shadow-card transition-all duration-300;
+    background: rgba(255, 255, 255, 0.03);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(16px);
+    border: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 20px 60px -20px rgba(0, 0, 0, 0.6);
+  }
+  .glass-card::before,
+  .liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.35) 0%,
+      rgba(255, 255, 255, 0.1) 20%,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0) 60%,
+      rgba(255, 255, 255, 0.1) 80%,
+      rgba(255, 255, 255, 0.35) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
   }
 
   .eyebrow {
-    @apply inline-flex items-center gap-2 rounded-full border border-accent-400/30 bg-accent-400/[0.07] px-4 py-1.5 text-fluid-xs font-semibold uppercase tracking-[0.2em] text-accent-600;
+    @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-fluid-xs font-semibold uppercase tracking-[0.2em] text-accent-300;
   }
 
   .noise-overlay {
@@ -155,5 +234,8 @@ button:focus-visible,
 @layer utilities {
   .mask-fade-bottom {
     mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
+  .mask-fade-x {
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
   }
 }

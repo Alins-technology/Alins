@@ -4,7 +4,6 @@ import { ArrowUpRight } from 'lucide-react'
 import { portfolio } from '../../data/portfolio'
 import SectionHeading from '../common/SectionHeading'
 import PortfolioCard from './PortfolioCard'
-import { ScribbleCircle } from '../common/Doodles'
 
 // Bento-style column spans applied to the wrapper around each card — wide,
 // narrow, narrow, wide — so the grid reads as an uneven composition instead
@@ -14,7 +13,6 @@ const spans = ['lg:col-span-2', 'lg:col-span-1', 'lg:col-span-1', 'lg:col-span-2
 export default function PortfolioPreview() {
   return (
     <section className="relative section-pad">
-      <ScribbleCircle aria-hidden className="pointer-events-none absolute -left-4 top-8 hidden h-16 w-16 text-primary-400/50 lg:block" />
       <div className="container-x">
         <div className="flex flex-col items-center justify-between gap-8 md:flex-row md:items-end">
           <SectionHeading

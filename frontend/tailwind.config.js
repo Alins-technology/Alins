@@ -6,11 +6,11 @@ export default {
     extend: {
       colors: {
         bg: {
-          DEFAULT: '#ffffff',
-          soft: '#f8f8fd',
-          surface: '#f2f3fb',
-          card: '#ffffff',
-          border: '#e7e7f4',
+          DEFAULT: '#0c0c0c',
+          soft: '#111113',
+          surface: '#16161a',
+          card: 'rgba(255,255,255,0.03)',
+          border: 'rgba(255,255,255,0.10)',
         },
         primary: {
           DEFAULT: '#3b6dfb',
@@ -37,8 +37,14 @@ export default {
           core: '#fff2c9',
           deep: '#c23a12',
         },
+        // DEFAULT deliberately resolves to the vivid cyan (matching 400), not
+        // the darker 500/600/700 teal shades below — this is a dark theme,
+        // so any bare `accent` utility (dots, icons, small text) needs to be
+        // the shade that actually pops against `#0c0c0c`, not the muted teal
+        // that only read well as text on a white page. The darker numbers
+        // stay in the scale for background tints/glows that want restraint.
         accent: {
-          DEFAULT: '#0891a8',
+          DEFAULT: '#22d3ee',
           50: '#eafcff',
           100: '#cef7fd',
           200: '#9cecf9',
@@ -51,9 +57,9 @@ export default {
           deep: '#0b7285',
         },
         ink: {
-          DEFAULT: '#15162e',
-          muted: '#5c5e7d',
-          faint: '#9294b3',
+          DEFAULT: '#ffffff',
+          muted: 'rgba(255,255,255,0.66)',
+          faint: 'rgba(255,255,255,0.48)',
         },
       },
       fontFamily: {
@@ -89,14 +95,14 @@ export default {
         'noise': "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E\")",
       },
       boxShadow: {
-        glow: '0 0 40px rgba(59,109,251,0.22)',
-        'glow-cyan': '0 0 40px rgba(8,145,168,0.2)',
-        'glow-accent': '0 0 36px rgba(34,211,238,0.35)',
-        'glow-nebula': '0 0 50px rgba(139,92,246,0.22)',
-        'glow-flame': '0 0 45px rgba(255,122,48,0.25)',
-        card: '0 10px 40px -12px rgba(20,20,50,0.12)',
-        nav: '0 8px 30px -12px rgba(8,145,168,0.16)',
-        'nav-scrolled': '0 16px 44px -14px rgba(8,145,168,0.26)',
+        glow: '0 0 40px rgba(59,109,251,0.35)',
+        'glow-cyan': '0 0 40px rgba(34,211,238,0.3)',
+        'glow-accent': '0 0 36px rgba(34,211,238,0.4)',
+        'glow-nebula': '0 0 50px rgba(139,92,246,0.32)',
+        'glow-flame': '0 0 45px rgba(255,122,48,0.3)',
+        card: '0 20px 60px -20px rgba(0,0,0,0.6)',
+        nav: '0 8px 30px -12px rgba(0,0,0,0.5)',
+        'nav-scrolled': '0 16px 44px -14px rgba(0,0,0,0.6)',
       },
       animation: {
         'spin-slow': 'spin 14s linear infinite',
@@ -108,6 +114,7 @@ export default {
         'float-soft-delay': 'floatSoft 5s ease-in-out 1.4s infinite',
         'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
         gradient: 'gradientShift 8s ease infinite',
+        shiny: 'shiny 6s linear infinite',
         twinkle: 'twinkle 2.4s ease-in-out infinite',
         flicker: 'flicker 0.4s ease-in-out infinite',
         // Preloader liquid-wave drift — same seamless-tile technique as
@@ -138,6 +145,10 @@ export default {
         gradientShift: {
           '0%, 100%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },
+        },
+        shiny: {
+          '0%': { backgroundPosition: '-200% center' },
+          '100%': { backgroundPosition: '200% center' },
         },
         twinkle: {
           '0%, 100%': { opacity: 0.25 },

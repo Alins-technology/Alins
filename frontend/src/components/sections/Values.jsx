@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import { values } from '../../data/content'
 import SectionHeading from '../common/SectionHeading'
-import { Loop, Zigzag } from '../common/Doodles'
 
 export default function Values() {
   return (
@@ -30,31 +29,25 @@ export default function Values() {
                 className={
                   featured
                     ? 'group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-primary-500/20 p-8 shadow-card sm:col-span-2 lg:col-span-2 lg:row-span-2 lg:p-10'
-                    : 'group relative flex flex-col justify-between rounded-2xl border border-bg-border bg-white p-6 shadow-card transition-[border-color,box-shadow] duration-300 hover:border-primary-500/30 hover:shadow-glow-cyan'
+                    : 'group relative flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.03] p-6 shadow-card backdrop-blur-xl transition-[border-color,box-shadow] duration-300 hover:border-primary-500/30 hover:shadow-glow-cyan'
                 }
                 style={
                   featured
-                    ? { background: 'linear-gradient(150deg, rgba(59,109,251,0.12), rgba(139,92,246,0.10) 60%, rgba(8,145,168,0.09))' }
+                    ? { background: 'linear-gradient(150deg, rgba(59,109,251,0.12), rgba(139,92,246,0.10) 60%, rgba(34,211,238,0.09))' }
                     : undefined
                 }
               >
                 {featured && (
-                  <>
-                    <div
-                      aria-hidden
-                      className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gradient-to-br from-primary-500/25 to-accent/25 blur-2xl"
-                    />
-                    <Loop aria-hidden className="pointer-events-none absolute bottom-6 right-6 h-10 w-14 text-accent-deep/50" />
-                  </>
-                )}
-                {!featured && i === 1 && (
-                  <Zigzag aria-hidden className="pointer-events-none absolute right-5 top-5 h-4 w-9 text-nebula/50" />
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gradient-to-br from-primary-500/25 to-accent/25 blur-2xl"
+                  />
                 )}
                 <span
                   className={
                     featured
                       ? 'index-num relative text-base'
-                      : 'index-num relative transition-colors duration-300 group-hover:text-primary-600'
+                      : 'index-num relative transition-colors duration-300 group-hover:text-primary-400'
                   }
                 >
                   {String(i + 1).padStart(2, '0')}

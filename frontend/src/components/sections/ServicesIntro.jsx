@@ -1,7 +1,10 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, Suspense, lazy } from 'react'
 import { gsap } from '../../lib/gsap'
 import { services } from '../../data/services'
 import mark from '../../assets/alins-mark.png'
+import { usePrefersReducedMotion } from '../../lib/motion'
+
+const PageOrb = lazy(() => import('../three/PageOrb'))
 
 /**
  * The opening beat of /services — a plain, in-flow hero (not pinned, not
@@ -13,6 +16,7 @@ import mark from '../../assets/alins-mark.png'
  */
 export default function ServicesIntro() {
   const rootRef = useRef(null)
+  const reduced = usePrefersReducedMotion()
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -36,7 +40,7 @@ export default function ServicesIntro() {
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            'radial-gradient(ellipse 55% 50% at 20% 40%, rgba(139,92,246,0.14), transparent 65%), radial-gradient(ellipse 40% 40% at 85% 70%, rgba(8,145,168,0.10), transparent 60%)',
+            'radial-gradient(ellipse 55% 50% at 20% 40%, rgba(139,92,246,0.14), transparent 65%), radial-gradient(ellipse 40% 40% at 85% 70%, rgba(34,211,238,0.10), transparent 60%)',
         }}
       />
 
@@ -47,6 +51,18 @@ export default function ServicesIntro() {
         aria-hidden
         className="pointer-events-none absolute -right-[6%] top-1/2 h-[60vh] w-auto -translate-y-1/2 opacity-[0.04]"
       />
+
+      {!reduced && (
+        <div
+          aria-hidden
+          data-anim="mark"
+          className="pointer-events-none absolute -right-[4%] top-1/2 h-[46vh] w-[46vh] -translate-y-1/2 opacity-40"
+        >
+          <Suspense fallback={null}>
+            <PageOrb color="#22d3ee" ringColor="#8b5cf6" distort={0.5} />
+          </Suspense>
+        </div>
+      )}
 
       <div className="container-x relative">
         <div className="grid items-center gap-14 lg:grid-cols-[1.35fr_1fr] lg:gap-10 xl:gap-16">
@@ -65,7 +81,7 @@ export default function ServicesIntro() {
             </h1>
 
             <div data-anim="lede" className="mt-8 max-w-lg">
-              <p className="text-fluid-xl font-medium text-accent-500">
+              <p className="text-fluid-xl font-medium text-accent-300">
                 Six disciplines. One team that actually talks to itself.
               </p>
               <p className="text-fluid-sm mt-4 leading-relaxed text-ink-muted">
@@ -80,7 +96,7 @@ export default function ServicesIntro() {
             data-anim="panel"
             className="relative ml-auto w-full max-w-sm rounded-3xl px-7 py-8 shadow-card lg:mr-0"
             style={{
-              background: 'linear-gradient(150deg, rgba(139,92,246,0.10), rgba(8,145,168,0.08))',
+              background: 'linear-gradient(150deg, rgba(139,92,246,0.10), rgba(34,211,238,0.08))',
               border: '1px solid rgba(139,92,246,0.18)',
             }}
           >

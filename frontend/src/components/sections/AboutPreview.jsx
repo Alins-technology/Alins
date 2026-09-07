@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ArrowUpRight, CheckCircle2 } from 'lucide-react'
-import { Sparkle, ScribbleCircle, PlusCluster } from '../common/Doodles'
+import { ArrowUpRight, CheckCircle2, Sparkles } from 'lucide-react'
 
 const points = [
   'One team spans design, code and marketing',
@@ -43,7 +42,7 @@ export default function AboutPreview() {
 
           <Link
             to="/about"
-            className="mt-9 inline-flex items-center gap-2 text-sm font-semibold text-primary-600 transition-colors hover:text-accent-deep"
+            className="mt-9 inline-flex items-center gap-2 text-sm font-semibold text-primary-400 transition-colors hover:text-accent-300"
           >
             More about our agency <ArrowUpRight size={15} />
           </Link>
@@ -58,21 +57,22 @@ export default function AboutPreview() {
           className="relative lg:mt-16"
         >
           <div
-            className="aspect-[4/5] w-full max-w-sm overflow-hidden rounded-3xl p-8 shadow-card sm:p-10 lg:ml-auto"
-            style={{
-              background: 'linear-gradient(160deg, rgba(59,109,251,0.12), rgba(139,92,246,0.10) 55%, rgba(8,145,168,0.09))',
-              border: '1px solid rgba(59,109,251,0.18)',
-            }}
+            className="liquid-glass aspect-[4/5] w-full max-w-sm p-8 shadow-card sm:p-10 lg:ml-auto"
           >
             <div className="relative flex h-full flex-col justify-between">
               <span className="eyebrow w-fit">Who We Are</span>
 
-              {/* Colorful doodle cluster — keeps the card's center from
-                  reading as empty space instead of intentional stillness. */}
-              <div aria-hidden className="pointer-events-none relative mx-auto my-6 flex h-36 w-36 items-center justify-center gap-4 sm:h-44 sm:w-44">
-                <ScribbleCircle className="h-20 w-20 text-primary-500/60 sm:h-24 sm:w-24" />
-                <Sparkle className="absolute -right-2 -top-2 h-8 w-8 text-accent-deep animate-pulse-glow" />
-                <PlusCluster className="absolute -bottom-2 -left-2 h-9 w-9 text-accent" />
+              {/* A single glowing ring + icon instead of a doodle cluster —
+                  keeps the card's center from reading as empty space while
+                  matching the new glass/gradient visual language. */}
+              <div aria-hidden className="pointer-events-none relative mx-auto my-6 flex h-36 w-36 items-center justify-center sm:h-44 sm:w-44">
+                <div
+                  className="absolute inset-0 rounded-full animate-pulse-glow"
+                  style={{ background: 'radial-gradient(circle, rgba(59,109,251,0.18) 0%, rgba(59,109,251,0) 70%)' }}
+                />
+                <div className="flex h-20 w-20 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] sm:h-24 sm:w-24">
+                  <Sparkles className="h-9 w-9 text-accent-300" />
+                </div>
               </div>
 
               <div>

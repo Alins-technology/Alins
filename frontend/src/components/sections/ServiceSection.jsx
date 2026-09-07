@@ -82,12 +82,15 @@ export default function ServiceSection({ service, index, total, reverse, isLast,
       />
 
       {/* Oversized index numeral — a graphic element in its own right, not
-          just a label. Anchored to whichever edge the text column sits on. */}
+          just a label. Anchored to whichever edge the VISUAL mockup sits on
+          (the opposite side from the text column), so it never bleeds
+          through the readable heading — it used to sit on the same edge as
+          the text and the two would collide on the "reverse" sections. */}
       <span
         ref={bigNumRef}
         aria-hidden
         className={`pointer-events-none absolute top-6 select-none font-display text-[6rem] font-bold leading-none sm:text-[8.5rem] lg:top-10 lg:text-[10rem] ${
-          reverse ? 'right-1 sm:right-4 lg:right-8' : 'left-1 sm:left-4 lg:left-8'
+          reverse ? 'left-1 sm:left-4 lg:left-8' : 'right-1 sm:right-4 lg:right-8'
         }`}
         style={{ color: `${service.accent}14` }}
       >
@@ -111,7 +114,7 @@ export default function ServiceSection({ service, index, total, reverse, isLast,
               ref={numRef}
               className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-ink-faint"
             >
-              <Icon size={13} className="text-primary-500" />
+              <Icon size={13} className="text-primary-400" />
               {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
             </span>
 
@@ -122,7 +125,7 @@ export default function ServiceSection({ service, index, total, reverse, isLast,
               {service.title}
             </h2>
 
-            <p ref={shortRef} className="text-fluid-lg mt-5 font-medium text-accent-500">
+            <p ref={shortRef} className="text-fluid-lg mt-5 font-medium text-accent-300">
               {service.short}
             </p>
 
@@ -142,7 +145,7 @@ export default function ServiceSection({ service, index, total, reverse, isLast,
             <div ref={ctaRef}>
               <Link
                 to="/contact"
-                className="group mt-9 inline-flex items-center gap-1.5 text-sm font-semibold text-primary-600 transition-colors hover:text-accent"
+                className="group mt-9 inline-flex items-center gap-1.5 text-sm font-semibold text-primary-400 transition-colors hover:text-accent-300"
               >
                 Talk to the team
                 <ArrowUpRight size={14} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

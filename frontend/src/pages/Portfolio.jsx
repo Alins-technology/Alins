@@ -22,6 +22,8 @@ export default function Portfolio() {
         title="Work that speaks"
         highlight="for itself."
         description="A look at the sites, apps, brands and campaigns we've shipped — and the results they've kept producing after launch."
+        orbColor="#ff7a30"
+        orbRingColor="#8b5cf6"
       />
 
       <section className="pb-20 pt-0 md:pb-28">
@@ -35,7 +37,7 @@ export default function Portfolio() {
                 whileTap={{ scale: 0.96 }}
                 transition={{ type: 'spring', stiffness: 420, damping: 24 }}
                 className={`relative rounded-full border px-5 py-2.5 text-sm font-medium transition-colors duration-300 ${
-                  active === cat ? 'border-primary-500/60 text-primary-700' : 'border-bg-border text-ink-muted hover:border-primary-500/40 hover:text-ink'
+                  active === cat ? 'border-primary-400/60 text-primary-300' : 'border-bg-border text-ink-muted hover:border-primary-500/40 hover:text-ink'
                 }`}
               >
                 {active === cat && (
