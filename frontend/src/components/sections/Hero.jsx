@@ -1,20 +1,23 @@
-import { useRef } from 'react'
+import { Suspense, lazy, useRef } from 'react'
 import { motion, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowUpRight } from 'lucide-react'
 import MagneticButton from '../common/MagneticButton'
 import { usePrefersReducedMotion } from '../../lib/motion'
 
+const GlassSkyline = lazy(() => import('../three/GlassSkyline'))
+
 /**
- * Centered hero — no floating 3D sphere/ball behind the headline anymore
- * (that read as a stray "bubble" rather than part of the brand). The
- * backdrop is a flat, edge-anchored aurora wash instead — the same
- * `grid-glow` gradient token used elsewhere in the app, so the hero and the
- * rest of the site share one atmosphere instead of the hero having its own
- * one-off circular glow. A fade to the page's dark ground keeps the text
- * fully readable. The heading itself gets a light pointer-tracking 3D tilt
- * for a bit of depth — cheap (CSS transform only), skipped entirely under
- * prefers-reduced-motion or on touch.
+ * Centered hero — the backdrop is a flat, edge-anchored aurora wash (the
+ * same `grid-glow` gradient token used elsewhere in the app, so the hero
+ * and the rest of the site share one atmosphere) with a small cluster of
+ * abstract glass towers (`GlassSkyline`) rising up out of it once on load,
+ * sitting behind the headline. A fade to the page's dark ground keeps the
+ * text fully readable and is what hides each tower's base, so the skyline
+ * reads as rising out of the page rather than floating in front of it. The
+ * heading itself gets a light pointer-tracking 3D tilt for a bit of depth —
+ * cheap (CSS transform only), skipped entirely under prefers-reduced-motion
+ * or on touch.
  */
 export default function Hero() {
   const reduced = usePrefersReducedMotion()
@@ -54,7 +57,8 @@ export default function Hero() {
           `grid-glow` token the rest of the app uses (doubled up + a slow
           drifting tint on top so the hero reads noticeably more colorful
           than a plain section, without ever resolving into a distinct
-          circle/ball shape). Fades to the page's dark ground for legibility. */}
+          circle/ball shape) — plus the glass skyline rising up through it.
+          Fades to the page's dark ground for legibility. */}
       <motion.div aria-hidden style={{ opacity: bgOpacity }} className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-grid-glow" />
         <div className="absolute inset-0 bg-grid-glow" />
@@ -66,6 +70,13 @@ export default function Hero() {
             backgroundSize: '200% 200%',
           }}
         />
+        {!reduced && (
+          <div aria-hidden className="absolute inset-0 opacity-90">
+            <Suspense fallback={null}>
+              <GlassSkyline />
+            </Suspense>
+          </div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bg/50 to-bg" />
       </motion.div>
 
