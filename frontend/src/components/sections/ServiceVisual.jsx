@@ -58,7 +58,7 @@ function GlassPanel({ className = '', style, children }) {
 /* ---------------------------------------------------------------------- */
 /* 01 — Web Design: floating browser / interface glass panels             */
 /* ---------------------------------------------------------------------- */
-function WebDesignVisual({ accent }) {
+export function WebDesignVisual({ accent }) {
   return (
     <div className="relative h-full w-full">
       <GlassPanel
@@ -101,7 +101,7 @@ function WebDesignVisual({ accent }) {
 /* ---------------------------------------------------------------------- */
 /* 02 — Web Development: node graph + code fragments                      */
 /* ---------------------------------------------------------------------- */
-function WebDevVisual({ accent, glowTo }) {
+export function WebDevVisual({ accent, glowTo }) {
   return (
     <div className="relative h-full w-full">
       <div className="absolute inset-[6%] opacity-90">
@@ -129,7 +129,7 @@ function WebDevVisual({ accent, glowTo }) {
 /* ---------------------------------------------------------------------- */
 /* 03 — App Development: layered glass screens                            */
 /* ---------------------------------------------------------------------- */
-function AppDevVisual({ accent, glowTo }) {
+export function AppDevVisual({ accent, glowTo }) {
   return (
     <div className="relative h-full w-full">
       {/* Phone 1 — a real "screen" with a notch, a hero card, two content
@@ -212,7 +212,7 @@ function AppDevVisual({ accent, glowTo }) {
 /* ---------------------------------------------------------------------- */
 /* 04 — Digital Marketing: growth chart + signal points                   */
 /* ---------------------------------------------------------------------- */
-function MarketingVisual({ accent, glowTo }) {
+export function MarketingVisual({ accent, glowTo }) {
   return (
     <div className="relative h-full w-full">
       <div className="absolute inset-[8%] opacity-90">
@@ -238,7 +238,7 @@ function MarketingVisual({ accent, glowTo }) {
 /* ---------------------------------------------------------------------- */
 /* 05 — Graphic Design: typography + gradient shape composition           */
 /* ---------------------------------------------------------------------- */
-function GraphicVisual({ accent, glowTo }) {
+export function GraphicVisual({ accent, glowTo }) {
   return (
     <div className="relative h-full w-full">
       <span
@@ -272,7 +272,7 @@ function GraphicVisual({ accent, glowTo }) {
 /* ---------------------------------------------------------------------- */
 /* 06 — SEO & Growth: constellation / ascending signal                    */
 /* ---------------------------------------------------------------------- */
-function SeoVisual({ accent, glowTo }) {
+export function SeoVisual({ accent, glowTo }) {
   const stars = [
     [12, 18],
     [30, 8],

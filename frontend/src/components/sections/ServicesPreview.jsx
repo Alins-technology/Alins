@@ -4,6 +4,11 @@ import { ArrowUpRight } from 'lucide-react'
 import { services } from '../../data/services'
 import SectionHeading from '../common/SectionHeading'
 
+// Lets the whole bento cell be a real link to that service's detail page
+// while keeping the exact same whileInView/whileHover motion the cards
+// already had as plain divs.
+const MotionLink = motion(Link)
+
 export default function ServicesPreview() {
   const [featured, ...rest] = services
 
@@ -32,7 +37,8 @@ export default function ServicesPreview() {
 
         <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[11.5rem]">
           {/* Featured cell — spans two columns and two rows, tinted to read as promoted */}
-          <motion.div
+          <MotionLink
+            to={`/services/${featured.id}`}
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
@@ -79,14 +85,15 @@ export default function ServicesPreview() {
                 className="mt-6 text-ink-faint transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-primary-400"
               />
             </div>
-          </motion.div>
+          </MotionLink>
 
           {/* Remaining services — flat bordered cells, no blur so the grid stays cheap and calm */}
           {rest.map((service, i) => {
             const num = String(i + 2).padStart(2, '0')
             return (
-              <motion.div
+              <MotionLink
                 key={service.id}
+                to={`/services/${service.id}`}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
@@ -113,7 +120,7 @@ export default function ServicesPreview() {
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-ink-muted">{service.short}</p>
                 </div>
-              </motion.div>
+              </MotionLink>
             )
           })}
         </div>

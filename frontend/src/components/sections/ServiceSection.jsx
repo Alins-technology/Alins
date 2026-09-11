@@ -122,7 +122,12 @@ export default function ServiceSection({ service, index, total, reverse, isLast,
               ref={titleRef}
               className="text-h1 mt-5 uppercase leading-[1.05] text-ink"
             >
-              {service.title}
+              <Link
+                to={`/services/${service.id}`}
+                className="transition-colors duration-300 hover:text-accent-300"
+              >
+                {service.title}
+              </Link>
             </h2>
 
             <p ref={shortRef} className="text-fluid-lg mt-5 font-medium text-accent-300">
@@ -142,7 +147,14 @@ export default function ServiceSection({ service, index, total, reverse, isLast,
               ))}
             </ul>
 
-            <div ref={ctaRef}>
+            <div ref={ctaRef} className="flex flex-wrap items-center gap-x-6 gap-y-3">
+              <Link
+                to={`/services/${service.id}`}
+                className="group mt-9 inline-flex items-center gap-1.5 text-sm font-semibold text-ink transition-colors hover:text-accent-300"
+              >
+                View full details
+                <ArrowUpRight size={14} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
               <Link
                 to="/contact"
                 className="group mt-9 inline-flex items-center gap-1.5 text-sm font-semibold text-primary-400 transition-colors hover:text-accent-300"

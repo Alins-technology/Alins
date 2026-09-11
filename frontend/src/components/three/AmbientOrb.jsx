@@ -1,16 +1,21 @@
 import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Float } from '@react-three/drei'
-import { Blob, OrbitRing, ParallaxGroup, SceneLights } from './blobParts'
+import { Blob, ParallaxGroup, SceneLights } from './blobParts'
 
 /**
  * The app-shell's ambient 3D layer — stands in for the fixed looping video
- * a purely-CSS reference design would use. One distorted blob + two thin
- * orbit rings, dark-recolored, fixed full-viewport and mounted once (see
- * Layout.jsx) behind every route so it drifts continuously as you navigate
- * instead of restarting per page. Kept deliberately sparse (one mesh, no
- * particles) since this runs underneath the page-specific HeroOrb/PageOrb
- * scenes too — it's a low, slow presence, not the focal point.
+ * a purely-CSS reference design would use. One distorted blob, dark-
+ * recolored, fixed full-viewport and mounted once (see Layout.jsx) behind
+ * every route so it drifts continuously as you navigate instead of
+ * restarting per page. Kept deliberately sparse (one mesh, no particles)
+ * since this runs underneath the page-specific HeroOrb/PageOrb scenes too
+ * — it's a low, slow presence, not the focal point.
+ *
+ * Used to also carry two thin orbit rings — dropped because, being fixed
+ * full-viewport behind every route, their faint circular outline read as
+ * stray "lines" cutting across whatever content scrolled past them,
+ * especially over the new services pages' sparser dark sections.
  */
 export default function AmbientOrb() {
   return (
@@ -36,8 +41,6 @@ export default function AmbientOrb() {
               opacity={0.55}
             />
           </Float>
-          <OrbitRing radius={3.1} color="#3b6dfb" tilt={0.6} opacity={0.16} speed={0.05} />
-          <OrbitRing radius={3.6} color="#22d3ee" tilt={-0.4} opacity={0.1} speed={-0.035} thickness={0.004} />
         </ParallaxGroup>
       </Suspense>
     </Canvas>
