@@ -1,0 +1,9 @@
+# robots.txt for alins.in
+User-agent: Googlebot
+Disallow:
+
+User-agent: *
+Disallow:
+Disallow: /cgi-bin/
+
+Sitemap: https://www.alins.in/sitemap.xml
