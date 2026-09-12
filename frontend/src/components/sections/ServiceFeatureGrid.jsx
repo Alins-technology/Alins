@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import { staggerContainer, fadeUpChild } from '../../lib/motion'
-import { PlusCluster } from '../common/Doodles'
 
 /**
  * "What's included" for one service — a bento grid (per DESIGN_SYSTEM.md):
@@ -48,11 +47,6 @@ export default function ServiceFeatureGrid({ service, featureCards }) {
             <div
               aria-hidden
               className={`pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br ${service.color} opacity-[0.10] transition-opacity duration-500 group-hover:opacity-[0.18]`}
-            />
-            <PlusCluster
-              aria-hidden
-              className="pointer-events-none absolute right-6 top-6 h-9 w-9 opacity-30"
-              style={{ color: service.accent }}
             />
             <span className="index-num">01</span>
             <h3 className="text-h3 mt-6 text-ink">{featured.title}</h3>

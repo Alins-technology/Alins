@@ -1,13 +1,12 @@
 import { motion } from 'framer-motion'
 import { staggerContainer, fadeUpChild } from '../../lib/motion'
-import { Zigzag } from '../common/Doodles'
 
 /**
  * A simple, calm "stack" row — the tools/platforms used to deliver one
  * service (`serviceDetails.tools`). Deliberately lightweight next to the
- * heavier bento/process sections: a centered heading, a doodle accent, and
- * one row of pill chips that wraps on small screens. No marquee/scroll
- * trickery here — the list is short enough that a static wrap reads better.
+ * heavier bento/process sections: a centered heading and one row of pill
+ * chips that wraps on small screens. No marquee/scroll trickery here — the
+ * list is short enough that a static wrap reads better.
  */
 export default function ServiceTools({ service, tools }) {
   return (
@@ -18,7 +17,6 @@ export default function ServiceTools({ service, tools }) {
             <span className="h-1.5 w-1.5 rounded-full" style={{ background: service.accent }} />
             Tools & Platforms
           </span>
-          <Zigzag className="h-4 w-24 opacity-60" style={{ color: service.accent }} />
         </div>
 
         <motion.div

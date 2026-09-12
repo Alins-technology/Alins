@@ -6,7 +6,6 @@ import { services } from '../../data/services'
 import { usePrefersReducedMotion } from '../../lib/motion'
 import ServiceMotif from './ServiceMotif'
 import ServiceVisual from './ServiceVisual'
-import { Sparkle, Squiggle, DashArrow } from '../common/Doodles'
 
 const PageOrb = lazy(() => import('../three/PageOrb'))
 
@@ -66,10 +65,9 @@ export default function ServiceDetailHero({ service, index, tagline, heroNote })
       <div className="container-x relative">
         <div className="grid items-center gap-14 lg:grid-cols-[1.1fr_1fr] lg:gap-10 xl:gap-16">
           <div>
-            <span data-anim="eyebrow" className="eyebrow relative">
+            <span data-anim="eyebrow" className="eyebrow">
               <Icon size={13} style={{ color: service.accent }} />
               {String(index + 1).padStart(2, '0')} / {String(services.length).padStart(2, '0')} — {heroNote || 'What We Offer'}
-              <Sparkle className="absolute -right-5 -top-4 h-4 w-4" style={{ color: service.accent }} />
             </span>
 
             <h1 data-anim="heading" className="text-h1 mt-6 uppercase leading-[0.98] text-ink">
@@ -78,11 +76,10 @@ export default function ServiceDetailHero({ service, index, tagline, heroNote })
 
             <p
               data-anim="tagline"
-              className="text-fluid-xl relative mt-6 max-w-lg font-medium"
+              className="text-fluid-xl mt-6 max-w-lg font-medium"
               style={{ color: service.accent }}
             >
               {tagline || service.short}
-              <Squiggle className="mt-2 block h-3 w-20 opacity-70" style={{ color: service.accent }} />
             </p>
 
             <p data-anim="desc" className="text-fluid-sm mt-5 max-w-lg leading-relaxed text-ink-muted">
@@ -101,18 +98,13 @@ export default function ServiceDetailHero({ service, index, tagline, heroNote })
               ))}
             </ul>
 
-            <div data-anim="cta" className="relative mt-9 flex flex-wrap items-center gap-4">
+            <div data-anim="cta" className="mt-9 flex flex-wrap items-center gap-4">
               <Link to="/contact" className="btn-primary">
                 Start a Project <ArrowUpRight size={16} />
               </Link>
               <Link to="/portfolio" className="btn-outline">
                 See Our Work
               </Link>
-              <DashArrow
-                aria-hidden
-                className="pointer-events-none absolute -right-16 -top-10 hidden h-10 w-16 -scale-x-100 opacity-50 sm:block"
-                style={{ color: service.accent }}
-              />
             </div>
           </div>
 

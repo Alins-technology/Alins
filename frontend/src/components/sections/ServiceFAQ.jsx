@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { EASE } from '../../lib/motion'
-import { ScribbleCircle } from '../common/Doodles'
 
 function FAQItem({ item, isOpen, onToggle, accent }) {
   return (
@@ -57,13 +56,8 @@ export default function ServiceFAQ({ service, faqs }) {
             <span className="h-1.5 w-1.5 rounded-full" style={{ background: service.accent }} />
             Frequently Asked
           </span>
-          <h2 className="relative text-h2 text-ink">
+          <h2 className="text-h2 text-ink">
             Questions about <span className="gradient-text">{service.title.toLowerCase()}.</span>
-            <ScribbleCircle
-              aria-hidden
-              className="pointer-events-none absolute -right-9 -top-7 h-9 w-9 opacity-40"
-              style={{ color: service.accent }}
-            />
           </h2>
         </div>
 

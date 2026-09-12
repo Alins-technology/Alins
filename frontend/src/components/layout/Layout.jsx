@@ -1,4 +1,3 @@
-import { Suspense, lazy } from 'react'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import CustomCursor from '../common/CustomCursor'
@@ -9,13 +8,17 @@ import FloatingSocials from '../common/FloatingSocials'
 import NoiseFilters from '../common/NoiseFilters'
 import GuideLines from '../common/GuideLines'
 import { useSmoothScroll } from '../../lib/smoothScroll'
-import { usePrefersReducedMotion } from '../../lib/motion'
 
-const AmbientOrb = lazy(() => import('../three/AmbientOrb'))
+// The fixed ambient 3D layer (AmbientOrb — one drifting blob behind every
+// page) used to sit here. Dropped: even with its orbit rings already
+// removed, the blob mesh's own translucent silhouette still read as a
+// stray curved line/circle cutting across content — most visible over the
+// services pages' sparser dark sections, but present (just less noticeable)
+// on every page since it was fixed full-viewport. GradientBackdrop +
+// Starfield stay as the site's ambient backdrop.
 
 export default function Layout({ children }) {
   useSmoothScroll()
-  const reduced = usePrefersReducedMotion()
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-bg">
@@ -23,13 +26,6 @@ export default function Layout({ children }) {
       <CustomCursor />
       <ScrollToTop />
       <GradientBackdrop />
-      {!reduced && (
-        <div aria-hidden className="pointer-events-none fixed inset-0 z-0 opacity-70">
-          <Suspense fallback={null}>
-            <AmbientOrb />
-          </Suspense>
-        </div>
-      )}
       <Starfield />
       <GuideLines />
       <div className="noise-overlay fixed inset-0 z-[1]" />

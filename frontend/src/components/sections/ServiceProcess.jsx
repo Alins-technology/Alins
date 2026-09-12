@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import { staggerContainer, fadeUpChild } from '../../lib/motion'
-import { Loop } from '../common/Doodles'
 
 /**
  * "How we work" for one service — same two-column recipe as the global
@@ -27,13 +26,8 @@ export default function ServiceProcess({ service, process }) {
             <span className="h-1.5 w-1.5 rounded-full" style={{ background: service.accent }} />
             How We Work
           </span>
-          <h2 className="relative mt-5 text-h2 leading-[1.02] text-ink">
+          <h2 className="mt-5 text-h2 leading-[1.02] text-ink">
             Four steps for <span className="gradient-text">{service.title.toLowerCase()}.</span>
-            <Loop
-              aria-hidden
-              className="pointer-events-none absolute -right-10 -top-6 hidden h-8 w-12 opacity-40 sm:block"
-              style={{ color: service.accent }}
-            />
           </h2>
           <p className="text-lede mt-6 max-w-md">
             The same system on every {service.title.toLowerCase()} engagement, so you always know
