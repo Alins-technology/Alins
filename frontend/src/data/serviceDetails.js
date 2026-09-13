@@ -58,6 +58,18 @@ export const serviceDetails = {
         a: 'Yes — single-page and section-level redesigns are scoped just as often as full rebuilds.',
       },
     ],
+    locations: [
+      {
+        city: 'Noida',
+        heading: 'Web Design Company in Noida',
+        body: 'Noida’s startups, retailers and service brands need more than a template — they need a site that loads fast, reads clean on a phone and turns a visit into an enquiry. As a web design company based in Noida, we design around your business identity from the first sketch, not a stock layout.',
+      },
+      {
+        city: 'Indirapuram',
+        heading: 'Web Design Services in Indirapuram',
+        body: 'Local businesses across Indirapuram, Ghaziabad and the surrounding NCR need a site that’s easy to find and even easier to trust. Every build is mobile-first and enquiry-ready, designed against your services and audience rather than copy-pasted from the last client.',
+      },
+    ],
     relatedIds: ['web-development', 'graphic-designing'],
   },
 
@@ -111,6 +123,18 @@ export const serviceDetails = {
         a: 'Often, yes. We start with a short technical audit to confirm scope before quoting work on an existing project.',
       },
     ],
+    locations: [
+      {
+        city: 'Noida',
+        heading: 'Custom Website Development in Noida',
+        body: 'Generic templates rarely fit a growing business. As a website development company in Noida, we architect sites around your actual services, audience and growth plans — corporate sites, service platforms, portfolios or fully custom web applications.',
+      },
+      {
+        city: 'Indirapuram',
+        heading: 'Web Development Agency in Indirapuram',
+        body: 'From local businesses to specialised platforms, we build for Indirapuram, Ghaziabad and the wider NCR with the same rigor: clean information architecture, responsive layouts and room to add features as the business grows.',
+      },
+    ],
     relatedIds: ['web-design', 'app-development'],
   },
 
@@ -162,6 +186,18 @@ export const serviceDetails = {
       {
         q: 'What happens after launch?',
         a: 'We offer an ongoing support retainer for OS updates and fixes, but you own the codebase and can take it anywhere.',
+      },
+    ],
+    locations: [
+      {
+        city: 'Noida',
+        heading: 'App Development Company in Noida',
+        body: 'Noida’s startups and service companies lean on digital platforms to reach customers every day. We build Android, iOS and web applications scoped around how your business actually runs, not a generic app shell resold to every client.',
+      },
+      {
+        city: 'Indirapuram',
+        heading: 'App Development Company in Indirapuram',
+        body: 'Running a business in Indirapuram, Ghaziabad or the nearby NCR? We build functional, business-specific apps across Android, iOS and web — planned around your market and users, not a one-size-fits-all template.',
       },
     ],
     relatedIds: ['web-development', 'digital-marketing'],
@@ -268,6 +304,18 @@ export const serviceDetails = {
       {
         q: 'What do we receive at the end?',
         a: 'Full source files, exported assets in every format you need, and a guideline document covering usage rules.',
+      },
+    ],
+    locations: [
+      {
+        city: 'Noida',
+        heading: 'Graphic Design Company in Noida',
+        body: 'Startups, retailers and established brands across Noida need visual consistency across web, social and print. We build design systems, not one-off graphics, so every touchpoint stays unmistakably yours.',
+      },
+      {
+        city: 'Indirapuram',
+        heading: 'Graphic Design Company in Indirapuram',
+        body: 'Every brand across Indirapuram, Ghaziabad and the wider NCR needs its own visual language. From social creatives to full brand identities, designs are built around your business and audience, not a generic stock template.',
       },
     ],
     relatedIds: ['web-design', 'digital-marketing'],

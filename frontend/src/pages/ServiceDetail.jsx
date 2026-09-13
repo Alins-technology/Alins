@@ -5,6 +5,7 @@ import ServiceDetailHero from '../components/sections/ServiceDetailHero'
 import ServiceFeatureGrid from '../components/sections/ServiceFeatureGrid'
 import ServiceProcess from '../components/sections/ServiceProcess'
 import ServiceTools from '../components/sections/ServiceTools'
+import ServiceAreas from '../components/sections/ServiceAreas'
 import ServiceFAQ from '../components/sections/ServiceFAQ'
 import RelatedServices from '../components/sections/RelatedServices'
 import CTA from '../components/sections/CTA'
@@ -50,6 +51,7 @@ export default function ServiceDetail() {
       <ServiceFeatureGrid service={service} featureCards={details.featureCards} />
       <ServiceProcess service={service} process={details.process} />
       <ServiceTools service={service} tools={details.tools} />
+      <ServiceAreas service={service} locations={details.locations} />
       <ServiceFAQ service={service} faqs={details.faqs} />
       <RelatedServices relatedIds={details.relatedIds} />
       <CTA
