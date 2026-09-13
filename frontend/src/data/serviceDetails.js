@@ -471,6 +471,100 @@ export const serviceDetails = {
         a: 'Paid channels can show early signal within weeks; organic/SEO work compounds over months. We\'re upfront about which is which.',
       },
     ],
+    deepDive: {
+      intro:
+        'In a competitive digital world, businesses need to strategically use their digital presence to position themselves in front of the right customers. We provide professional Digital Marketing Services to help firms improve their online presence, generate enquiries about their products and services, and grow — using best practices across SEO, social media, ad marketing and performance marketing to hit specific business objectives.',
+      sections: [
+        {
+          id: 'dm-search-visibility',
+          heading: 'Make Your Business Visible on Search Engines',
+          body: [
+            'Customers increasingly rely on search engines to find products and services. Firms looking for SEO Services in Noida can benefit from our SEO practices to improve their online presence and ranking on search engines.',
+            'Our SEO executives build cost-effective, reliable strategies covering keywords, on-page, technical SEO, content creation, local SEO and more — the goal being a firm that actually shows up on the first page of search results, not just a report that says it should.',
+          ],
+        },
+        {
+          id: 'dm-social-media',
+          heading: 'Connect with Customers on Social Media Platforms',
+          body: [
+            'Businesses can network with target customers on social media, learn more about what they want, and build trust over time. Working with a professional Social Media Marketing in Noida team helps firms strengthen their online presence and hit marketing objectives faster.',
+            'Our social media marketers develop cost-effective strategies built around your target audience, brand and content — not a generic posting calendar copied across every client.',
+          ],
+        },
+        {
+          id: 'dm-performance-marketing',
+          heading: 'Focus on Marketing with Measurable Goals and Results',
+          body: [
+            'Most firms now want marketing strategies that produce specific, measurable goals. Our Performance Marketing in Noida services are built to hit real objectives — leads, enquiries, traffic or sales.',
+            'Progress gets tracked against real KPIs — impressions, clicks, enquiries, conversions and cost per click or impression — so every campaign gets examined honestly and that read feeds directly into the next one.',
+          ],
+        },
+        {
+          id: 'dm-google-ads',
+          heading: 'Market Your Business Effectively Using Google Ads',
+          body: [
+            'Google Ads promote a firm’s products and services by targeting prospective customers directly. Businesses investing in Google Ads Services in Noida need clear objectives, a defined audience, the right ad types and the right keywords before spending a rupee.',
+            'Our team sets realistic objectives — leads, enquiries, sales or brand awareness — then builds out campaigns with the right targeting, audiences, keywords and locations, tracking impressions, clicks, enquiries, conversions and cost-effectiveness the whole way through.',
+          ],
+        },
+        {
+          id: 'dm-online-advertising',
+          heading: 'Develop Cost-Effective Online Advertisement Strategies',
+          body: [
+            'Modern marketing leans on advertisements to reach a large audience efficiently. As a Digital Advertising Agency in Noida, we have the experience to build reliable online advertisement strategies around the right ad networks, platforms, targeting, budgeting and creative.',
+            'Every advertisement strategy depends on the target audience and the marketing objective behind it — so understanding your specific needs comes first, before any spend goes out the door.',
+          ],
+        },
+        {
+          id: 'dm-local-seo',
+          heading: 'Improve Your Local SEO to Attract More Customers',
+          body: [
+            'Local SEO is essential for firms that depend on local searches to bring in customers. As an SEO Company in Indirapuram, we offer local SEO strategies built around your services, location and the keywords customers actually use.',
+            'Beyond the basics of SEO, local SEO also factors in search intent and location — which matters most for firms serving specific areas such as Indirapuram, Ghaziabad, Noida and nearby regions.',
+          ],
+        },
+        {
+          id: 'dm-social-indirapuram',
+          heading: 'Increase Your Business Visibility on Social Media',
+          body: [
+            'Social media is now an essential part of any digital marketing strategy, connecting a business to local and international customers alike. Our Social Media Marketing in Indirapuram solutions start by identifying your brand, audience, content and marketing objectives.',
+            'From there we build cost-effective strategies to hit those objectives, including creating and publishing engaging content and running social campaigns.',
+          ],
+        },
+        {
+          id: 'dm-smart-decisions',
+          heading: 'Make Smart Marketing Decisions to Meet Your Business Objectives',
+          body: [
+            'Good marketing decisions — audiences, targeting, ad networks, platforms — need to be informed by real data. Our Performance Marketing in Indirapuram services help firms make smart decisions based on practical insight into their own marketing activity.',
+            'Relying on analytics to inform strategy is how businesses hit their objectives faster. Our team takes a data-driven approach to examining a firm’s marketing activity and separating what’s working from what isn’t.',
+          ],
+        },
+        {
+          id: 'dm-local-targeting',
+          heading: 'Connect with Prospective Customers in Your Local Area',
+          body: [
+            'Businesses can and should use local targeting to identify and connect with customers in a specific area, such as Indirapuram. Modern marketing lets firms target customers based on interests, preferences and other factors, not just location alone.',
+            'Our Online Advertising Services in Indirapuram specialize in advertisement strategies built around local targeting — making sure businesses reach the customers who are actually nearby and actually interested.',
+          ],
+        },
+        {
+          id: 'dm-strategy-consultant',
+          heading: 'Develop a Strategic Digital Marketing Strategy for Your Business',
+          body: [
+            'A firm’s digital marketing strategy should be practical, and should account for its online presence, marketing objectives, audience and website. A Digital Marketing Consultant in Noida can help build that strategy properly.',
+            'As a full-service digital marketing agency, we examine a firm’s website, audience and competitors to identify the best way to improve online presence and meet real marketing objectives.',
+          ],
+        },
+        {
+          id: 'dm-grow-with-alins',
+          heading: 'Grow Your Business with ALINS Technologies Digital Marketing Services',
+          body: [
+            'Digital marketing strategies keep evolving as new trends and approaches emerge, which is exactly why firms need an experienced partner to develop and run them properly.',
+            'Our experience across SEO, social media, Google Ads, performance marketing and online advertising helps firms improve their online presence and grow their business. Whether you\'re looking for SEO Services in Noida, social media marketing, Google Ads, or local marketing SEO advice in Indirapuram, we\'re here to help.',
+          ],
+        },
+      ],
+    },
     relatedIds: ['seo-growth', 'graphic-designing'],
   },
 
